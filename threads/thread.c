@@ -28,6 +28,9 @@
    that are ready to run but not actually running. */
 static struct list ready_list;
 
+/*List of sleep thread*/
+static struct list sleep_list;
+
 /* Idle thread. */
 static struct thread *idle_thread;
 
@@ -44,6 +47,8 @@ static struct list destruction_req;
 static long long idle_ticks;    /* # of timer ticks spent idle. */
 static long long kernel_ticks;  /* # of timer ticks in kernel threads. */
 static long long user_ticks;    /* # of timer ticks in user programs. */
+
+static long long next_tick_to_awake;
 
 /* Scheduling. */
 #define TIME_SLICE 4            /* # of timer ticks to give each thread. */
@@ -64,6 +69,9 @@ static void schedule (void);
 static tid_t allocate_tid (void);
 
 /* Returns true if T appears to point to a valid thread. */
+
+//magic // detects stack overflow
+//생성될 때 THREAD_MAGIC(0xcd6abf4b)으로 설정. 스택 오버플로우 발생 시 이 값이 변한다.
 #define is_thread(t) ((t) != NULL && (t)->magic == THREAD_MAGIC)
 
 /* Returns the running thread.
@@ -109,6 +117,9 @@ thread_init (void) {
 	lock_init (&tid_lock);
 	list_init (&ready_list);
 	list_init (&destruction_req);
+	list_init (&sleep_list);
+
+	next_tick_to_awake = INT64_MAX;
 
 	/* Set up a thread structure for the running thread. */
 	initial_thread = running_thread ();
@@ -148,7 +159,7 @@ thread_tick (void) {
 #endif
 	else
 		kernel_ticks++;
-
+		
 	/* Enforce preemption. */
 	if (++thread_ticks >= TIME_SLICE)
 		intr_yield_on_return ();
@@ -292,6 +303,87 @@ thread_exit (void) {
 	NOT_REACHED ();
 }
 
+/* 현재 스레드가 idle 스레드가 아닐경우
+thread의 상태를 BLOCKED로 바꾸고 깨어나야 할 ticks을 저장,
+슬립 큐에 삽입하고, awake함수가 실행되어야 할 tick값을 update */
+/* 현재 스레드를 슬립 큐에 삽입한 후에 스케줄한다. */
+/* 해당 과정중에는 인터럽트를 받아들이지 않는다. */
+void 
+thread_sleep(int64_t w_tick){
+	struct thread *curr = thread_current();
+	enum intr_level old_level;
+
+	//intr수행중에 disable하면 문제돼서 intr_context로 intr중인지 확인
+	/*
+	 Returns true during processing of an external interrupt
+   and false at all other times. 
+		bool
+		intr_context (void) {
+			return in_external_intr;
+		}
+	*/
+	ASSERT (!intr_context ());
+
+	old_level = intr_disable ();
+	if (curr != idle_thread)
+	{
+		curr->wakeup_tick = w_tick;
+		update_next_tick_to_awake(w_tick);
+		list_push_back (&sleep_list, &curr->elem);
+		do_schedule(THREAD_BLOCKED);
+	}
+	else{
+		do_schedule(THREAD_READY); // ###################### ?! ####################
+	}
+	intr_set_level (old_level);
+}
+
+/* next_tick_to_awake 가 깨워야 할 스레드중 가장 작은 tick을 갖도록
+업데이트 한다 */
+void 
+update_next_tick_to_awake(int64_t ticks)
+{
+	if(ticks < next_tick_to_awake)
+		next_tick_to_awake = ticks;
+}
+
+/* next_tick_to_awake 을 반환한다. */
+int64_t get_next_tick_to_awake(void)
+{
+	return next_tick_to_awake;
+}
+
+/* sleep list의 모든 entry 를 순회하며 다음과 같은 작업을 수행한다.
+현재 tick이 깨워야 할 tick 보다 크거나 같다면 슬립 큐에서 제거하고 unblock 한다.
+작다면 update_next_tick_to_awake() 를 호출한다.
+*/
+void
+thread_awake(int64_t ticks) {
+	//int64_t tmp_tick = INT64_MAX;
+	struct thread* t;
+	for (struct list_elem* e = list_begin(&sleep_list); e != list_end(&sleep_list) ;) {
+			t = list_entry(e, struct thread, elem);
+			ASSERT (is_thread (t));
+			ASSERT (t->status == THREAD_BLOCKED);
+
+			if (ticks >= (t->wakeup_tick)) {
+					e = list_remove(&t->elem);
+					thread_unblock(t);
+					// unblock :: ready로 스레드가 갈거야
+					// next_tick_to_awake야 바뀌어야해
+			}
+			else {
+					// if (tmp_tick > t->wakeup_tick)
+					// 	tmp_tick = t->wakeup_tick;
+					e = list_next(e);
+					update_next_tick_to_awake(ticks);
+			}
+	}
+	//next_tick_to_awake = tmp_tick;
+	//printf("#################################\nthread name : %s next_tick_to_awake: %lld\n",t->name, next_tick_to_awake);
+}
+
+
 /* Yields the CPU.  The current thread is not put to sleep and
    may be scheduled again immediately at the scheduler's whim. */
 void
@@ -359,7 +451,7 @@ thread_get_recent_cpu (void) {
 static void
 idle (void *idle_started_ UNUSED) {
 	struct semaphore *idle_started = idle_started_;
-
+    
 	idle_thread = thread_current ();
 	sema_up (idle_started);
 
@@ -462,6 +554,7 @@ do_iret (struct intr_frame *tf) {
    It's not safe to call printf() until the thread switch is
    complete.  In practice that means that printf()s should be
    added at the end of the function. */
+	 //curr thread
 static void
 thread_launch (struct thread *th) {
 	uint64_t tf_cur = (uint64_t) &running_thread ()->tf;
@@ -534,7 +627,7 @@ do_schedule(int status) {
 			list_entry (list_pop_front (&destruction_req), struct thread, elem);
 		palloc_free_page(victim);
 	}
-	thread_current ()->status = status;
+	thread_current()->status = status;
 	schedule ();
 }
 
@@ -548,7 +641,7 @@ schedule (void) {
 	ASSERT (is_thread (next));
 	/* Mark us as running. */
 	next->status = THREAD_RUNNING;
-
+	
 	/* Start new time slice. */
 	thread_ticks = 0;
 
@@ -565,6 +658,7 @@ schedule (void) {
 		   currently used bye the stack.
 		   The real destruction logic will be called at the beginning of the
 		   schedule(). */
+			 //initial_thread = main thread
 		if (curr && curr->status == THREAD_DYING && curr != initial_thread) {
 			ASSERT (curr != next);
 			list_push_back (&destruction_req, &curr->elem);

@@ -1,0 +1,26 @@
+Kernel command line: -q run priority-fifo
+0 ~ 9fc00 1
+100000 ~ 13e0000 1
+Pintos booting with: 
+	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
+	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
+Calibrating timer...  157,081,600 loops/s.
+Boot complete.
+Executing 'priority-fifo':
+(priority-fifo) begin
+(priority-fifo) 16 threads will iterate 16 times in the same order each time.
+(priority-fifo) If the order varies then there is a bug.
+(priority-fifo) end
+Execution of 'priority-fifo' complete.
+Timer: 23 ticks
+Thread: 0 idle ticks, 23 kernel ticks, 0 user ticks
+Console: 557 characters output
+Keyboard: 0 keys pressed
+Powering offKernel PANIC at ../../threads/thread.c:278 in thread_current(): assertion `t->status == THREAD_RUNNING' failed.
+Call stack: 0x80042133cf 0x8004206eee 0x800420a0ac 0x800421645d 0x800421657b 0x80042108d2 0x8004208ba1 0x8004208a15 0x8004208dfc 0x8004209a24 0x8004209e79 0x8004216494 0x800421657b 0x80042108d2 0x8004208ba1 0x8004208a15 0x8004208dfc 0x8004213be2 0x8004213c8a 0x8004209b82 0x800420a043 0x8004218e51 0x800420746d.
+The `backtrace' program can make call stacks useful.
+Read "Backtraces" in the "Debugging Tools" chapter
+of the Pintos documentation for more information.
+Timer: 24 ticks
+Thread: 0 idle ticks, 24 kernel ticks, 0 user ticks
+Console: 1
