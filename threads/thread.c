@@ -85,7 +85,9 @@ static tid_t allocate_tid (void);
 // Global descriptor table for the thread_start.
 // Because the gdt will be setup after the thread_init, we should
 // setup temporal gdt first.
-static uint64_t gdt[3] = { 0, 0x00af9a000000ffff, 0x00cf92000000ffff };
+static uint64_t gdt[3] = { 0, 0x00af9a000000ffff, 0x00cf92000000ffff }; 
+// 0x00af9a000000ffff : 49427445715107840
+// 0x00cf92000000ffff : 58425848876826620
 
 /* Initializes the threading system by transforming the code
    that's currently running into a thread.  This can't work in
@@ -122,10 +124,11 @@ thread_init (void) {
 	next_tick_to_awake = INT64_MAX;
 
 	/* Set up a thread structure for the running thread. */
+	//#define running_thread() ((struct thread *) (pg_round_down (rrsp ())))
 	initial_thread = running_thread ();
 	init_thread (initial_thread, "main", PRI_DEFAULT);
-	initial_thread->status = THREAD_RUNNING;
-	initial_thread->tid = allocate_tid ();
+	initial_thread->status = THREAD_RUNNING; 
+	initial_thread->tid = allocate_tid (); 
 }
 
 /* Starts preemptive thread scheduling by enabling interrupts.
@@ -216,7 +219,7 @@ thread_create (const char *name, int priority,
 	t->tf.eflags = FLAG_IF;
 
 	/* Add to run queue. */
-	thread_unblock (t);
+	thread_unblock (t); //!
 
 	return tid;
 }
@@ -330,10 +333,8 @@ thread_sleep(int64_t w_tick){
 		curr->wakeup_tick = w_tick;
 		update_next_tick_to_awake(w_tick);
 		list_push_back (&sleep_list, &curr->elem);
-		do_schedule(THREAD_BLOCKED);
-	}
-	else{
-		do_schedule(THREAD_READY); // ###################### ?! ####################
+		//do_schedule(THREAD_BLOCKED);
+		thread_block();
 	}
 	intr_set_level (old_level);
 }
@@ -359,7 +360,7 @@ int64_t get_next_tick_to_awake(void)
 */
 void
 thread_awake(int64_t ticks) {
-	//int64_t tmp_tick = INT64_MAX;
+	int64_t tmp_tick = INT64_MAX;
 	struct thread* t;
 	for (struct list_elem* e = list_begin(&sleep_list); e != list_end(&sleep_list) ;) {
 			t = list_entry(e, struct thread, elem);
@@ -373,13 +374,13 @@ thread_awake(int64_t ticks) {
 					// next_tick_to_awake야 바뀌어야해
 			}
 			else {
-					// if (tmp_tick > t->wakeup_tick)
-					// 	tmp_tick = t->wakeup_tick;
+					if (tmp_tick > t->wakeup_tick)
+					 	tmp_tick = t->wakeup_tick;
 					e = list_next(e);
-					update_next_tick_to_awake(ticks);
+					//update_next_tick_to_awake(ticks);
 			}
 	}
-	//next_tick_to_awake = tmp_tick;
+	next_tick_to_awake = tmp_tick;
 	//printf("#################################\nthread name : %s next_tick_to_awake: %lld\n",t->name, next_tick_to_awake);
 }
 
@@ -455,7 +456,7 @@ idle (void *idle_started_ UNUSED) {
 	idle_thread = thread_current ();
 	sema_up (idle_started);
 
-	for (;;) {
+	for(;;) {
 		/* Let someone else run. */
 		intr_disable ();
 		thread_block ();
@@ -472,7 +473,9 @@ idle (void *idle_started_ UNUSED) {
 
 		   See [IA32-v2a] "HLT", [IA32-v2b] "STI", and [IA32-v3a]
 		   7.11.1 "HLT Instruction". */
+
 		asm volatile ("sti; hlt" : : : "memory");
+		//intr_enable ();
 	}
 }
 
@@ -649,7 +652,7 @@ schedule (void) {
 	/* Activate the new address space. */
 	process_activate (next);
 #endif
-
+	//curr이 idle이고, ready함수가 비어있을 때 if문 안으로 들어가지 못한다!
 	if (curr != next) {
 		/* If the thread we switched from is dying, destroy its struct
 		   thread. This must happen late so that thread_exit() doesn't

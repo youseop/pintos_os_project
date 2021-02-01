@@ -93,7 +93,8 @@ struct thread {
 	int priority;                       /* Priority. */
   int64_t wakeup_tick;                /* wakeup_tick */
 	/* Shared between thread.c and synch.c. */
-	struct list_elem elem;              /* List element. */
+	struct list_elem elem;
+	void* func;              /* List element. */
 
 #ifdef USERPROG
 	/* Owned by userprog/process.c. */

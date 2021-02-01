@@ -1,27 +1,2 @@
 FAIL
-Kernel panic in run: PANIC at ../../threads/thread.c:278 in thread_current(): assertion `t->status == THREAD_RUNNING' failed.
-Call stack: 0x80042133cf 0x8004206eee 0x800420a0ac 0x800421645d 0x800421657b 0x80042108d2 0x8004208ba1 0x8004208a15 0x8004208dfc 0x8004209a24 0x8004209e79 0x8004216494 0x800421657b 0x80042108d2 0x8004208ba1 0x8004208a15 0x8004208dfc 0x8004213be2 0x8004213c8a 0x8004209b82 0x800420a043 0x8004218e51 0x800420746d
-Translation of call stack:
-0x00000080042133cf: debug_panic (lib/kernel/debug.c:32)
-0x0000008004206eee: thread_current (threads/thread.c:280)
-0x000000800420a0ac: lock_held_by_current_thread (threads/synch.c:236)
-0x000000800421645d: acquire_console (lib/kernel/console.c:87)
-0x000000800421657b: vprintf (lib/kernel/console.c:122)
-0x00000080042108d2: printf (lib/stdio.c:80)
-0x0000008004208ba1: intr_dump_frame (threads/interrupt.c:387)
-0x0000008004208a15: intr_handler (threads/interrupt.c:361)
-0x0000008004208dfc: intr_entry (threads/intr-stubs.o:?)
-0x0000008004209a24: sema_down (threads/synch.c:68)
-0x0000008004209e79: lock_acquire (threads/synch.c:192)
-0x0000008004216494: acquire_console (lib/kernel/console.c:92)
-0x000000800421657b: vprintf (lib/kernel/console.c:122)
-0x00000080042108d2: printf (lib/stdio.c:80)
-0x0000008004208ba1: intr_dump_frame (threads/interrupt.c:387)
-0x0000008004208a15: intr_handler (threads/interrupt.c:361)
-0x0000008004208dfc: intr_entry (threads/intr-stubs.o:?)
-0x0000008004213be2: list_remove (lib/kernel/list.c:242)
-0x0000008004213c8a: list_pop_front (lib/kernel/list.c:254)
-0x0000008004209b82: sema_up (threads/synch.c:113)
-0x000000800420a043: lock_release (threads/synch.c:227)
-0x0000008004218e51: simple_thread_func (tests/threads/priority-fifo.c:97 (discriminator 3))
-0x000000800420746d: kernel_thread (threads/thread.c:486)
+Run didn't shut down properly: no "Powering off" message
