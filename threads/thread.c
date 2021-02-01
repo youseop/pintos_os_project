@@ -192,8 +192,9 @@ thread_print_stats (void) {
    Priority scheduling is the goal of Problem 1-3. */
 tid_t
 thread_create (const char *name, int priority,
-		thread_func *function, void *aux) {
+		thread_func *function, void *aux) { // ?
 	struct thread *t;
+	struct thread *curr = thread_current ();
 	tid_t tid;
 
 	ASSERT (function != NULL);
@@ -220,9 +221,42 @@ thread_create (const char *name, int priority,
 
 	/* Add to run queue. */
 	thread_unblock (t); //!
-
+	//? if문으로 우선순위 판단해서 thread_block 실행
+	if(curr->priority < priority){
+		thread_yield();
+	}
 	return tid;
 }
+
+void test_max_priority(void){
+	struct thread *curr = thread_current ();
+	struct thread *ready_header;
+
+	if (list_empty(&ready_list)){//? 체크했어야 했나?!
+		//printf("#error1# thread_set_priority: ready_list is empty. [Cannot execute yield_thread().]\n");
+		return;
+	}
+
+	ready_header = list_entry(
+		list_begin(&ready_list), 
+		struct thread, elem
+		);
+
+	if(curr->priority < ready_header->priority){
+		thread_yield();
+	}
+}
+
+// true when a < b
+bool cmp_priority(const struct list_elem *a, const struct list_elem *b, void *aux UNUSED){
+	struct thread* t_a;
+	struct thread* t_b;
+	t_a = list_entry(a, struct thread, elem);
+	t_b = list_entry(b, struct thread, elem);
+
+	return t_a->priority > t_b->priority;
+}
+
 
 /* Puts the current thread to sleep.  It will not be scheduled
    again until awoken by thread_unblock().
@@ -254,7 +288,12 @@ thread_unblock (struct thread *t) {
 
 	old_level = intr_disable ();
 	ASSERT (t->status == THREAD_BLOCKED);
-	list_push_back (&ready_list, &t->elem);
+	//list_push_back (&ready_list, &t->elem); 
+	//? 정렬한 상태로 푸쉬해야한다!
+	//? 레디큐에 넣어놓고 정렬된 상태에서 
+
+	list_insert_ordered(&ready_list, &t->elem, &cmp_priority, NULL);
+
 	t->status = THREAD_READY;
 	intr_set_level (old_level);
 }
@@ -396,7 +435,9 @@ thread_yield (void) {
 
 	old_level = intr_disable ();
 	if (curr != idle_thread)
-		list_push_back (&ready_list, &curr->elem);
+		//list_push_back (&ready_list, &curr->elem); //? sorting 해서 집어넣자.
+		list_insert_ordered(&ready_list, &curr->elem, &cmp_priority, NULL);
+	
 	do_schedule (THREAD_READY);
 	intr_set_level (old_level);
 }
@@ -405,6 +446,7 @@ thread_yield (void) {
 void
 thread_set_priority (int new_priority) {
 	thread_current ()->priority = new_priority;
+	test_max_priority();	//?
 }
 
 /* Returns the current thread's priority. */
