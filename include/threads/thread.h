@@ -94,7 +94,14 @@ struct thread {
   int64_t wakeup_tick;                /* wakeup_tick */
 	/* Shared between thread.c and synch.c. */
 	struct list_elem elem;
-	void* func;              /* List element. */
+	
+	//?<------------>
+	int init_priority;
+	struct lock* wait_on_lock;
+	struct list donations;
+	struct list_elem donation_elem;
+	//?<------------>
+
 
 #ifdef USERPROG
 	/* Owned by userprog/process.c. */
@@ -121,10 +128,17 @@ void thread_start (void);
 void thread_tick (void);
 void thread_print_stats (void);
 
+//alarm clock
 void thread_sleep(int64_t);
 void update_next_tick_to_awake(int64_t);
 int64_t get_next_tick_to_awake(void);
 void thread_awake(int64_t);
+
+//priority scheduling
+void test_max_priority(void);
+// bool cmp_priority(const struct list_elem *a, 
+// 									const struct list_elem *b, 
+// 									void *aux UNUSED);
 
 typedef void thread_func (void *aux);
 tid_t thread_create (const char *name, int priority, thread_func *, void *);
@@ -148,5 +162,9 @@ int thread_get_recent_cpu (void);
 int thread_get_load_avg (void);
 
 void do_iret (struct intr_frame *tf);
+
+void donate_priority(void);
+void remove_with_lock(struct lock *lock);
+void refresh_priority(void);
 
 #endif /* threads/thread.h */
