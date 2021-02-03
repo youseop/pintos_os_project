@@ -29,7 +29,7 @@ Executing 'priority-fifo':
 (priority-fifo) end
 Execution of 'priority-fifo' complete.
 Timer: 26 ticks
-Thread: 0 idle ticks, 27 kernel ticks, 0 user ticks
+Thread: 0 idle ticks, 26 kernel ticks, 0 user ticks
 Console: 1597 characters output
 Keyboard: 0 keys pressed
 Powering off...
