@@ -444,11 +444,14 @@ thread_yield (void) {
 void
 thread_set_priority (int new_priority) {
 	struct thread* curr = thread_current();
-	curr->init_priority = new_priority;
-	refresh_priority(); //나한테 딸려있는 donation list들을 refresh
-	donate_priority();  //내가 포함된 donation list의 대장을 refresh 
-
-	test_max_priority();
+	int old_priority = curr->priority;
+  curr->init_priority = new_priority;
+  refresh_priority(); //나한테 딸려있는 donation list들을 refresh
+	
+  if(old_priority < curr->priority)
+    donate_priority();
+  else
+	  test_max_priority();
 }
 
 /* Returns the current thread's priority. */
@@ -739,28 +742,47 @@ allocate_tid (void) {
 현재 스레드의 우선순위를 lock 을 보유하고 있는 스레드에게 기부 한다.
 (Nested donation 그림 참고, nested depth 는 8로 제한한다. ) */
 void donate_priority(void){
-	struct thread* curr = thread_current();
-	struct thread* next = curr;
+  struct thread* curr = thread_current(); // pri 6
+  if(curr->wait_on_lock == NULL){
+    return;
+  }
+	struct thread* next = curr->wait_on_lock->holder; // main 6
 	int nested_depth = 0;
 
-	while (nested_depth<8 && next->wait_on_lock->holder != NULL){
+	while (next != NULL){
+		if(next->priority < curr->priority)
+			next->priority = curr->priority;
+    if(next->wait_on_lock == NULL)
+      break;
 		next = next->wait_on_lock->holder;
-		if(next->priority >= curr->priority)
-			break;
-		next->priority = curr->priority;
-		nested_depth++;
 	}
+
+
+
+	// struct thread* curr = thread_current(); // pri 6
+	// struct thread* next = curr->wait_on_lock->holder; // main 6
+	// int nested_depth = 0;
+
+	// while (next != NULL){
+	// 	if(next->priority >= curr->priority)
+	// 		break;
+	// 	next->priority = curr->priority;
+
+	// 	next = next->wait_on_lock->holder;
+	// }
 }
 
 /* lock 을 해지 했을때 donations 리스트에서 해당 엔트리를
 삭제 하기 위한 함수를 구현한다. */
 void remove_with_lock(struct lock *lock){
 	struct thread* curr = thread_current();
-	struct list curr_donation = curr->donations;
 	struct thread* t;
-	// struct list_elem* begin_addr = list_begin(&curr_donation);
-	// struct list_elem* end_addr = list_end(&curr_donation) ;
-	for (struct list_elem* e = list_begin(&curr_donation); e != list_end(&curr_donation) ;) {
+  
+  if(list_empty(&curr->donations)){
+    return;
+  }
+
+	for (struct list_elem* e = list_begin(&curr->donations); e != list_end(&curr->donations) ;) {
 		t = list_entry(e, struct thread, donation_elem);
 		ASSERT (is_thread (t));
 		if (t->wait_on_lock == lock){
@@ -778,16 +800,23 @@ void remove_with_lock(struct lock *lock){
 우선순위로 설정한다. */
 void refresh_priority(void){
 	struct thread* curr = thread_current();
-	struct list curr_donation = curr->donations;
 	struct thread* t;
 
 	curr->priority = curr->init_priority;
-	
-	for (struct list_elem* e = list_begin(&curr_donation); e!=list_end(&curr_donation); e=list_next(e)) {
-		t = list_entry(e, struct thread, donation_elem);
-		ASSERT(is_thread(t));
+  
+  if(!list_empty(&curr->donations)){
+	  list_sort(&curr->donations, &cmp_priority, NULL);
+    int list_priority = list_entry(list_begin(&curr->donations), struct thread, donation_elem)->priority;
+    if (list_priority > curr->priority)
+      curr->priority = list_priority;
+  }
 
-		if (t->priority > curr->priority)
-			curr->priority = t->priority;
-	}
+
+	// for (struct list_elem* e = list_begin(&curr->donations); e!=list_end(&curr->donations); e=list_next(e)) {
+	// 	t = list_entry(e, struct thread, donation_elem);
+	// 	ASSERT(is_thread(t));
+
+	// 	if (t->priority > curr->priority)
+	// 		curr->priority = t->priority;
+	// }
 }

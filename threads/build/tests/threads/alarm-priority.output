@@ -1,11 +1,27 @@
 Kernel command line: -q run alarm-priority
-Kernel PANIC at ../../threads/thread.c:765 in remove_with_lock(): assertion `is_thread (t)' failed.
-Call stack: 0x8004213946 0x8004207d52 0x800420a4b1 0x8004207c16 0x80042069a5 0x8004206068.
-The `backtrace' program can make call stacks useful.
-Read "Backtraces" in the "Debugging Tools" chapter
-of the Pintos documentation for more information.
-Timer: 0 ticks
-Thread: 0 idle ticks, 0 kernel ticks, 0 user ticks
-Console: 454 characters output
+0 ~ 9fc00 1
+100000 ~ 13e0000 1
+Pintos booting with: 
+	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
+	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
+Calibrating timer...  157,081,600 loops/s.
+Boot complete.
+Executing 'alarm-priority':
+(alarm-priority) begin
+(alarm-priority) Thread priority 30 woke up.
+(alarm-priority) Thread priority 29 woke up.
+(alarm-priority) Thread priority 28 woke up.
+(alarm-priority) Thread priority 27 woke up.
+(alarm-priority) Thread priority 26 woke up.
+(alarm-priority) Thread priority 25 woke up.
+(alarm-priority) Thread priority 24 woke up.
+(alarm-priority) Thread priority 23 woke up.
+(alarm-priority) Thread priority 22 woke up.
+(alarm-priority) Thread priority 21 woke up.
+(alarm-priority) end
+Execution of 'alarm-priority' complete.
+Timer: 522 ticks
+Thread: 489 idle ticks, 34 kernel ticks, 0 user ticks
+Console: 880 characters output
 Keyboard: 0 keys pressed
 Powering off...
