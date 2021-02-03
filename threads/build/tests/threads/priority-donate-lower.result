@@ -1,25 +1,10 @@
 FAIL
-Test output failed to match any acceptable form.
-
-Acceptable output:
-  (priority-donate-lower) begin
-  (priority-donate-lower) Main thread should have priority 41.  Actual priority: 41.
-  (priority-donate-lower) Lowering base priority...
-  (priority-donate-lower) Main thread should have priority 41.  Actual priority: 41.
-  (priority-donate-lower) acquire: got the lock
-  (priority-donate-lower) acquire: done
-  (priority-donate-lower) acquire must already have finished.
-  (priority-donate-lower) Main thread should have priority 21.  Actual priority: 21.
-  (priority-donate-lower) end
-Differences in `diff -u' format:
-  (priority-donate-lower) begin
-- (priority-donate-lower) Main thread should have priority 41.  Actual priority: 41.
-+ (priority-donate-lower) Main thread should have priority 41.  Actual priority: 31.
-  (priority-donate-lower) Lowering base priority...
-- (priority-donate-lower) Main thread should have priority 41.  Actual priority: 41.
-+ (priority-donate-lower) Main thread should have priority 41.  Actual priority: 21.
-  (priority-donate-lower) acquire: got the lock
-  (priority-donate-lower) acquire: done
-  (priority-donate-lower) acquire must already have finished.
-  (priority-donate-lower) Main thread should have priority 21.  Actual priority: 21.
-  (priority-donate-lower) end
+Kernel panic in run: PANIC at ../../threads/thread.c:765 in remove_with_lock(): assertion `is_thread (t)' failed.
+Call stack: 0x8004213946 0x8004207d52 0x800420a4b1 0x8004207c16 0x80042069a5 0x8004206068
+Translation of call stack:
+0x0000008004213946: debug_panic (lib/kernel/debug.c:32)
+0x0000008004207d52: remove_with_lock (threads/thread.c:766)
+0x000000800420a4b1: lock_release (threads/synch.c:260)
+0x0000008004207c16: allocate_tid (threads/thread.c:734)
+0x00000080042069a5: thread_init (threads/thread.c:131)
+0x0000008004206068: main (threads/init.c:83)

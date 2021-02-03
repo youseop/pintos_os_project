@@ -29,6 +29,7 @@
 #include "threads/synch.h"
 #include <stdio.h>
 #include <string.h>
+#include <stdbool.h>
 #include "threads/interrupt.h"
 #include "threads/thread.h"
 
@@ -113,7 +114,7 @@ sema_up (struct semaphore *sema) {
 	old_level = intr_disable ();
 	if (!list_empty (&sema->waiters))
   { 
-    list_sort(&sema->waiters, &cmp_priority, NULL);
+      list_sort(&sema->waiters, &cmp_priority, NULL);
 		thread_unblock (list_entry (list_pop_front (&sema->waiters),
 					struct thread, elem));
   }
@@ -196,12 +197,31 @@ lock_init (struct lock *lock) {
    we need to sleep. */
 void
 lock_acquire (struct lock *lock) {//? try to acquire
+/* 해당 lock 의 holder가 존재 한다면 아래 작업을 수행한다. */
+/* 현재 스레드의 wait_on_lock 변수에 획득 하기를 기다리는 lock의 주소를 저장 */
+/* multiple donation 을 고려하기 위해 이전상태의 우선순위를 기억,
+donation 을 받은 스레드의 thread 구조체를 list로 관리한다. */
+/* priority donation 수행하기 위해 donate_priority() 함수 호출 */
+
 	ASSERT (lock != NULL);
 	ASSERT (!intr_context ());
 	ASSERT (!lock_held_by_current_thread (lock));
 
+   struct thread* curr = thread_current();
+   struct thread* lock_holder = lock->holder;
+
+   if(lock_holder != NULL){
+      curr->wait_on_lock = lock;
+      curr->init_priority = curr->priority;
+      
+      list_push_back(&(lock_holder->donations), &curr->donation_elem);
+      donate_priority(); 
+   }
+
 	sema_down (&lock->semaphore);
-	lock->holder = thread_current ();
+   //lock을 획득한 후 wait_on_lock과 holder갱신
+   curr->wait_on_lock = NULL;
+	lock->holder = curr;
 }
 
 /* Tries to acquires LOCK and returns true if successful or false
@@ -235,6 +255,10 @@ lock_release (struct lock *lock) {
 	ASSERT (lock_held_by_current_thread (lock));
 
 	lock->holder = NULL;
+
+   remove_with_lock(lock);
+   refresh_priority();
+
 	sema_up (&lock->semaphore);
 }
 
@@ -254,7 +278,7 @@ struct semaphore_elem {
 	struct semaphore semaphore;         /* This semaphore. */
 };
 
-/*하지만 이렇게 되면 cond_wait가 호출 된 후 cond_signal이 호출 됬는데, 
+/*하지만 이렇게 되면 cond_wait가 호출 된 후 cond_signal이 호출 됐는데, 
   먼저 호출된 cond_wait에서 signal을 받지 못하는 경우가 있을 수 있다. 
   왜냐면 lock_release를 하고 sema_down을 하게 될 텐데, lock_release 
   직후에 다른 thread가 스케쥴링되고 그 thread에서 cond_signal하게 되면 
@@ -311,7 +335,7 @@ cond_wait (struct condition *cond, struct lock *lock) {
   list_insert_ordered(&cond->waiters, &waiter.elem, &cmp_sem_priority, NULL);
 	
 	lock_release (lock);
-	sema_down (&waiter.semaphore);
+	sema_down (&waiter.semaphore);//
 	lock_acquire (lock);
 }
 
@@ -330,8 +354,7 @@ cond_signal (struct condition *cond, struct lock *lock UNUSED) {
 	ASSERT (lock_held_by_current_thread (lock));
 
 	if (!list_empty (&cond->waiters)){
-    list_sort(&cond->waiters, &cmp_sem_priority, NULL); //?
-
+      list_sort(&cond->waiters, &cmp_sem_priority, NULL); //?
 		sema_up (&list_entry (list_pop_front (&cond->waiters),
 					struct semaphore_elem, elem)->semaphore);
   }
@@ -362,6 +385,7 @@ bool cmp_sem_priority (const struct list_elem *a, const struct list_elem *b, voi
   */
   struct semaphore_elem *sa = list_entry(a, struct semaphore_elem, elem);
   struct semaphore_elem *sb = list_entry(b, struct semaphore_elem, elem);
+  
   struct list_elem* elem_a = list_begin(&(sa->semaphore).waiters);
   struct list_elem* elem_b = list_begin(&(sb->semaphore).waiters);
 
@@ -369,4 +393,13 @@ bool cmp_sem_priority (const struct list_elem *a, const struct list_elem *b, voi
   struct thread* thread_b = list_entry(elem_b, struct thread, elem);
 
   return thread_a->priority > thread_b->priority;
+}
+
+bool cmp_priority(const struct list_elem *a, const struct list_elem *b, void *aux){
+	struct thread* t_a;
+	struct thread* t_b;
+	t_a = list_entry(a, struct thread, elem);
+	t_b = list_entry(b, struct thread, elem);
+
+	return t_a->priority > t_b->priority;
 }

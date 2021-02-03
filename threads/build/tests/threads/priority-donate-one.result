@@ -1,27 +1,10 @@
 FAIL
-Test output failed to match any acceptable form.
-
-Acceptable output:
-  (priority-donate-one) begin
-  (priority-donate-one) This thread should have priority 32.  Actual priority: 32.
-  (priority-donate-one) This thread should have priority 33.  Actual priority: 33.
-  (priority-donate-one) acquire2: got the lock
-  (priority-donate-one) acquire2: done
-  (priority-donate-one) acquire1: got the lock
-  (priority-donate-one) acquire1: done
-  (priority-donate-one) acquire2, acquire1 must already have finished, in that order.
-  (priority-donate-one) This should be the last line before finishing this test.
-  (priority-donate-one) end
-Differences in `diff -u' format:
-  (priority-donate-one) begin
-- (priority-donate-one) This thread should have priority 32.  Actual priority: 32.
-- (priority-donate-one) This thread should have priority 33.  Actual priority: 33.
-+ (priority-donate-one) This thread should have priority 32.  Actual priority: 31.
-+ (priority-donate-one) This thread should have priority 33.  Actual priority: 31.
-  (priority-donate-one) acquire2: got the lock
-  (priority-donate-one) acquire2: done
-  (priority-donate-one) acquire1: got the lock
-  (priority-donate-one) acquire1: done
-  (priority-donate-one) acquire2, acquire1 must already have finished, in that order.
-  (priority-donate-one) This should be the last line before finishing this test.
-  (priority-donate-one) end
+Kernel panic in run: PANIC at ../../threads/thread.c:765 in remove_with_lock(): assertion `is_thread (t)' failed.
+Call stack: 0x8004213946 0x8004207d52 0x800420a4b1 0x8004207c16 0x80042069a5 0x8004206068
+Translation of call stack:
+0x0000008004213946: debug_panic (lib/kernel/debug.c:32)
+0x0000008004207d52: remove_with_lock (threads/thread.c:766)
+0x000000800420a4b1: lock_release (threads/synch.c:260)
+0x0000008004207c16: allocate_tid (threads/thread.c:734)
+0x00000080042069a5: thread_init (threads/thread.c:131)
+0x0000008004206068: main (threads/init.c:83)

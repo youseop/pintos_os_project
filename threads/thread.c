@@ -232,8 +232,7 @@ void test_max_priority(void){
 	struct thread *curr = thread_current ();
 	struct thread *ready_header;
 
-	if (list_empty(&ready_list)){//? 체크했어야 했나?!
-		//printf("#error1# thread_set_priority: ready_list is empty. [Cannot execute yield_thread().]\n");
+	if (list_empty(&ready_list)){
 		return;
 	}
 
@@ -248,14 +247,14 @@ void test_max_priority(void){
 }
 
 // true when a < b
-bool cmp_priority(const struct list_elem *a, const struct list_elem *b, void *aux UNUSED){
-	struct thread* t_a;
-	struct thread* t_b;
-	t_a = list_entry(a, struct thread, elem);
-	t_b = list_entry(b, struct thread, elem);
+// bool cmp_priority(const struct list_elem *a, const struct list_elem *b, void *aux UNUSED){
+// 	struct thread* t_a;
+// 	struct thread* t_b;
+// 	t_a = list_entry(a, struct thread, elem);
+// 	t_b = list_entry(b, struct thread, elem);
 
-	return t_a->priority > t_b->priority;
-}
+// 	return t_a->priority > t_b->priority;
+// }
 
 
 /* Puts the current thread to sleep.  It will not be scheduled
@@ -414,9 +413,8 @@ thread_awake(int64_t ticks) {
 			}
 			else {
 					if (tmp_tick > t->wakeup_tick)
-					 	tmp_tick = t->wakeup_tick;
+						tmp_tick = t->wakeup_tick;
 					e = list_next(e);
-					//update_next_tick_to_awake(ticks);
 			}
 	}
 	next_tick_to_awake = tmp_tick;
@@ -445,8 +443,12 @@ thread_yield (void) {
 /* Sets the current thread's priority to NEW_PRIORITY. */
 void
 thread_set_priority (int new_priority) {
-	thread_current ()->priority = new_priority;
-	test_max_priority();	//?
+	struct thread* curr = thread_current();
+	curr->init_priority = new_priority;
+	refresh_priority(); //나한테 딸려있는 donation list들을 refresh
+	donate_priority();  //내가 포함된 donation list의 대장을 refresh 
+
+	test_max_priority();
 }
 
 /* Returns the current thread's priority. */
@@ -539,13 +541,17 @@ init_thread (struct thread *t, const char *name, int priority) {
 	ASSERT (t != NULL);
 	ASSERT (PRI_MIN <= priority && priority <= PRI_MAX);
 	ASSERT (name != NULL);
-
+	
 	memset (t, 0, sizeof *t);
 	t->status = THREAD_BLOCKED;
 	strlcpy (t->name, name, sizeof t->name);
 	t->tf.rsp = (uint64_t) t + PGSIZE - sizeof (void *);
 	t->priority = priority;
 	t->magic = THREAD_MAGIC;
+	
+	t->init_priority = priority;
+	t->wait_on_lock = NULL;
+	list_init(&t->donations);
 }
 
 /* Chooses and returns the next thread to be scheduled.  Should
@@ -726,4 +732,62 @@ allocate_tid (void) {
 	lock_release (&tid_lock);
 
 	return tid;
+}
+
+/* priority donation 을 수행하는 함수를 구현한다.
+현재 스레드가 기다리고 있는 lock 과 연결 된 모든 스레드들을 순회하며
+현재 스레드의 우선순위를 lock 을 보유하고 있는 스레드에게 기부 한다.
+(Nested donation 그림 참고, nested depth 는 8로 제한한다. ) */
+void donate_priority(void){
+	struct thread* curr = thread_current();
+	struct thread* next = curr;
+	int nested_depth = 0;
+
+	while (nested_depth<8 && next->wait_on_lock->holder != NULL){
+		next = next->wait_on_lock->holder;
+		if(next->priority >= curr->priority)
+			break;
+		next->priority = curr->priority;
+		nested_depth++;
+	}
+}
+
+/* lock 을 해지 했을때 donations 리스트에서 해당 엔트리를
+삭제 하기 위한 함수를 구현한다. */
+void remove_with_lock(struct lock *lock){
+	struct thread* curr = thread_current();
+	struct list curr_donation = curr->donations;
+	struct thread* t;
+	// struct list_elem* begin_addr = list_begin(&curr_donation);
+	// struct list_elem* end_addr = list_end(&curr_donation) ;
+	for (struct list_elem* e = list_begin(&curr_donation); e != list_end(&curr_donation) ;) {
+		t = list_entry(e, struct thread, donation_elem);
+		ASSERT (is_thread (t));
+		if (t->wait_on_lock == lock){
+			e = list_remove(&t->donation_elem);
+		}
+		else{
+			e = list_next(e);
+		}
+	}
+}
+
+/* 현재 스레드의 우선순위를 기부받기 전의 우선순위로 변경 */
+/* 가장 우선수위가 높은 donations 리스트의 스레드와
+현재 스레드의 우선순위를 비교하여 높은 값을 현재 스레드의
+우선순위로 설정한다. */
+void refresh_priority(void){
+	struct thread* curr = thread_current();
+	struct list curr_donation = curr->donations;
+	struct thread* t;
+
+	curr->priority = curr->init_priority;
+	
+	for (struct list_elem* e = list_begin(&curr_donation); e!=list_end(&curr_donation); e=list_next(e)) {
+		t = list_entry(e, struct thread, donation_elem);
+		ASSERT(is_thread(t));
+
+		if (t->priority > curr->priority)
+			curr->priority = t->priority;
+	}
 }
