@@ -41,7 +41,7 @@ Executing 'priority-condvar':
 (priority-condvar) end
 Execution of 'priority-condvar' complete.
 Timer: 27 ticks
-Thread: 0 idle ticks, 28 kernel ticks, 0 user ticks
+Thread: 0 idle ticks, 27 kernel ticks, 0 user ticks
 Console: 1707 characters output
 Keyboard: 0 keys pressed
 Powering off...
