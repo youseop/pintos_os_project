@@ -207,20 +207,21 @@ donation 을 받은 스레드의 thread 구조체를 list로 관리한다. */
 	ASSERT (!intr_context ());
 	ASSERT (!lock_held_by_current_thread (lock));
 
-   struct thread* curr = thread_current();
-   struct thread* lock_holder = lock->holder;
+  struct thread* curr = thread_current(); // pri 6
+  struct thread* lock_holder = lock->holder; // main
 
-   if(lock_holder != NULL){
-      curr->wait_on_lock = lock;
-      curr->init_priority = curr->priority;
-      
-      list_push_back(&(lock_holder->donations), &curr->donation_elem);
-      donate_priority(); 
-   }
+  if(lock_holder != NULL){
+    curr->wait_on_lock = lock;
+    // if(lock_holder->priority < curr->priority)
+    //   lock_holder->priority = curr->priority;
+    
+    list_insert_ordered(&(lock_holder->donations), &curr->donation_elem, &cmp_priority, NULL);
+    donate_priority(); 
+  }
 
 	sema_down (&lock->semaphore);
-   //lock을 획득한 후 wait_on_lock과 holder갱신
-   curr->wait_on_lock = NULL;
+  curr->wait_on_lock = NULL;
+
 	lock->holder = curr;
 }
 
@@ -256,8 +257,8 @@ lock_release (struct lock *lock) {
 
 	lock->holder = NULL;
 
-   remove_with_lock(lock);
-   refresh_priority();
+  remove_with_lock(lock);
+  refresh_priority();
 
 	sema_up (&lock->semaphore);
 }
