@@ -1,2 +1,2 @@
 FAIL
-run: write "deleteme": FAILED
+run: read "deleteme": FAILED

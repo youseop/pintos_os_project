@@ -1,2 +1,2 @@
 FAIL
-run: read "rox-simple": FAILED
+run: try to write "rox-simple": FAILED

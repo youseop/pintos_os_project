@@ -2,6 +2,7 @@
 #define USERPROG_PROCESS_H
 
 #include "threads/thread.h"
+#include "filesys/file.h"
 
 struct thread *get_child_process (int pid);
 tid_t process_create_initd (const char *file_name);
@@ -13,6 +14,11 @@ void process_activate (struct thread *next);
 void argument_stack(char **parse ,int count ,void **esp);
 
 void argument_stack(char **parse ,int count ,void **esp);
+
+void remove_child_process(struct thread *cp);
+int process_add_file(struct file *f);
+struct file *process_get_file(int fd);
+void process_close_file(int fd);
 
 #endif /* userprog/process.h */
 

@@ -5,6 +5,7 @@
 #include "threads/interrupt.h"
 #include "threads/thread.h"
 #include "intrinsic.h"
+#include "lib/user/syscall.h"
 
 /* Number of page faults processed. */
 static long long page_fault_cnt;
@@ -146,6 +147,7 @@ page_fault (struct intr_frame *f) {
 		return;
 #endif
 
+  exit(-1);
 	/* Count page faults. */
 	page_fault_cnt++;
 

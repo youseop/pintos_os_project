@@ -122,7 +122,9 @@ struct thread {
 	// 프로세스의 종료 상태를 나타내는 필드 추가?!
 	int8_t exit_status;
 	struct semaphore exit_sema;
-	struct semaphore load_sema;
+  
+  struct file **fd_table;
+  int next_fd;
   //?<---------------------->
 
 

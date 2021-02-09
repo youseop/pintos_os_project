@@ -5,7 +5,7 @@ Pintos booting with:
 	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
 	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
 Calibrating timer...  157,081,600 loops/s.
-hd0:0: detected 297 sector (148 kB) disk, model "QEMU HARDDISK", serial "QM00001"
+hd0:0: detected 305 sector (152 kB) disk, model "QEMU HARDDISK", serial "QM00001"
 hd0:1: detected 20,160 sector (9 MB) disk, model "QEMU HARDDISK", serial "QM00002"
 hd1:0: detected 103 sector (51 kB) disk, model "QEMU HARDDISK", serial "QM00003"
 Formatting file system...done.
@@ -13,24 +13,14 @@ Boot complete.
 Putting 'open-bad-ptr' into the file system...
 Executing 'open-bad-ptr':
 (open-bad-ptr) begin
-Page fault at 0x20101234: not present error reading page in kernel context.
-Interrupt 0x0e (#PF Page-Fault Exception) at rip=8004215d09
- cr2=0000000020101234 error=               0
-rax 0000000020101234 rbx 0000000000000000 rcx 0000000000000005 rdx 000000800423de78
-rsp 000000800423de20 rbp 000000800423de40 rsi 000000800423de78 rdi 0000000020101234
-rip 0000008004215d09 r8 0000000000000000  r9 0000000000000000 r10 0000000000000000
-r11 0000000000000212 r12 000000800421b960 r13 0000000000000000 r14 0000000000000000
-r15 0000000000000000 rflags 00000206
-es: 001b ds: 001b cs: 0008 ss: 0010
-Kernel PANIC at ../../userprog/exception.c:97 in kill(): Kernel bug - unexpected interrupt in kernel
-Call stack: 0x8004216a3d 0x800421b6ab 0x800421b82a 0x800420905a 0x8004209478 0x800421d694 0x800421d7ce 0x800421c144 0x800421bac2 0x800421b89f 0x4000fd 0x400190 0x400c31.
-The `backtrace' program can make call stacks useful.
-Read "Backtraces" in the "Debugging Tools" chapter
-of the Pintos documentation for more information.
-Timer: 60 ticks
-Thread: 30 idle ticks, 26 kernel ticks, 4 user ticks
+open-bad-ptr: exit(-1)
+Execution of 'open-bad-ptr' complete.
+Timer: 58 ticks
+Thread: 30 idle ticks, 27 kernel ticks, 1 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 82 reads, 234 writes
 hd1:0: 103 reads, 0 writes
-Console: 1799 characters output
-Key
+Console: 846 characters output
+Keyboard: 0 keys pressed
+Exception: 0 page faults
+Powering off...

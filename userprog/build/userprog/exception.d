@@ -8,4 +8,4 @@ userprog/exception.o: ../../userprog/exception.c \
  ../../include/threads/thread.h ../../include/lib/kernel/list.h \
  ../../include/threads/synch.h ../../include/intrinsic.h \
  ../../include/threads/mmu.h ../../include/threads/pte.h \
- ../../include/threads/vaddr.h
+ ../../include/threads/vaddr.h ../../include/lib/user/syscall.h

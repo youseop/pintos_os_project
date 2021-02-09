@@ -1,12 +1,25 @@
 FAIL
-Kernel panic in run: PANIC at ../../userprog/exception.c:97 in kill(): Kernel bug - unexpected interrupt in kernel
-Call stack: 0x8004216a3d 0x800421b6ab 0x800421b82a 0x800420905a 0x8004209478 0x800420a5a0 0x800420f876 0x800420783c
-Translation of call stack:
-0x0000008004216a3d: debug_panic (lib/kernel/debug.c:32)
-0x000000800421b6ab: kill (userprog/exception.c:103)
-0x000000800421b82a: page_fault (userprog/exception.c:159 (discriminator 12))
-0x000000800420905a: intr_handler (threads/interrupt.c:352)
-0x0000008004209478: intr_entry (threads/intr-stubs.o:?)
-0x000000800420a5a0: lock_acquire (threads/synch.c:217)
-0x000000800420f876: acquire_thread_func (tests/threads/priority-donate-lower.c:48)
-0x000000800420783c: kernel_thread (threads/thread.c:559)
+Test output failed to match any acceptable form.
+
+Acceptable output:
+  (priority-donate-lower) begin
+  (priority-donate-lower) Main thread should have priority 41.  Actual priority: 41.
+  (priority-donate-lower) Lowering base priority...
+  (priority-donate-lower) Main thread should have priority 41.  Actual priority: 41.
+  (priority-donate-lower) acquire: got the lock
+  (priority-donate-lower) acquire: done
+  (priority-donate-lower) acquire must already have finished.
+  (priority-donate-lower) Main thread should have priority 21.  Actual priority: 21.
+  (priority-donate-lower) end
+Differences in `diff -u' format:
+  (priority-donate-lower) begin
++ acquire: exit(-1)
+  (priority-donate-lower) Main thread should have priority 41.  Actual priority: 41.
+  (priority-donate-lower) Lowering base priority...
+  (priority-donate-lower) Main thread should have priority 41.  Actual priority: 41.
+- (priority-donate-lower) acquire: got the lock
+- (priority-donate-lower) acquire: done
+  (priority-donate-lower) acquire must already have finished.
+- (priority-donate-lower) Main thread should have priority 21.  Actual priority: 21.
++ (priority-donate-lower) Main thread should have priority 21.  Actual priority: 41.
+  (priority-donate-lower) end

@@ -223,8 +223,15 @@ thread_create (const char *name, int priority,
 	t->isLoad = 0;
 	t->isTerminated = 0;
 	sema_init(&t->exit_sema, 0);
-	sema_init(&t->load_sema, 0);
 	list_push_back(&curr->child_process, &t->child_elem);
+
+	t->next_fd = 2;
+	t->fd_table = palloc_get_multiple(PAL_ZERO,2);
+	if(t->fd_table == NULL){
+		palloc_free_multiple(t->fd_table,2);
+		palloc_free_page(t);
+		return TID_ERROR;
+	}
 
 	/* Add to run queue. */
 	thread_unblock (t); //!

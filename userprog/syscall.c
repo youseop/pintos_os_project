@@ -8,6 +8,7 @@
 #include "threads/flags.h"
 #include "intrinsic.h"
 #include "threads/init.h"
+#include "threads/synch.h"
 #include "filesys/filesys.h"
 #include "threads/vaddr.h"
 #include "userprog/process.h"
@@ -65,6 +66,8 @@ syscall_init (void) {
 	 * mode stack. Therefore, we masked the FLAG_FL. */
 	write_msr(MSR_SYSCALL_MASK,
 			FLAG_IF | FLAG_TF | FLAG_DF | FLAG_IOPL | FLAG_AC | FLAG_NT);
+
+  lock_init(&filesys_lock);
 }
 
 /* The main system call interface */
@@ -123,16 +126,28 @@ syscall_handler (struct intr_frame *f UNUSED) {
       f->R.rax = filesys_remove (f->R.rdi);
       break;
     case SYS_OPEN:
-      f->R.rax = filesys_open(f->R.rdi);
+      if(f->R.rdi == NULL)
+        f->R.rax = -1;
+      else
+        f->R.rax = open(f->R.rdi);
       break;
     case SYS_FILESIZE:
+      f->R.rax = filesize(f->R.rdi);
       break;
     case SYS_READ:
+      f->R.rax = read(f->R.rdi, f->R.rsi, f->R.rdx);
       break;
     case SYS_WRITE:
       f->R.rax = write(f->R.rdi, f->R.rsi, f->R.rdx);
       break;
     case SYS_SEEK:
+      seek(f->R.rdi, f->R.rsi);
+      break;
+    case SYS_TELL:
+      f->R.rax = tell(f->R.rdi);
+      break;
+    case SYS_CLOSE:
+      close(f->R.rdi);
       break;
     default:
       exit(f->R.rax);
@@ -161,15 +176,57 @@ tid_t fork (const char *thread_name){
 
 }
 
-int write (int fd, const void *buffer, unsigned size){
-  if (fd == 1){
-    putbuf(buffer, size);
+/* 파일에 동시 접근이 일어날 수 있으므로 Lock 사용 */
+/* 파일 디스크립터를 이용하여 파일 객체 검색 */
+/* 파일 디스크립터가 0일 경우 키보드에 입력을 버퍼에 저장 후
+버퍼의 저장한 크기를 리턴 (input_getc() 이용) */
+/* 파일 디스크립터가 0이 아닐 경우 파일의 데이터를 크기만큼 저
+장 후 읽은 바이트 수를 리턴 */
+int read (int fd, void *buffer, unsigned size){
+  lock_acquire(&filesys_lock);
+  if(fd == 0){
+    for(int i = 0; i<size; i++){
+      ((char*)buffer)[i] = input_getc();
+    }
+    lock_release(&filesys_lock);
     return size;
   }
-  else{
-
+  else if(fd < 0){
+    lock_release(&filesys_lock);
+    return -1;
   }
-  return -1;
+  else if(fd > 2){
+    struct file *f = process_get_file(fd);
+    if(f == NULL){
+      return -1;
+    }
+    size = file_read(f, buffer, size);
+    lock_release(&filesys_lock);
+    return size;
+  }
+  lock_release(&filesys_lock);
+  exit(-1);  
+}
+
+int write (int fd, const void *buffer, unsigned size){
+  lock_acquire(&filesys_lock);
+  if(fd == 1){
+    putbuf(buffer, size);
+    lock_release(&filesys_lock);
+    return size;
+  }
+  else if(fd < 1){
+    lock_release(&filesys_lock);
+    return -1;
+  }
+  else{
+    struct file* f = process_get_file(fd);
+    if(f==NULL)
+      return -1;
+    size = file_write(f, buffer, size);
+    lock_release(&filesys_lock);
+    return size;
+  }
 }
 
 void check_address(void *addr)
@@ -211,4 +268,52 @@ int exec(const char*cmd_line){
 
 int wait(tid_t tid){
   return process_wait(tid);
+}
+
+/* 파일을 open */
+/* 해당 파일 객체에 파일 디스크립터 부여 */
+/* 파일 디스크립터 리턴 */
+/* 해당 파일이 존재하지 않으면 -1 리턴 */
+int open(const char *file){
+  struct file *f = filesys_open(file);
+  if (f == NULL){
+    return -1;
+  }
+  return process_add_file(f);
+}
+
+/* 파일 디스크립터를 이용하여 파일 객체 검색 */
+/* 해당 파일의 길이를 리턴 */
+/* 해당 파일이 존재하지 않으면 -1 리턴 */
+int filesize (int fd){
+  struct file *f = process_get_file(fd);
+  if(f == NULL)
+    return -1;
+  return file_length(f);
+}
+
+/* 파일 디스크립터를 이용하여 파일 객체 검색 */
+/* 해당 열린 파일의 위치(offset)를 position만큼 이동 */
+void seek (int fd, unsigned position){
+  struct file *f = process_get_file(fd);
+  if(f == NULL){
+    return -1;
+  }
+  file_seek(f, file_tell(f) + position);
+}
+
+/* 파일 디스크립터를 이용하여 파일 객체 검색 */
+/* 해당 열린 파일의 위치를 반환 */
+unsigned tell (int fd){
+  struct file *f = process_get_file(fd);
+  if(f == NULL){
+    return -1;
+  }
+  return file_tell(f);
+}
+
+/* 해당 파일 디스크립터에 해당하는 파일을 닫음 */
+/* 파일 디스크립터 엔트리 초기화 */ 
+void close(int fd){
+  process_close_file(fd);
 }

@@ -8,7 +8,6 @@
 #include "userprog/gdt.h"
 #include "userprog/tss.h"
 #include "filesys/directory.h"
-#include "filesys/file.h"
 #include "filesys/filesys.h"
 #include "threads/flags.h"
 #include "threads/init.h"
@@ -180,13 +179,13 @@ process_exec (void *f_name) {
 
 	bool success;
   char *user_program;
-  char *save_arg[20]; //? # input argmuent limit = 10
+  char *save_arg[40]; //? # input argmuent limit = 10
   char *saveptr;
   char *retptr = NULL;
   int token_cnt = 0;
 	struct thread* curr = thread_current();
 
-	char* need_free[20];
+	char* need_free[40];
 
   retptr = strtok_r(file_name, " ", &saveptr);
 	need_free[token_cnt] = malloc(sizeof(char)*(strlen(retptr)+1));
@@ -271,6 +270,12 @@ process_exit (void) {
 	 * TODO: project2/process_termination.html).
 	 * TODO: We recommend you to implement process resource cleanup here. */
 	process_cleanup ();
+	for(int i=0; i<=curr->next_fd; i++){
+		if(curr->fd_table[i] != NULL)
+			file_close(curr->fd_table[i]);
+	}
+	palloc_free_multiple(curr->fd_table,2);
+
 }
 
 /* Free the current process's resources. */
@@ -761,13 +766,39 @@ void remove_child_process(struct thread *cp)
 		child = list_entry(e, struct thread, child_elem);
 		ASSERT (is_thread (child));
 		if (child->tid == cp->tid){
-			e = list_remove(&child->elem);
+			e = list_remove(&child->child_elem);
 			palloc_free_page(child);
-			return; //?          --------- 반창고 -----------
+			return;
 		}
 		else{
 			e = list_next(e);
 		}
 	}
 	return NULL;
+}
+
+/* 파일 객체를 파일 디스크립터 테이블에 추가
+/* 파일 디스크립터의 최대값 1 증가 */
+/* 파일 디스크립터 리턴 */
+int
+process_add_file(struct file *f){
+	struct thread* curr = thread_current();
+	curr->next_fd ++;
+	curr->fd_table[curr->next_fd] = f;
+	return curr->next_fd;
+}
+
+/* 파일 디스크립터에 해당하는 파일 객체를 리턴 */
+/* 없을 시 NULL 리턴 */
+struct file *process_get_file(int fd){
+	struct thread* curr = thread_current();
+	return curr->fd_table[fd];
+}
+
+/* 파일 디스크립터에 해당하는 파일을 닫음 */
+/* 파일 디스크립터 테이블 해당 엔트리 초기화 */
+void process_close_file(int fd){
+	struct thread* curr = thread_current();
+	file_close(curr->fd_table[fd]);
+	curr->fd_table[fd] = NULL;
 }

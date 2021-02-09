@@ -1,2 +1,1 @@
-FAIL
-run: read of 373 bytes at offset 0 in "sample.txt" returned 9: FAILED
+PASS

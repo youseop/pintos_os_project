@@ -1,2 +1,21 @@
 FAIL
-run: read() returned 9 instead of 373: FAILED
+Test output failed to match any acceptable form.
+
+Acceptable output:
+  (fork-close) begin
+  (fork-close) open "sample.txt"
+  (fork-close) child run
+  (fork-close) end
+  child: exit(0)
+  (fork-close) Parent success
+  (fork-close) end
+  fork-close: exit(0)
+Differences in `diff -u' format:
+  (fork-close) begin
+  (fork-close) open "sample.txt"
+- (fork-close) child run
+- (fork-close) end
+- child: exit(0)
+  (fork-close) Parent success
+  (fork-close) end
+  fork-close: exit(0)

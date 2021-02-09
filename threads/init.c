@@ -240,15 +240,13 @@ run_task (char **argv) {
 	const char *task = argv[1];
 
 	printf ("Executing '%s':\n", task);
-  //? <________흐린 글씨 중요!! 밑에 보자!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!_______>
-#ifdef USERPROG //? 어떻게 확인하지?!
+#ifdef USERPROG 
 	if (thread_tests){
 		run_test (task);
 	} else {
 		process_wait (process_create_initd (task)); 
 	}
 #else
-//? <________중요!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!_______>
 	run_test (task);
 #endif
 	printf ("Execution of '%s' complete.\n", task);

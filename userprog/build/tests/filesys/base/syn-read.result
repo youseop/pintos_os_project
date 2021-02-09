@@ -1,2 +1,2 @@
 FAIL
-run: write "data": FAILED
+run: wait for child 1 of 10 returned -1 (expected 0): FAILED

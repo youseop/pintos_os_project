@@ -1,2 +1,1 @@
-FAIL
-run: read() returned 9 instead of 0: FAILED
+PASS
