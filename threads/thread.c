@@ -219,6 +219,13 @@ thread_create (const char *name, int priority,
 	t->tf.cs = SEL_KCSEG;
 	t->tf.eflags = FLAG_IF;
 
+	t->parent_process = curr;
+	t->isLoad = 0;
+	t->isTerminated = 0;
+	sema_init(&t->exit_sema, 0);
+	sema_init(&t->load_sema, 0);
+	list_push_back(&curr->child_process, &t->child_elem);
+
 	/* Add to run queue. */
 	thread_unblock (t); //!
 	//? if문으로 우선순위 판단해서 thread_block 실행
@@ -338,9 +345,18 @@ thread_exit (void) {
 	process_exit ();
 #endif
 
+	/* 프로세스 디스크립터에 프로세스 종료를 알림 */
+	/* 부모프로세스의 대기 상태 이탈(세마포어 이용) */
+	intr_disable ();
+
+	if(!list_empty(&thread_current()->exit_sema.waiters)){
+		//printf("## %p, %p\n",&thread_current()->exit_sema,thread_current());
+		sema_up(&thread_current()->exit_sema);
+	}
+	//printf("hey\n");
+
 	/* Just set our status to dying and schedule another process.
 	   We will be destroyed during the call to schedule_tail(). */
-	intr_disable ();
 	do_schedule (THREAD_DYING);
 	NOT_REACHED ();
 }
@@ -445,8 +461,20 @@ thread_yield (void) {
 /* Sets the current thread's priority to NEW_PRIORITY. */
 void
 thread_set_priority (int new_priority) {
-	thread_current ()->priority = new_priority;
-	test_max_priority();	//?
+	enum intr_level old_level;
+	old_level = intr_disable ();
+  struct thread* curr = thread_current();
+  int old_priority = curr->priority;
+
+	curr->init_priority = new_priority;
+	refresh_priority(); //나한테 딸려있는 donation list들을 refresh
+
+  if(old_priority > curr->priority)
+	  donate_priority();  //내가 포함된 donation list의 대장을 refresh 
+  
+	test_max_priority();
+
+	intr_set_level (old_level);
 }
 
 /* Returns the current thread's priority. */
@@ -546,6 +574,14 @@ init_thread (struct thread *t, const char *name, int priority) {
 	t->tf.rsp = (uint64_t) t + PGSIZE - sizeof (void *);
 	t->priority = priority;
 	t->magic = THREAD_MAGIC;
+  
+	t->init_priority = priority;
+	t->wait_on_lock = NULL;
+	list_init(&t->donations);
+
+	list_init(&t->child_process);
+	t->isLoad = 0;
+	t->isTerminated = 0;
 }
 
 /* Chooses and returns the next thread to be scheduled.  Should
@@ -706,7 +742,7 @@ schedule (void) {
 			 //initial_thread = main thread
 		if (curr && curr->status == THREAD_DYING && curr != initial_thread) {
 			ASSERT (curr != next);
-			list_push_back (&destruction_req, &curr->elem);
+			//?list_push_back (&destruction_req, &curr->elem);
 		}
 
 		/* Before switching the thread, we first save the information
@@ -726,4 +762,78 @@ allocate_tid (void) {
 	lock_release (&tid_lock);
 
 	return tid;
+}
+
+/* priority donation 을 수행하는 함수를 구현한다.
+현재 스레드가 기다리고 있는 lock 과 연결 된 모든 스레드들을 순회하며
+현재 스레드의 우선순위를 lock 을 보유하고 있는 스레드에게 기부 한다.
+(Nested donation 그림 참고, nested depth 는 8로 제한한다. ) */
+void donate_priority(void){
+	struct thread* curr = thread_current();
+	struct thread* next = curr->wait_on_lock->holder;
+	int nested_depth = 0;
+
+  
+	enum intr_level old_level;
+	old_level = intr_disable ();
+	while (next != NULL && nested_depth<8){
+
+    if(next->priority < curr->priority)
+      next->priority = curr->priority;
+
+    nested_depth++;
+		next = next->wait_on_lock->holder;
+	}
+	intr_set_level (old_level);
+}
+
+/* lock 을 해지 했을때 donations 리스트에서 해당 엔트리를
+삭제 하기 위한 함수를 구현한다. */
+void remove_with_lock(struct lock *lock){
+	struct thread* curr = thread_current();
+	struct thread* t;
+  
+  if(list_empty(&curr->donations)){
+    return;
+  }
+
+	for (struct list_elem* e = list_begin(&curr->donations); e != list_end(&curr->donations) ;) {
+		t = list_entry(e, struct thread, donation_elem);
+		ASSERT (is_thread (t));
+		if (t->wait_on_lock == lock){
+			e = list_remove(&t->donation_elem);
+		}
+		else{
+			e = list_next(e);
+		}
+	}
+}
+
+
+/* 현재 스레드의 우선순위를 기부받기 전의 우선순위로 변경 */
+/* 가장 우선수위가 높은 donations 리스트의 스레드와
+현재 스레드의 우선순위를 비교하여 높은 값을 현재 스레드의
+우선순위로 설정한다. */
+void refresh_priority(void){
+	struct thread* curr = thread_current();
+	struct thread* t;
+
+	curr->priority = curr->init_priority;
+	
+  if(list_empty(&curr->donations)){
+    return;
+  }
+
+  list_sort(&curr->donations, &cmp_priority, NULL);
+  int list_priority = list_entry(list_begin(&curr->donations), struct thread, donation_elem)->priority;
+  if( list_priority > curr->priority)
+    curr->priority = list_priority;
+
+	// for (struct list_elem* e = list_begin(&curr->donations); e!=list_end(&curr->donations); e=list_next(e)) {
+	// 	t = list_entry(e, struct thread, donation_elem);
+	// 	ASSERT(is_thread(t));
+
+	// 	if (t->priority > curr->priority)
+	// 		curr->priority = t->priority;
+	// }
 }

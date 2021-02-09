@@ -37,13 +37,14 @@ struct gp_registers {
 struct intr_frame {
 	/* Pushed by intr_entry in intr-stubs.S.
 	   These are the interrupted task's saved registers. */
-	struct gp_registers R;
+	struct gp_registers R; //? R의 gp_registers안에 rax존재!
 	uint16_t es;
 	uint16_t __pad1;
 	uint32_t __pad2;
 	uint16_t ds;
 	uint16_t __pad3;
 	uint32_t __pad4;
+	
 	/* Pushed by intrNN_stub in intr-stubs.S. */
 	uint64_t vec_no; /* Interrupt vector number. */
 /* Sometimes pushed by the CPU,
@@ -57,7 +58,7 @@ struct intr_frame {
 	uint16_t __pad5;
 	uint32_t __pad6;
 	uint64_t eflags;
-	uintptr_t rsp;
+	uintptr_t rsp;  //? esp랑 같다! 64비트 - rsp
 	uint16_t ss;
 	uint16_t __pad7;
 	uint32_t __pad8;

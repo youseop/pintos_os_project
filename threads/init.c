@@ -240,13 +240,15 @@ run_task (char **argv) {
 	const char *task = argv[1];
 
 	printf ("Executing '%s':\n", task);
-#ifdef USERPROG
+  //? <________흐린 글씨 중요!! 밑에 보자!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!_______>
+#ifdef USERPROG //? 어떻게 확인하지?!
 	if (thread_tests){
 		run_test (task);
 	} else {
-		process_wait (process_create_initd (task));
+		process_wait (process_create_initd (task)); 
 	}
 #else
+//? <________중요!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!_______>
 	run_test (task);
 #endif
 	printf ("Execution of '%s' complete.\n", task);
@@ -284,7 +286,7 @@ run_actions (char **argv) {
 		for (a = actions; ; a++)
 			if (a->name == NULL)
 				PANIC ("unknown action `%s' (use -h for help)", *argv);
-			else if (!strcmp (*argv, a->name))
+			else if (!strcmp (*argv, a->name)) //?매칭되면 for문 탈출!! (매칭 안되면 다음 name과 compare)
 				break;
 
 		/* Check for required arguments. */

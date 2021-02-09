@@ -21,6 +21,9 @@
 #ifdef VM
 #include "vm/vm.h"
 #endif
+#define running_thread() ((struct thread *) (pg_round_down (rrsp ())))
+#define THREAD_MAGIC 0xcd6abf4b
+#define is_thread(t) ((t) != NULL && (t)->magic == THREAD_MAGIC)
 
 static void process_cleanup (void);
 static bool load (const char *file_name, struct intr_frame *if_);
@@ -40,6 +43,10 @@ process_init (void) {
  * Notice that THIS SHOULD BE CALLED ONCE. */
 tid_t
 process_create_initd (const char *file_name) {
+//?same with  process_execute
+//? - file_name 문자열 파싱
+//? - 첫 번째 토큰을 thread_create()함수에 스레드 이름으로 전달
+  char *saveptr;
 	char *fn_copy;
 	tid_t tid;
 
@@ -48,12 +55,17 @@ process_create_initd (const char *file_name) {
 	fn_copy = palloc_get_page (0);
 	if (fn_copy == NULL)
 		return TID_ERROR;
+	//?왜 4kb만들어 놓고, 몇십 byte만 쓸까?
 	strlcpy (fn_copy, file_name, PGSIZE);
 
+  char *retptr = strtok_r(file_name, " ", &saveptr);
+	
 	/* Create a new thread to execute FILE_NAME. */
 	tid = thread_create (file_name, PRI_DEFAULT, initd, fn_copy);
+	
 	if (tid == TID_ERROR)
 		palloc_free_page (fn_copy);
+	
 	return tid;
 }
 
@@ -65,7 +77,6 @@ initd (void *f_name) {
 #endif
 
 	process_init ();
-
 	if (process_exec (f_name) < 0)
 		PANIC("Fail to launch initd\n");
 	NOT_REACHED ();
@@ -162,9 +173,36 @@ error:
  * Returns -1 on fail. */
 int
 process_exec (void *f_name) {
-	char *file_name = f_name;
-	bool success;
+	void **save_addr = malloc(sizeof(void*));
+	*save_addr = f_name;
+	char *file_name = malloc(sizeof(char)*(strlen(f_name)+1));
+	memcpy(file_name, f_name,strlen(f_name)+1);
 
+	bool success;
+  char *user_program;
+  char *save_arg[20]; //? # input argmuent limit = 10
+  char *saveptr;
+  char *retptr = NULL;
+  int token_cnt = 0;
+	struct thread* curr = thread_current();
+
+	char* need_free[20];
+
+  retptr = strtok_r(file_name, " ", &saveptr);
+	need_free[token_cnt] = malloc(sizeof(char)*(strlen(retptr)+1));
+	memcpy(need_free[token_cnt], retptr,strlen(retptr)+1);
+
+  while(retptr != NULL){
+    token_cnt++;
+    retptr = strtok_r(NULL, " ", &saveptr);
+		if(retptr){
+			need_free[token_cnt] = malloc(sizeof(char)*(strlen(retptr)+1));
+			memcpy(need_free[token_cnt], retptr,strlen(retptr)+1);
+		}
+		else{
+			need_free[token_cnt] = NULL;
+		}
+  }
 	/* We cannot use the intr_frame in the thread structure.
 	 * This is because when current thread rescheduled,
 	 * it stores the execution information to the member. */
@@ -172,19 +210,24 @@ process_exec (void *f_name) {
 	_if.ds = _if.es = _if.ss = SEL_UDSEG;
 	_if.cs = SEL_UCSEG;
 	_if.eflags = FLAG_IF | FLAG_MBS;
-
 	/* We first kill the current context */
+	
 	process_cleanup ();
 
 	/* And then load the binary */
-	success = load (file_name, &_if);
-
+	success = load (need_free[0], &_if);
 	/* If load failed, quit. */
-	palloc_free_page (file_name);
-	if (!success)
+	if (!success){
 		return -1;
-
+	}
+	argument_stack(need_free, token_cnt, &_if.rsp);
 	/* Start switched process. */
+	_if.R.rdi = token_cnt;
+	_if.R.rsi = (int64_t*)_if.rsp + 1;
+	//? palloc_free_page (f_name);   -------------- 반창고 --------------
+	for(int i = 0; i<token_cnt; i++){
+		free(need_free[i]);
+	}
 	do_iret (&_if);
 	NOT_REACHED ();
 }
@@ -195,16 +238,28 @@ process_exec (void *f_name) {
  * exception), returns -1.  If TID is invalid or if it was not a
  * child of the calling process, or if process_wait() has already
  * been successfully called for the given TID, returns -1
- * immediately, without waiting.
- *
- * This function will be implemented in problem 2-2.  For now, it
- * does nothing. */
+ * immediately, without waiting.*/
 int
 process_wait (tid_t child_tid UNUSED) {
 	/* XXX: Hint) The pintos exit if process_wait (initd), we recommend you
 	 * XXX:       to add infinite loop here before
 	 * XXX:       implementing the process_wait. */
-	return -1;
+	//?for(long long i = 0; i < 1000000000; i ++);
+	
+	/* 자식 프로세스의 프로세스 디스크립터 검색 */
+	/* 예외 처리 발생시 -1 리턴 */
+	/* 자식프로세스가 종료될 때까지 부모 프로세스 대기(세마포어 이용) */
+	/* 자식 프로세스 디스크립터 삭제 */
+	/* 자식 프로세스의 exit status 리턴 */
+
+	struct thread* child = get_child_process(child_tid);
+	if(child == NULL)
+		return -1;
+	if(child->isTerminated == 0){
+		sema_down(&child->exit_sema);
+		remove_child_process(child);
+	}
+	return child->exit_status;
 }
 
 /* Exit the process. This function is called by thread_exit (). */
@@ -215,7 +270,6 @@ process_exit (void) {
 	 * TODO: Implement process termination message (see
 	 * TODO: project2/process_termination.html).
 	 * TODO: We recommend you to implement process resource cleanup here. */
-
 	process_cleanup ();
 }
 
@@ -232,7 +286,9 @@ process_cleanup (void) {
 	/* Destroy the current process's page directory and switch back
 	 * to the kernel-only page directory. */
 	pml4 = curr->pml4;
+	//printf("name of thread : %s (%d)\n",thread_current()->name,thread_current()->tid);
 	if (pml4 != NULL) {
+		//printf("in the process cleanup if , %ld\n",*pml4);
 		/* Correct ordering here is crucial.  We must set
 		 * cur->pagedir to NULL before switching page directories,
 		 * so that a timer interrupt can't switch back to the
@@ -323,7 +379,7 @@ static bool load_segment (struct file *file, off_t ofs, uint8_t *upage,
 static bool
 load (const char *file_name, struct intr_frame *if_) {
 	struct thread *t = thread_current ();
-	struct ELF ehdr;
+	struct ELF ehdr; //ELF header
 	struct file *file = NULL;
 	off_t file_ofs;
 	bool success = false;
@@ -637,3 +693,81 @@ setup_stack (struct intr_frame *if_) {
 	return success;
 }
 #endif /* VM */
+
+void argument_stack(char **parse ,int count ,void **esp){
+  //? 바이블에서 user_stack찾자
+	int i, j;
+	void* save_pointer[count];
+
+	//인자들을 저장
+	for(i = count -1; i>-1; i--){
+		for(j = strlen(parse[i]); j>-1; j--){
+			*esp = (char*)*esp - 1;
+			**(char **)esp = parse[i][j];
+		}
+		save_pointer[i] = *(char **)esp;
+	}
+	
+	*esp = *(int64_t*)esp & ~(int64_t)7;
+	
+	//마지막 널값의 주소!
+	*esp = (int64_t*)*esp - 1;
+	**(int64_t**)esp = NULL;
+	
+	//각 인자가 들어있는 주소
+	for(i = count - 1; i > -1; i--){
+		*esp = (int64_t*)*esp - 1;
+		**(int64_t**)esp = save_pointer[i];
+	}
+	// //문자열 배열의 시작값
+	// void *tmp_p;
+	// tmp_p = *esp;
+	// *esp = (int64_t*)*esp - 1;
+	// **(int64_t **)esp = tmp_p;
+	// //args개수 저장
+	// *esp = (int64_t*)*esp - 1;
+	// **(int64_t **)esp = count;
+
+	//trash주소값 0
+	*esp = (int64_t*)*esp - 1;
+	**(int64_t **)esp = NULL;
+	return;
+}
+
+/* 자식 리스트에 접근하여 프로세스 디스크립터 검색 */
+/* 해당 pid가 존재하면 프로세스 디스크립터 반환 */
+/* 리스트에 존재하지 않으면 NULL 리턴 */
+struct thread *get_child_process (int pid){
+	struct thread* curr = thread_current();
+	struct thread* child;
+	for (struct list_elem* e = list_begin(&curr->child_process); e != list_end(&curr->child_process) ;) {
+		child = list_entry(e, struct thread, child_elem);
+		ASSERT (is_thread (child));
+		if (child->tid == pid){
+			return child;
+		}
+		e = list_next(e);
+	}
+	return NULL;
+}
+
+/* 자식 리스트에서 제거*/
+/* 프로세스 디스크립터 메모리 해제 */
+void remove_child_process(struct thread *cp)
+{
+	struct thread* curr = thread_current();
+	struct thread* child;
+	for (struct list_elem* e = list_begin(&curr->child_process); e != list_end(&curr->child_process) ;) {
+		child = list_entry(e, struct thread, child_elem);
+		ASSERT (is_thread (child));
+		if (child->tid == cp->tid){
+			e = list_remove(&child->elem);
+			palloc_free_page(child);
+			return; //?          --------- 반창고 -----------
+		}
+		else{
+			e = list_next(e);
+		}
+	}
+	return NULL;
+}

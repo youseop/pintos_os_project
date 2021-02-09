@@ -57,14 +57,12 @@ sema_init (struct semaphore *sema, unsigned value) {
    interrupts disabled, but if it sleeps then the next scheduled
    thread will probably turn interrupts back on. This is
    sema_down function. */
-void
+void 
 sema_down (struct semaphore *sema) {
-  //? sema try down
 	enum intr_level old_level;
 
 	ASSERT (sema != NULL);
 	ASSERT (!intr_context ());
-
 	old_level = intr_disable ();
 	while (sema->value == 0) {//?
 		//list_push_back (&sema->waiters, &thread_current ()->elem);
@@ -196,14 +194,32 @@ lock_init (struct lock *lock) {
    we need to sleep. */
 void
 lock_acquire (struct lock *lock) {//? try to acquire
-	ASSERT (lock != NULL);
+/* 해당 lock 의 holder가 존재 한다면 아래 작업을 수행한다. */
+/* 현재 스레드의 wait_on_lock 변수에 획득 하기를 기다리는 lock의 주소를 저장 */
+/* multiple donation 을 고려하기 위해 이전상태의 우선순위를 기억,
+donation 을 받은 스레드의 thread 구조체를 list로 관리한다. */
+/* priority donation 수행하기 위해 donate_priority() 함수 호출 */
+  ASSERT (lock != NULL);
 	ASSERT (!intr_context ());
 	ASSERT (!lock_held_by_current_thread (lock));
 
-	sema_down (&lock->semaphore);
-	lock->holder = thread_current ();
-}
+  struct thread* curr = thread_current();
+  struct thread* lock_holder = lock->holder;
 
+  if(lock_holder != NULL){
+    curr->wait_on_lock = lock;
+    if(lock_holder->priority < curr->priority)
+      lock_holder->priority = curr->priority;
+    list_insert_ordered(&(lock_holder->donations), &curr->donation_elem, &cmp_priority, NULL);
+    //list_push_back(&(lock_holder->donations), &curr->donation_elem);
+    donate_priority(); 
+  }
+	sema_down (&lock->semaphore);
+  //printf("############ %p\n",&lock->semaphore);
+  curr->wait_on_lock = NULL;
+
+	lock->holder = curr;
+}
 /* Tries to acquires LOCK and returns true if successful or false
    on failure.  The lock must not already be held by the current
    thread.
@@ -235,6 +251,10 @@ lock_release (struct lock *lock) {
 	ASSERT (lock_held_by_current_thread (lock));
 
 	lock->holder = NULL;
+  
+  remove_with_lock(lock);
+  refresh_priority();
+
 	sema_up (&lock->semaphore);
 }
 

@@ -22,11 +22,13 @@ static __inline int64_t syscall (uint64_t num_, uint64_t a1_, uint64_t a2_,
 			"mov %5, %%r10\n"
 			"mov %6, %%r8\n"
 			"mov %7, %%r9\n"
-			"syscall\n"
+			"syscall\n"       
 			: "=a" (ret)
 			: "g" (num), "g" (a1), "g" (a2), "g" (a3), "g" (a4), "g" (a5), "g" (a6)
 			: "cc", "memory");
 	return ret;
+  /*'g' : 특수 레지스터를 제외한 일반 레지스터, 
+  메모리 혹은 immediate 정수 중 아무것이나 나타내는 오퍼랜드.*/
 }
 
 /* Invokes syscall NUMBER, passing no arguments, and returns the

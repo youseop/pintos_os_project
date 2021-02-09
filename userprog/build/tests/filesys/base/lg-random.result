@@ -1,0 +1,2 @@
+FAIL
+run: write 512 bytes at offset 48128 failed: FAILED

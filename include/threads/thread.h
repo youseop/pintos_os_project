@@ -4,7 +4,9 @@
 #include <debug.h>
 #include <list.h>
 #include <stdint.h>
+#include <stdbool.h>
 #include "threads/interrupt.h"
+#include "threads/synch.h"
 #ifdef VM
 #include "vm/vm.h"
 #endif
@@ -94,7 +96,36 @@ struct thread {
   int64_t wakeup_tick;                /* wakeup_tick */
 	/* Shared between thread.c and synch.c. */
 	struct list_elem elem;
-	void* func;              /* List element. */
+
+  int init_priority;
+  struct lock *wait_on_lock;
+  struct list donations;
+  struct list_elem donation_elem;
+
+  //?<---------------------->
+	// uint8_t *stack;
+	// struct list_elem allelem;
+	struct thread* parent_process;
+	struct list child_process;
+	struct list_elem child_elem;
+	/*
+	 프로세스의 생성 성공 여부를 확인하는 플래그 추가 (실행 파일이 로드에 실패하면 -1)
+	 프로세스의 종료 유무를 확인하는 필드 추가
+	 프로세스의 종료 상태를 나타내는 필드 추가
+	 자식 프로세스의 생성/종료 대기를 위한 세마포어 추가
+	 자식 프로세스 리스트 필드 추가
+	 부모 프로세스 디스크립터를 가리키는 필드 추가
+	*/
+	int8_t success;
+	int8_t isLoad;
+	int8_t isTerminated;
+	// 프로세스의 종료 상태를 나타내는 필드 추가?!
+	int8_t exit_status;
+	struct semaphore exit_sema;
+	struct semaphore load_sema;
+  //?<---------------------->
+
+
 
 #ifdef USERPROG
 	/* Owned by userprog/process.c. */
@@ -147,6 +178,14 @@ void thread_set_nice (int);
 int thread_get_recent_cpu (void);
 int thread_get_load_avg (void);
 
+//?
+void donate_priority(void);
+void remove_with_lock(struct lock *lock);
+void refresh_priority(void);
+void test_max_priority(void);
+
 void do_iret (struct intr_frame *tf);
+
+bool cmp_priority(const struct list_elem *a, const struct list_elem *b, void *aux UNUSED);
 
 #endif /* threads/thread.h */
