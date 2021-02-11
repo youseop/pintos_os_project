@@ -11,10 +11,12 @@ Formatting file system...done.
 Boot complete.
 Executing 'priority-donate-one':
 (priority-donate-one) begin
-acquire1: exit(-1)
 (priority-donate-one) This thread should have priority 32.  Actual priority: 32.
-acquire2: exit(-1)
 (priority-donate-one) This thread should have priority 33.  Actual priority: 33.
+(priority-donate-one) acquire2: got the lock
+(priority-donate-one) acquire2: done
+(priority-donate-one) acquire1: got the lock
+(priority-donate-one) acquire1: done
 (priority-donate-one) acquire2, acquire1 must already have finished, in that order.
 (priority-donate-one) This should be the last line before finishing this test.
 (priority-donate-one) end
@@ -23,7 +25,7 @@ Timer: 55 ticks
 Thread: 30 idle ticks, 25 kernel ticks, 0 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 9 reads, 18 writes
-Console: 1081 characters output
+Console: 1207 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

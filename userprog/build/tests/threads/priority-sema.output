@@ -11,9 +11,33 @@ Formatting file system...done.
 Boot complete.
 Executing 'priority-sema':
 (priority-sema) begin
-main: exit(-1)
-main: exit(-1)
-main: exit(-1)
-main: exit(-1)
-main: exit(-1)
-mKernel PANIC at ../../threads/thread.c:333 in t
+(priority-sema) Thread priority 30 woke up.
+(priority-sema) Back in main thread.
+(priority-sema) Thread priority 29 woke up.
+(priority-sema) Back in main thread.
+(priority-sema) Thread priority 28 woke up.
+(priority-sema) Back in main thread.
+(priority-sema) Thread priority 27 woke up.
+(priority-sema) Back in main thread.
+(priority-sema) Thread priority 26 woke up.
+(priority-sema) Back in main thread.
+(priority-sema) Thread priority 25 woke up.
+(priority-sema) Back in main thread.
+(priority-sema) Thread priority 24 woke up.
+(priority-sema) Back in main thread.
+(priority-sema) Thread priority 23 woke up.
+(priority-sema) Back in main thread.
+(priority-sema) Thread priority 22 woke up.
+(priority-sema) Back in main thread.
+(priority-sema) Thread priority 21 woke up.
+(priority-sema) Back in main thread.
+(priority-sema) end
+Execution of 'priority-sema' complete.
+Timer: 57 ticks
+Thread: 30 idle ticks, 27 kernel ticks, 0 user ticks
+hd0:0: 0 reads, 0 writes
+hd0:1: 9 reads, 18 writes
+Console: 1498 characters output
+Keyboard: 0 keys pressed
+Exception: 0 page faults
+Powering off...

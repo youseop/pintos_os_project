@@ -1,2 +1,1 @@
-FAIL
-Kernel panic in run: PANIC at ../../threads/thread.c:333 in t
+PASS

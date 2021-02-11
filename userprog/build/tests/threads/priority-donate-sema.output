@@ -12,17 +12,19 @@ Boot complete.
 Executing 'priority-donate-sema':
 (priority-donate-sema) begin
 (priority-donate-sema) Thread L acquired lock.
-high: exit(-1)
 (priority-donate-sema) Thread L downed semaphore.
+(priority-donate-sema) Thread H acquired lock.
+(priority-donate-sema) Thread H finished.
+(priority-donate-sema) Thread M finished.
 (priority-donate-sema) Thread L finished.
 (priority-donate-sema) Main thread finished.
 (priority-donate-sema) end
 Execution of 'priority-donate-sema' complete.
 Timer: 54 ticks
-Thread: 30 idle ticks, 24 kernel ticks, 0 user ticks
+Thread: 29 idle ticks, 25 kernel ticks, 0 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 9 reads, 18 writes
-Console: 922 characters output
+Console: 1038 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

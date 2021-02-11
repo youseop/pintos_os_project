@@ -13,14 +13,15 @@ Boot complete.
 Putting 'read-bad-fd' into the file system...
 Executing 'read-bad-fd':
 (read-bad-fd) begin
-read-bad-fd: exit(-1)
+(read-bad-fd) end
+read-bad-fd: exit(0)
 Execution of 'read-bad-fd' complete.
 Timer: 58 ticks
 Thread: 30 idle ticks, 27 kernel ticks, 1 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 80 reads, 234 writes
 hd1:0: 103 reads, 0 writes
-Console: 839 characters output
+Console: 856 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

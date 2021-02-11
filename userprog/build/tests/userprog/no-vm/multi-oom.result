@@ -1,2 +1,2 @@
 FAIL
-run: Should return > 0.: FAILED
+Run didn't shut down properly: no "Timer: # ticks" message

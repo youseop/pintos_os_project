@@ -9,7 +9,7 @@ void get_argument(void *rsp, int **arg , int count);
 tid_t fork (const char *thread_name);
 int read (int fd, void *buffer, unsigned size);
 int write (int fd, const void *buffer, unsigned size);
-void check_address(void *addr);
+void check_address(void *addr, int status);
 void exit (int status);
 void halt (void);
 int exec(const char*cmd_line);

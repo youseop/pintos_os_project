@@ -16,17 +16,21 @@ Putting 'child-close' into the file system...
 Executing 'multi-child-fd':
 (multi-child-fd) begin
 (multi-child-fd) open "sample.txt"
-(multi-child-fd) wait(exec()) = -1
+(child-close) begin
+(child-close) verified contents of "sample.txt"
+(child-close) end
+child-close: exit(0)
+(multi-child-fd) wait(exec()) = 0
 (multi-child-fd) verified contents of "sample.txt"
 (multi-child-fd) end
 multi-child-fd: exit(0)
 Execution of 'multi-child-fd' complete.
-Timer: 64 ticks
-Thread: 30 idle ticks, 32 kernel ticks, 2 user ticks
+Timer: 65 ticks
+Thread: 30 idle ticks, 32 kernel ticks, 3 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 149 reads, 488 writes
+hd0:1: 204 reads, 488 writes
 hd1:0: 220 reads, 0 writes
-Console: 1125 characters output
+Console: 1231 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

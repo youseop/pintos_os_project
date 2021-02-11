@@ -151,19 +151,16 @@ inode_close (struct inode *inode) {
 	/* Ignore null pointer. */
 	if (inode == NULL)
 		return;
-
 	/* Release resources if this was the last opener. */
 	if (--inode->open_cnt == 0) {
 		/* Remove from inode list and release lock. */
 		list_remove (&inode->elem);
-
 		/* Deallocate blocks if removed. */
 		if (inode->removed) {
 			free_map_release (inode->sector, 1);
 			free_map_release (inode->data.start,
-					bytes_to_sectors (inode->data.length)); 
+					bytes_to_sectors (inode->data.length));
 		}
-
 		free (inode); 
 	}
 }
@@ -236,7 +233,6 @@ inode_write_at (struct inode *inode, const void *buffer_, off_t size,
 	const uint8_t *buffer = buffer_;
 	off_t bytes_written = 0;
 	uint8_t *bounce = NULL;
-
 	if (inode->deny_write_cnt)
 		return 0;
 
@@ -262,8 +258,9 @@ inode_write_at (struct inode *inode, const void *buffer_, off_t size,
 			/* We need a bounce buffer. */
 			if (bounce == NULL) {
 				bounce = malloc (DISK_SECTOR_SIZE);
-				if (bounce == NULL)
+				if (bounce == NULL){
 					break;
+        }
 			}
 
 			/* If the sector contains data before or after the chunk
@@ -283,7 +280,6 @@ inode_write_at (struct inode *inode, const void *buffer_, off_t size,
 		bytes_written += chunk_size;
 	}
 	free (bounce);
-
 	return bytes_written;
 }
 

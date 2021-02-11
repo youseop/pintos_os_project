@@ -4,6 +4,11 @@
 #include "threads/thread.h"
 #include "filesys/file.h"
 
+struct process_pack {
+  struct thread *t;
+  struct intr_frame *_if;
+};
+
 struct thread *get_child_process (int pid);
 tid_t process_create_initd (const char *file_name);
 tid_t process_fork (const char *name, struct intr_frame *if_);

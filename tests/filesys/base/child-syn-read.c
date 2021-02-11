@@ -21,7 +21,6 @@ main (int argc, const char *argv[])
   int child_idx;
   int fd;
   size_t i;
-
   quiet = true;
   
   CHECK (argc == 2, "argc must be 2, actually %d", argc);

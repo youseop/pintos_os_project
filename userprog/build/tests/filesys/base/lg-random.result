@@ -1,2 +1,1 @@
-FAIL
-run: write 512 bytes at offset 23040 failed: FAILED
+PASS

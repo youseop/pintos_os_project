@@ -11,19 +11,23 @@ Formatting file system...done.
 Boot complete.
 Executing 'priority-donate-nest':
 (priority-donate-nest) begin
-medium: exit(-1)
 (priority-donate-nest) Low thread should have priority 32.  Actual priority: 32.
-high: exit(-1)
-(priority-donate-nest) Low thread should have priority 33.  Actual priority: 32.
+(priority-donate-nest) Low thread should have priority 33.  Actual priority: 33.
+(priority-donate-nest) Medium thread should have priority 33.  Actual priority: 33.
+(priority-donate-nest) Medium thread got the lock.
+(priority-donate-nest) High thread got the lock.
+(priority-donate-nest) High thread finished.
+(priority-donate-nest) High thread should have just finished.
+(priority-donate-nest) Middle thread finished.
 (priority-donate-nest) Medium thread should just have finished.
-(priority-donate-nest) Low thread should have priority 31.  Actual priority: 33.
+(priority-donate-nest) Low thread should have priority 31.  Actual priority: 31.
 (priority-donate-nest) end
 Execution of 'priority-donate-nest' complete.
 Timer: 55 ticks
-Thread: 30 idle ticks, 25 kernel ticks, 0 user ticks
+Thread: 29 idle ticks, 26 kernel ticks, 0 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 9 reads, 18 writes
-Console: 1062 characters output
+Console: 1368 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

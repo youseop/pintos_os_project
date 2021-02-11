@@ -223,6 +223,7 @@ thread_create (const char *name, int priority,
 	t->isLoad = 0;
 	t->isTerminated = 0;
 	sema_init(&t->exit_sema, 0);
+	sema_init(&t->fork_sema, 0);
 	list_push_back(&curr->child_process, &t->child_elem);
 
 	t->next_fd = 2;
@@ -246,8 +247,7 @@ void test_max_priority(void){
 	struct thread *curr = thread_current ();
 	struct thread *ready_header;
 
-	if (list_empty(&ready_list)){//? 체크했어야 했나?!
-		//printf("#error1# thread_set_priority: ready_list is empty. [Cannot execute yield_thread().]\n");
+	if (list_empty(&ready_list)){
 		return;
 	}
 
@@ -356,12 +356,10 @@ thread_exit (void) {
 	/* 부모프로세스의 대기 상태 이탈(세마포어 이용) */
 	intr_disable ();
 
+  thread_current()->isTerminated = 1;
 	if(!list_empty(&thread_current()->exit_sema.waiters)){
-		//printf("## %p, %p\n",&thread_current()->exit_sema,thread_current());
 		sema_up(&thread_current()->exit_sema);
 	}
-	//printf("hey\n");
-
 	/* Just set our status to dying and schedule another process.
 	   We will be destroyed during the call to schedule_tail(). */
 	do_schedule (THREAD_DYING);
@@ -443,7 +441,6 @@ thread_awake(int64_t ticks) {
 			}
 	}
 	next_tick_to_awake = tmp_tick;
-	//printf("#################################\nthread name : %s next_tick_to_awake: %lld\n",t->name, next_tick_to_awake);
 }
 
 
@@ -476,10 +473,10 @@ thread_set_priority (int new_priority) {
 	curr->init_priority = new_priority;
 	refresh_priority(); //나한테 딸려있는 donation list들을 refresh
 
-  if(old_priority > curr->priority)
+  if(old_priority < curr->priority)
 	  donate_priority();  //내가 포함된 donation list의 대장을 refresh 
-  
-	test_max_priority();
+  else 
+		test_max_priority();
 
 	intr_set_level (old_level);
 }
@@ -777,21 +774,17 @@ allocate_tid (void) {
 (Nested donation 그림 참고, nested depth 는 8로 제한한다. ) */
 void donate_priority(void){
 	struct thread* curr = thread_current();
+	if (curr->wait_on_lock == NULL)
+			return;
 	struct thread* next = curr->wait_on_lock->holder;
-	int nested_depth = 0;
-
   
-	enum intr_level old_level;
-	old_level = intr_disable ();
-	while (next != NULL && nested_depth<8){
-
+	while (next != NULL){
     if(next->priority < curr->priority)
       next->priority = curr->priority;
-
-    nested_depth++;
+		if(next->wait_on_lock == NULL)
+			break;
 		next = next->wait_on_lock->holder;
 	}
-	intr_set_level (old_level);
 }
 
 /* lock 을 해지 했을때 donations 리스트에서 해당 엔트리를

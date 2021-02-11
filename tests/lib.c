@@ -80,7 +80,6 @@ void
 exec_children (const char *child_name, pid_t pids[], size_t child_cnt) 
 {
   size_t i;
-
   for (i = 0; i < child_cnt; i++) 
     {
       char cmd_line[128];
@@ -91,7 +90,6 @@ exec_children (const char *child_name, pid_t pids[], size_t child_cnt)
       } else {
         exec (cmd_line);
       }
-      
     }
 }
 

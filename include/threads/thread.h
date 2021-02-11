@@ -122,9 +122,11 @@ struct thread {
 	// 프로세스의 종료 상태를 나타내는 필드 추가?!
 	int8_t exit_status;
 	struct semaphore exit_sema;
+	struct semaphore fork_sema;
   
   struct file **fd_table;
   int next_fd;
+  struct file *exec_file;
   //?<---------------------->
 
 
@@ -139,7 +141,8 @@ struct thread {
 #endif
 
 	/* Owned by thread.c. */
-	struct intr_frame tf;               /* Information for switching */
+	struct intr_frame if_;
+  struct intr_frame tf;               /* Information for switching */
 	unsigned int magic;                     /* Detects stack overflow. */
 };
 
@@ -180,7 +183,6 @@ void thread_set_nice (int);
 int thread_get_recent_cpu (void);
 int thread_get_load_avg (void);
 
-//?
 void donate_priority(void);
 void remove_with_lock(struct lock *lock);
 void refresh_priority(void);

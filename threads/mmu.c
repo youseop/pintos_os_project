@@ -130,6 +130,7 @@ pgdir_for_each (uint64_t *pdp, pte_for_each_func *func, void *aux,
 	return true;
 }
 
+//#define PTE_ADDR(pte) ((uint64_t) (pte) & ~0xFFF)
 static bool
 pdp_for_each (uint64_t *pdp,
 		pte_for_each_func *func, void *aux, unsigned pml4_index) {
@@ -142,7 +143,7 @@ pdp_for_each (uint64_t *pdp,
 	}
 	return true;
 }
-
+//#define ptov(paddr) ((void *) (((uint64_t) paddr) + KERN_BASE))
 /* Apply FUNC to each available pte entries including kernel's. */
 bool
 pml4_for_each (uint64_t *pml4, pte_for_each_func *func, void *aux) {
@@ -242,6 +243,9 @@ pml4_set_page (uint64_t *pml4, void *upage, void *kpage, bool rw) {
 		*pte = vtop (kpage) | PTE_P | (rw ? PTE_W : 0) | PTE_U;
 	return pte != NULL;
 }
+/*
+#define vtop(vaddr) ({ ASSERT(is_kernel_vaddr(vaddr)); ((uint64_t) (vaddr) - (uint64_t) KERN_BASE);})
+*/
 
 /* Marks user virtual page UPAGE "not present" in page
  * directory PD.  Later accesses to the page will fault.  Other

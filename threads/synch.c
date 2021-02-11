@@ -208,14 +208,13 @@ donation 을 받은 스레드의 thread 구조체를 list로 관리한다. */
 
   if(lock_holder != NULL){
     curr->wait_on_lock = lock;
-    if(lock_holder->priority < curr->priority)
-      lock_holder->priority = curr->priority;
+    //?
+    // if(lock_holder->priority < curr->priority)
+    //   lock_holder->priority = curr->priority;
     list_insert_ordered(&(lock_holder->donations), &curr->donation_elem, &cmp_priority, NULL);
-    //list_push_back(&(lock_holder->donations), &curr->donation_elem);
     donate_priority(); 
   }
 	sema_down (&lock->semaphore);
-  //printf("############ %p\n",&lock->semaphore);
   curr->wait_on_lock = NULL;
 
 	lock->holder = curr;
@@ -264,7 +263,6 @@ lock_release (struct lock *lock) {
 bool
 lock_held_by_current_thread (const struct lock *lock) {
 	ASSERT (lock != NULL);
-
 	return lock->holder == thread_current ();
 }
 
@@ -350,8 +348,7 @@ cond_signal (struct condition *cond, struct lock *lock UNUSED) {
 	ASSERT (lock_held_by_current_thread (lock));
 
 	if (!list_empty (&cond->waiters)){
-    list_sort(&cond->waiters, &cmp_sem_priority, NULL); //?
-
+    list_sort(&cond->waiters, &cmp_sem_priority, NULL);
 		sema_up (&list_entry (list_pop_front (&cond->waiters),
 					struct semaphore_elem, elem)->semaphore);
   }

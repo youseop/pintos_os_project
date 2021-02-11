@@ -89,11 +89,8 @@ syscall_handler (struct intr_frame *f UNUSED) {
       call thread_exit function;
 
   */
-	// printf("\n\n<-----hex_dump----->\n");
-	// hex_dump(f->rsp, f->rsp, USER_STACK - f->rsp, true);
   
-  check_address(f->rsp);
-  //hex_dump(f->rsp, f->rsp,USER_STACK - f->rsp, 1); 
+  check_address(f->rsp,f->R.rdi);
   switch((f->R.rax)){
     case SYS_HALT:
       halt();
@@ -102,7 +99,8 @@ syscall_handler (struct intr_frame *f UNUSED) {
       exit(f->R.rdi);
       break;
     case SYS_FORK:
-      //fork( );
+      memcpy(&thread_current()->if_,f,sizeof(struct intr_frame));
+      f->R.rax = fork(f->R.rdi);
       break;
     case SYS_EXEC:
       f->R.rax = exec(f->R.rdi);
@@ -126,10 +124,9 @@ syscall_handler (struct intr_frame *f UNUSED) {
       f->R.rax = filesys_remove (f->R.rdi);
       break;
     case SYS_OPEN:
-      if(f->R.rdi == NULL)
-        f->R.rax = -1;
-      else
+      if(f->R.rdi)
         f->R.rax = open(f->R.rdi);
+      else exit(-1);
       break;
     case SYS_FILESIZE:
       f->R.rax = filesize(f->R.rdi);
@@ -150,7 +147,8 @@ syscall_handler (struct intr_frame *f UNUSED) {
       close(f->R.rdi);
       break;
     default:
-      exit(f->R.rax);
+      exit(f->R.rdi);
+      break;
   }
 	//printf ("system call!\n");
 }
@@ -159,21 +157,24 @@ syscall_handler (struct intr_frame *f UNUSED) {
 /* 유저 스택에 저장된 인자값들을 커널로 저장 */
 /* 인자가 저장된 위치가 유저영역인지 확인 */
 void get_argument(void *rsp, int **arg , int count){
-  check_address(rsp);
   rsp = (int64_t *)rsp + 2;
   for(int i=0;i<count;i++){
-      //printf("p: %p, d: %d, s: %s\n",rsp, *(int64_t *)rsp, rsp);
       arg[i] = rsp;
       rsp = (int64_t *)rsp + 1;
   }
 }
 
-tid_t fork (const char *thread_name){
-  
-  #ifdef USERPROG
-
-  #endif
-
+int fork (const char *thread_name){
+  tid_t child_tid = process_fork(thread_name,&thread_current()->tf);
+  struct thread* child = get_child_process(child_tid);
+  ASSERT(child);
+  sema_down(&child->fork_sema);
+  if (thread_current()->tid == child_tid){
+    return 0;
+  }
+  else{
+    return child_tid;
+  }
 }
 
 /* 파일에 동시 접근이 일어날 수 있으므로 Lock 사용 */
@@ -198,7 +199,8 @@ int read (int fd, void *buffer, unsigned size){
   else if(fd > 2){
     struct file *f = process_get_file(fd);
     if(f == NULL){
-      return -1;
+      lock_release(&filesys_lock);
+      return -1; //?
     }
     size = file_read(f, buffer, size);
     lock_release(&filesys_lock);
@@ -214,35 +216,32 @@ int write (int fd, const void *buffer, unsigned size){
     putbuf(buffer, size);
     lock_release(&filesys_lock);
     return size;
-  }
-  else if(fd < 1){
+  } 
+  else if(fd < 2){
     lock_release(&filesys_lock);
     return -1;
   }
   else{
     struct file* f = process_get_file(fd);
-    if(f==NULL)
-      return -1;
     size = file_write(f, buffer, size);
     lock_release(&filesys_lock);
     return size;
   }
 }
 
-void check_address(void *addr)
+void check_address(void *addr, int status)
 {
   /* 포인터가 가리키는 주소가 유저영역의 주소인지 확인 */
   /* 잘못된 접근일 경우 프로세스 종료 */
   if( !is_user_vaddr(addr)){
     printf("[get_argument] isn't pointing to user addr\n");
-    exit(-1);
+    exit(status);
   }
 }
 
 void exit (int status) {
   struct thread * curr = thread_current();
   curr->exit_status = status;
-
   printf("%s: exit(%d)\n", thread_name(), status);
   thread_exit ();
 }
@@ -254,16 +253,6 @@ void halt (void){
 
 int exec(const char*cmd_line){
   return process_exec(cmd_line);
-  // check_address(cmd_line);
-  // tid_t tid = process_create_initd(cmd_line);
-  // struct thread *child = get_child_process(tid);
-  // if (tid == TID_ERROR){
-  //   return -1;
-  // }
-  // if(child->isLoad == 0){
-  //   sema_down(&thread_current()->load_sema);
-  // }
-  // return tid; 
 }
 
 int wait(tid_t tid){
@@ -299,16 +288,13 @@ void seek (int fd, unsigned position){
   if(f == NULL){
     return -1;
   }
-  file_seek(f, file_tell(f) + position);
+  file_seek(f, position);
 }
 
 /* 파일 디스크립터를 이용하여 파일 객체 검색 */
 /* 해당 열린 파일의 위치를 반환 */
 unsigned tell (int fd){
   struct file *f = process_get_file(fd);
-  if(f == NULL){
-    return -1;
-  }
   return file_tell(f);
 }
 
