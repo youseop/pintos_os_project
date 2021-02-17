@@ -106,7 +106,6 @@ duplicate_pte (uint64_t *pte, void *va, void *aux) {
 	bool writable;
 	/* 1. TODO: If the parent_page is kernel page, then return immediately. */
   if(is_kernel_vaddr(va)){   
-  //if(is_kern_pte((uintptr_t *)pte)){ 
     return true;
   }
   
@@ -120,14 +119,8 @@ duplicate_pte (uint64_t *pte, void *va, void *aux) {
 	/* 4. TODO: Duplicate parent's page to the new page and
 	 *    TODO: check whether parent's page is writable or not (set WRITABLE
 	 *    TODO: according to the result). */
-  //?pte = pml4e_walk (pml4, (uint64_t) upage, false)
   memcpy(newpage,parent_page,PGSIZE);
-  // if(is_writable((uintptr_t *)parent_page)){
-  //   writable = true;
-  // }
-  // else{
-  //   writable = false;
-  // }
+  
   writable = is_writable(pte);
 	/* 5. Add new page to child's page table at address VA with WRITABLE
 	 *    permission. */
@@ -750,7 +743,6 @@ setup_stack (struct intr_frame *if_) {
 #endif /* VM */
 
 void argument_stack(char **parse ,int count ,void **esp){
-  //? 바이블에서 user_stack찾자
 	int i, j;
 	void* save_pointer[count];
 
@@ -774,15 +766,6 @@ void argument_stack(char **parse ,int count ,void **esp){
 		*esp = (int64_t*)*esp - 1;
 		**(int64_t**)esp = save_pointer[i];
 	}
-	// //문자열 배열의 시작값
-	// void *tmp_p;
-	// tmp_p = *esp;
-	// *esp = (int64_t*)*esp - 1;
-	// **(int64_t **)esp = tmp_p;
-	// //args개수 저장
-	// *esp = (int64_t*)*esp - 1;
-	// **(int64_t **)esp = count;
-
 	//trash주소값 0
 	*esp = (int64_t*)*esp - 1;
 	**(int64_t **)esp = NULL;

@@ -190,7 +190,7 @@ void thread_print_stats(void)
    Priority scheduling is the goal of Problem 1-3. */
 tid_t thread_create(const char *name, int priority,
                     thread_func *function, void *aux)
-{ // ?
+{
     struct thread *t;
     struct thread *curr = thread_current();
     tid_t tid;
@@ -233,8 +233,6 @@ tid_t thread_create(const char *name, int priority,
         palloc_free_page(t);
         return TID_ERROR;
     }
-    //@t->fd_table -= t->next_fd;
-    //?
 
     /* Add to run queue. */
     thread_unblock(t);
@@ -262,15 +260,6 @@ void test_max_priority(void)
         thread_yield();
 }
 
-// true when a < b
-// bool cmp_priority(const struct list_elem *a, const struct list_elem *b, void *aux UNUSED){
-// 	struct thread* t_a;
-// 	struct thread* t_b;
-// 	t_a = list_entry(a, struct thread, elem);
-// 	t_b = list_entry(b, struct thread, elem);
-
-// 	return t_a->priority > t_b->priority;
-// }
 
 /* Puts the current thread to sleep.  It will not be scheduled
    again until awoken by thread_unblock().
@@ -302,9 +291,8 @@ void thread_unblock(struct thread *t)
 
     old_level = intr_disable();
     ASSERT(t->status == THREAD_BLOCKED);
+    //좀비 프로세스 - 부모가 청소하기 전 까지 죽으면 안된다.
     //list_push_back (&ready_list, &t->elem);
-    //? 정렬한 상태로 푸쉬해야한다!
-    //? 레디큐에 넣어놓고 정렬된 상태에서
 
     list_insert_ordered(&ready_list, &t->elem, &cmp_priority, NULL);
 
@@ -351,15 +339,12 @@ void thread_exit(void)
     ASSERT(!intr_context());
 
 #ifdef USERPROG
-    //? PROJECT2
     process_exit();
 #endif
 
     /* Just set our status to dying and schedule another process.
 	   We will be destroyed during the call to schedule_tail(). */
     intr_disable();
-    //? 너 뭐야 왜 리스트가 비어있어
-    // sema_up(&thread_current()->exit_sema);
     thread_current()->isTerminated = 1;
     if(!list_empty(&thread_current()->exit_sema.waiters)){
 		sema_up(&thread_current()->exit_sema);
@@ -444,7 +429,6 @@ void thread_awake(int64_t ticks)
         }
     }
     next_tick_to_awake = tmp_tick;
-    //printf("#################################\nthread name : %s next_tick_to_awake: %lld\n",t->name, next_tick_to_awake);
 }
 
 /* Yields the CPU.  The current thread is not put to sleep and
@@ -458,7 +442,6 @@ void thread_yield(void)
 
     old_level = intr_disable();
     if (curr != idle_thread)
-        //list_push_back (&ready_list, &curr->elem); //? sorting 해서 집어넣자.
         list_insert_ordered(&ready_list, &curr->elem, &cmp_priority, NULL);
 
     do_schedule(THREAD_READY);
@@ -806,18 +789,6 @@ void donate_priority(void)
             break;
         next = next->wait_on_lock->holder;
     }
-
-    // struct thread* curr = thread_current(); // pri 6
-    // struct thread* next = curr->wait_on_lock->holder; // main 6
-    // int nested_depth = 0;
-
-    // while (next != NULL){
-    // 	if(next->priority >= curr->priority)
-    // 		break;
-    // 	next->priority = curr->priority;
-
-    // 	next = next->wait_on_lock->holder;
-    // }
 }
 
 /* lock 을 해지 했을때 donations 리스트에서 해당 엔트리를
@@ -864,12 +835,4 @@ void refresh_priority(void)
         if (list_priority > curr->priority)
             curr->priority = list_priority;
     }
-
-    // for (struct list_elem* e = list_begin(&curr->donations); e!=list_end(&curr->donations); e=list_next(e)) {
-    // 	t = list_entry(e, struct thread, donation_elem);
-    // 	ASSERT(is_thread(t));
-
-    // 	if (t->priority > curr->priority)
-    // 		curr->priority = t->priority;
-    // }
 }

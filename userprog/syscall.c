@@ -150,7 +150,6 @@ syscall_handler (struct intr_frame *f UNUSED) {
       exit(f->R.rdi);
       break;
   }
-	//printf ("system call!\n");
 }
 
 
@@ -206,7 +205,7 @@ int read (int fd, void *buffer, unsigned size){
     struct file *f = process_get_file(fd);
     if(f == NULL){
       lock_release(&filesys_lock);
-      return -1; //?
+      return -1; 
     }
     size = file_read(f, buffer, size);
     lock_release(&filesys_lock);

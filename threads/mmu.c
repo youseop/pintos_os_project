@@ -131,6 +131,7 @@ pgdir_for_each (uint64_t *pdp, pte_for_each_func *func, void *aux,
 }
 
 //#define PTE_ADDR(pte) ((uint64_t) (pte) & ~0xFFF)
+
 static bool
 pdp_for_each (uint64_t *pdp,
 		pte_for_each_func *func, void *aux, unsigned pml4_index) {
@@ -143,7 +144,9 @@ pdp_for_each (uint64_t *pdp,
 	}
 	return true;
 }
+
 //#define ptov(paddr) ((void *) (((uint64_t) paddr) + KERN_BASE))
+
 /* Apply FUNC to each available pte entries including kernel's. */
 bool
 pml4_for_each (uint64_t *pml4, pte_for_each_func *func, void *aux) {

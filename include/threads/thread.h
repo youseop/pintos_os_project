@@ -102,7 +102,6 @@ struct thread {
   struct list donations;
   struct list_elem donation_elem;
 
-  //?<---------------------->
 	// uint8_t *stack;
 	// struct list_elem allelem;
 	struct thread* parent_process;
@@ -127,7 +126,6 @@ struct thread {
   struct file **fd_table;
   int next_fd;
   struct file *exec_file;
-  //?<---------------------->
 
 
 

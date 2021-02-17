@@ -64,8 +64,7 @@ sema_down (struct semaphore *sema) {
 	ASSERT (sema != NULL);
 	ASSERT (!intr_context ());
 	old_level = intr_disable ();
-	while (sema->value == 0) {//?
-		//list_push_back (&sema->waiters, &thread_current ()->elem);
+	while (sema->value == 0) {
     list_insert_ordered(&sema->waiters, &thread_current ()->elem, &cmp_priority, NULL);
 		thread_block (); //schedule 까지 수행
 	}
@@ -193,7 +192,7 @@ lock_init (struct lock *lock) {
    interrupts disabled, but interrupts will be turned back on if
    we need to sleep. */
 void
-lock_acquire (struct lock *lock) {//? try to acquire
+lock_acquire (struct lock *lock) {
 /* 해당 lock 의 holder가 존재 한다면 아래 작업을 수행한다. */
 /* 현재 스레드의 wait_on_lock 변수에 획득 하기를 기다리는 lock의 주소를 저장 */
 /* multiple donation 을 고려하기 위해 이전상태의 우선순위를 기억,
@@ -208,9 +207,6 @@ donation 을 받은 스레드의 thread 구조체를 list로 관리한다. */
 
   if(lock_holder != NULL){
     curr->wait_on_lock = lock;
-    //?
-    // if(lock_holder->priority < curr->priority)
-    //   lock_holder->priority = curr->priority;
     list_insert_ordered(&(lock_holder->donations), &curr->donation_elem, &cmp_priority, NULL);
     donate_priority(); 
   }
