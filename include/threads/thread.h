@@ -120,7 +120,7 @@ struct thread {
 	int8_t isLoad;
 	int8_t isTerminated;
 	// 프로세스의 종료 상태를 나타내는 필드 추가?!
-	int8_t exit_status;
+	int exit_status;
 	struct semaphore exit_sema;
 	struct semaphore fork_sema;
   

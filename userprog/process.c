@@ -153,6 +153,7 @@ __do_fork (void *aux) {
 	struct intr_frame *parent_if = &parent->if_;
 
 	struct thread *current = thread_current ();
+  current->exit_status = 0;
 	/* TODO: somehow pass the parent_if. (i.e. process_fork()'s if_) */
 	bool succ = true;
 
@@ -161,8 +162,9 @@ __do_fork (void *aux) {
 
 	/* 2. Duplicate PT */
 	current->pml4 = pml4_create();
-	if (current->pml4 == NULL)
+	if (current->pml4 == NULL){
 		goto error;
+  }
 	process_activate (current);
 #ifdef VM
 	supplemental_page_table_init (&current->spt);
@@ -185,7 +187,7 @@ __do_fork (void *aux) {
   }
   current->next_fd = parent->next_fd;
 	process_init ();
-	if_.R.rax = 0;
+	if_.R.rax = 0; // 넌 자식이야!!!
   sema_up(&current->fork_sema);
 
 	/* Finally, switch to the newly created process. */
@@ -193,8 +195,9 @@ __do_fork (void *aux) {
 		do_iret (&if_);
   }
 error:
+		current->exit_status = -1;
   sema_up(&current->fork_sema);
-	thread_exit ();
+  thread_exit();
 }
 
 /* Switch the current execution context to the f_name.
@@ -285,8 +288,11 @@ process_wait (tid_t child_tid UNUSED) {
 	if(child->isTerminated == 0){
 		sema_down(&child->exit_sema);
 	}
+
   status = child->exit_status;
+
   remove_child_process(child);
+
 	return status;
 }
 
@@ -298,7 +304,7 @@ process_exit (void) {
 	 * TODO: Implement process termination message (see
 	 * TODO: project2/process_termination.html).
 	 * TODO: We recommend you to implement process resource cleanup here. */
-	for(int i=0; i<=curr->next_fd; i++){
+  for(int i=0; i<=curr->next_fd; i++){
 		if(curr->fd_table[i] != NULL && curr->exec_file != curr->fd_table[i]){
 			  file_close(curr->fd_table[i]);
     }
@@ -306,6 +312,15 @@ process_exit (void) {
 	file_close(curr->exec_file);
 	curr->exec_file =NULL;
 	palloc_free_multiple(curr->fd_table,2);
+
+	struct thread* cmp_thread;
+  
+	for (struct list_elem* e = list_begin(&curr->child_process); e != list_end(&curr->child_process);) {
+        cmp_thread = list_entry(e, struct thread, child_elem);
+		// list_remove(&cmp_thread->elem);
+		e = list_remove(&cmp_thread->child_elem);
+		palloc_free_page(cmp_thread);
+	}
 	process_cleanup ();
 }
 
@@ -618,7 +633,6 @@ load_segment (struct file *file, off_t ofs, uint8_t *upage,
 
 		/* Add the page to the process's address space. */
 		if (!install_page (upage, kpage, writable)) {
-			printf("fail\n");
 			palloc_free_page (kpage);
 			return false;
 		}
@@ -778,16 +792,18 @@ void argument_stack(char **parse ,int count ,void **esp){
 /* 자식 리스트에 접근하여 프로세스 디스크립터 검색 */
 /* 해당 pid가 존재하면 프로세스 디스크립터 반환 */
 /* 리스트에 존재하지 않으면 NULL 리턴 */
-struct thread *get_child_process (int pid){
+struct thread *
+get_child_process (int pid){
+  if(pid == -1)
+    return NULL;
 	struct thread* curr = thread_current();
 	struct thread* child;
-	for (struct list_elem* e = list_begin(&curr->child_process); e != list_end(&curr->child_process) ;) {
+	for (struct list_elem* e = list_begin(&curr->child_process); e != list_end(&curr->child_process) ;e = list_next(e)) {
 		child = list_entry(e, struct thread, child_elem);
 		ASSERT (is_thread (child));
 		if (child->tid == pid){
 			return child;
 		}
-		e = list_next(e);
 	}
 	return NULL;
 }
@@ -796,21 +812,9 @@ struct thread *get_child_process (int pid){
 /* 프로세스 디스크립터 메모리 해제 */
 void remove_child_process(struct thread *cp)
 {
-	struct thread* curr = thread_current();
-	struct thread* child;
-	for (struct list_elem* e = list_begin(&curr->child_process); e != list_end(&curr->child_process) ;) {
-		child = list_entry(e, struct thread, child_elem);
-		ASSERT (is_thread (child));
-		if (child->tid == cp->tid){
-			e = list_remove(&child->child_elem);
-			palloc_free_page(child);
-			return;
-		}
-		else{
-			e = list_next(e);
-		}
-	}
-	return NULL;
+
+  list_remove(&cp->child_elem);
+  palloc_free_page(cp);
 }
 
 /* 파일 객체를 파일 디스크립터 테이블에 추가
@@ -820,6 +824,10 @@ int
 process_add_file(struct file *f){
 	ASSERT(f != NULL);
 	struct thread* curr = thread_current();
+  if (curr->next_fd > 1022){
+    file_close(f);
+    return -1;
+  }
 	curr->next_fd ++;
 	curr->fd_table[curr->next_fd] = f;
 	return curr->next_fd;

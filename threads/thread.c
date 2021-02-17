@@ -192,7 +192,7 @@ thread_print_stats (void) {
    Priority scheduling is the goal of Problem 1-3. */
 tid_t
 thread_create (const char *name, int priority,
-		thread_func *function, void *aux) { // ?
+		thread_func *function, void *aux) { 
 	struct thread *t;
 	struct thread *curr = thread_current ();
 	tid_t tid;
@@ -201,9 +201,9 @@ thread_create (const char *name, int priority,
 
 	/* Allocate thread. */
 	t = palloc_get_page (PAL_ZERO);
-	if (t == NULL)
+	if (t == NULL){
 		return TID_ERROR;
-
+  }
 	/* Initialize thread. */
 	init_thread (t, name, priority);
 	tid = t->tid = allocate_tid ();
@@ -215,8 +215,8 @@ thread_create (const char *name, int priority,
 	t->tf.R.rsi = (uint64_t) aux;
 	t->tf.ds = SEL_KDSEG;
 	t->tf.es = SEL_KDSEG;
-	t->tf.ss = SEL_KDSEG;
-	t->tf.cs = SEL_KCSEG;
+	t->tf.ss = SEL_KDSEG; //? 10
+	t->tf.cs = SEL_KCSEG; //? 8
 	t->tf.eflags = FLAG_IF;
 
 	t->parent_process = curr;
@@ -224,15 +224,16 @@ thread_create (const char *name, int priority,
 	t->isTerminated = 0;
 	sema_init(&t->exit_sema, 0);
 	sema_init(&t->fork_sema, 0);
-	list_push_back(&curr->child_process, &t->child_elem);
 
 	t->next_fd = 2;
 	t->fd_table = palloc_get_multiple(PAL_ZERO,2);
 	if(t->fd_table == NULL){
-		palloc_free_multiple(t->fd_table,2);
+		//? palloc_free_multiple(t->fd_table,2);
 		palloc_free_page(t);
 		return TID_ERROR;
 	}
+
+	list_push_back(&curr->child_process, &t->child_elem);
 
 	/* Add to run queue. */
 	thread_unblock (t); //!
@@ -586,6 +587,8 @@ init_thread (struct thread *t, const char *name, int priority) {
 	list_init(&t->child_process);
 	t->isLoad = 0;
 	t->isTerminated = 0;
+
+  t->exit_status = 0;
 }
 
 /* Chooses and returns the next thread to be scheduled.  Should

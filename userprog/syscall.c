@@ -166,15 +166,21 @@ void get_argument(void *rsp, int **arg , int count){
 
 int fork (const char *thread_name){
   tid_t child_tid = process_fork(thread_name,&thread_current()->tf);
+  if(child_tid == -1)
+    return -1;
   struct thread* child = get_child_process(child_tid);
-  ASSERT(child);
+  if(child == NULL){
+    return -1;
+  }
+
   sema_down(&child->fork_sema);
-  if (thread_current()->tid == child_tid){
-    return 0;
+
+  if(child->exit_status == -1){
+    return -1;
   }
-  else{
-    return child_tid;
-  }
+
+ 
+  return child_tid;
 }
 
 /* 파일에 동시 접근이 일어날 수 있으므로 Lock 사용 */

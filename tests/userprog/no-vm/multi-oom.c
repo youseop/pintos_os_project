@@ -61,8 +61,9 @@ consume_some_resources (void)
 			  break;
 	  }
 #else
-		if (open (test_name) == -1)
-		  break;
+		if (open (test_name) == -1){
+		  break; 
+    }
 #endif
   }
 }
@@ -135,8 +136,9 @@ make_children (void) {
 
   if (i == 0)
 	  return depth;
-  else
+  else{
 	  exit (depth);
+  }
 }
 
 int
