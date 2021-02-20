@@ -2,6 +2,10 @@
 
 #include "vm/vm.h"
 
+/*
+* 파일 기반 페이지에 대한 작업을 제공합니다 (vm_type = VM_FILE).
+*/
+
 static bool file_backed_swap_in (struct page *page, void *kva);
 static bool file_backed_swap_out (struct page *page);
 static void file_backed_destroy (struct page *page);

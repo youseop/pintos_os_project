@@ -3,6 +3,10 @@
 #include "vm/vm.h"
 #include "devices/disk.h"
 
+/*
+* 익명 페이지에 대한 작업을 제공합니다 (vm_type = VM_ANON).
+*/
+
 /* DO NOT MODIFY BELOW LINE */
 static struct disk *swap_disk;
 static bool anon_swap_in (struct page *page, void *kva);

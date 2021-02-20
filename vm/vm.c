@@ -3,11 +3,26 @@
 #include "threads/malloc.h"
 #include "vm/vm.h"
 #include "vm/inspect.h"
+#include "threads/thread.h"
+#include "threads/vaddr.h"
+#include "list.h"
+#include "threads/palloc.h"
+#include <hash.h>
+
+/*
+* 	가상 메모리에 대한 일반 인터페이스를 제공합니다. 
+* 	헤더 파일에서 가상 메모리 시스템이 지원해야하는 
+* 	다른 vm_type (VM_UNINIT, VM_ANON, VM_FILE, VM_PAGE_CACHE)에 대한 
+* 	정의와 설명을 볼 수 있습니다 (지금은 VM_PAGE_CACHE 무시, 프로젝트 4 용). 
+* 	여기에서 보충 페이지 표를 구현할 수도 있습니다 (아래 참조).
+*/
 
 /* Initializes the virtual memory subsystem by invoking each subsystem's
  * intialize codes. */
 void
-vm_init (void) {
+vm_init (void)
+
+ {
 	vm_anon_init ();
 	vm_file_init ();
 #ifdef EFILESYS  /* For project 4 */
@@ -53,30 +68,56 @@ vm_alloc_page_with_initializer (enum vm_type type, void *upage, bool writable,
 		/* TODO: Create the page, fetch the initialier according to the VM type,
 		 * TODO: and then create "uninit" page struct by calling uninit_new. You
 		 * TODO: should modify the field after calling the uninit_new. */
+		struct page* page = (struct page*)malloc(sizeof(struct page));
+		ASSERT(page);
+		
+		bool (*initializer)(struct page *, enum vm_type, void *);
+		switch(type){
+			case VM_ANON:
+				initializer = anon_initializer;
+				break;
+			case VM_FILE:
+				initializer = file_backed_initializer;			
+				break;
+			default:
+				PANIC("###### vm_alloc_page_with_initializer [unvalid type] ######");
+				break;
+		}
+
+		uninit_new(page, upage, init, type, aux, initializer);
 
 		/* TODO: Insert the page into the spt. */
+		if(spt_insert_page(spt, page))
+			return true;
+		else{
+			goto err;
+		}
 	}
 err:
 	return false;
 }
 
-/* Find VA from spt and return page. On error, return NULL. */
+/* Find VA from spt and return page. On error, return NULL. 
+Find struct page that corresponds to 
+va(* Address in terms of user space *) 
+from the given supplemental page table. If fail, return NULL.*/
 struct page *
 spt_find_page (struct supplemental_page_table *spt UNUSED, void *va UNUSED) {
-	struct page *page = NULL;
-	/* TODO: Fill this function. */
-
-	return page;
+	ASSERT(pg_round_down(va) == va);
+	return page_lookup(va);
 }
 
-/* Insert PAGE into spt with validation. */
+/* Insert PAGE into spt with validation. 
+Insert struct page into the given supplemental page table. 
+This function should checks that the virtual address 
+does not exist in the given supplemental page table.*/
 bool
 spt_insert_page (struct supplemental_page_table *spt UNUSED,
 		struct page *page UNUSED) {
-	int succ = false;
-	/* TODO: Fill this function. */
-
-	return succ;
+	//?This function should checks that the virtual address does not exist in the given supplemental page table.
+	if(hash_insert(&spt->hash_table, &page->hash_elem) == NULL)
+		return true;
+	return false;
 }
 
 void
@@ -106,12 +147,19 @@ vm_evict_frame (void) {
 
 /* palloc() and get frame. If there is no available page, evict the page
  * and return it. This always return valid address. That is, if the user pool
- * memory is full, this function evicts the frame to get the available memory
+ * memory is full, //?this function evicts the frame to get the available memory
  * space.*/
 static struct frame *
 vm_get_frame (void) {
-	struct frame *frame = NULL;
-	/* TODO: Fill this function. */
+	void* p = palloc_get_page(PAL_USER);
+	if(p == NULL)
+		PANIC("todo");
+	
+	struct frame *frame = (struct frame*)malloc(sizeof(struct frame));
+	if (frame == NULL) 
+		PANIC("failed to allocate frame");
+	
+	frame->kva = p;
 
 	ASSERT (frame != NULL);
 	ASSERT (frame->page == NULL);
@@ -151,8 +199,10 @@ vm_dealloc_page (struct page *page) {
 /* Claim the page that allocate on VA. */
 bool
 vm_claim_page (void *va UNUSED) {
-	struct page *page = NULL;
 	/* TODO: Fill this function */
+	struct page *page = (struct page*)malloc(sizeof(struct page));
+	page->va = va;
+	ASSERT(!spt_insert_page(&thread_current ()->spt, page));
 
 	return vm_do_claim_page (page);
 }
@@ -166,14 +216,24 @@ vm_do_claim_page (struct page *page) {
 	frame->page = page;
 	page->frame = frame;
 
+	bool writable = true;
 	/* TODO: Insert page table entry to map page's VA to frame's PA. */
+	pml4_set_page(thread_current()->pml4, page->va, frame->kva, writable); //? rw>> 1 or 0 ??
 
+	//? #define swap_in(page, v) (page)->operations->swap_in ((page), v)
+	//? swap_in함수들 실행!
 	return swap_in (page, frame->kva);
 }
 
-/* Initialize new supplemental page table */
+/* Initialize new supplemental page table 
+
+Initializes the supplemental page table. 
+You may choose the data structure to use for the supplemental page table. 
+The function is called when a new process starts (in initd of userprog/process.c) 
+and when a process is being forked (in __do_fork of userprog/process.c).*/
 void
 supplemental_page_table_init (struct supplemental_page_table *spt UNUSED) {
+	hash_init(&spt->hash_table, page_hash, page_less, NULL);
 }
 
 /* Copy supplemental page table from src to dst */
@@ -187,4 +247,35 @@ void
 supplemental_page_table_kill (struct supplemental_page_table *spt UNUSED) {
 	/* TODO: Destroy all the supplemental_page_table hold by thread and
 	 * TODO: writeback all the modified contents to the storage. */
+}
+
+
+/* Computes and returns the hash value for hash element E, given
+ * auxiliary data AUX. */
+uint64_t page_hash (const struct hash_elem *e, void *aux){
+	const struct page* p = hash_entry(e, struct page, hash_elem);
+	return hash_bytes(&p->va, sizeof(p->va));
+}
+
+/* Compares the value of two hash elements A and B, given
+ * auxiliary data AUX.  Returns true if A is less than B, or
+ * false if A is greater than or equal to B. */
+bool page_less (const struct hash_elem *a,
+		const struct hash_elem *b,
+		void *aux){
+	struct page* page_a = hash_entry(a, struct page, hash_elem);
+	struct page* page_b = hash_entry(b, struct page, hash_elem);
+	return page_a->va < page_b->va;
+}
+
+/* Returns the page containing the given virtual address, 
+or a null pointer if no such page exists. */
+struct page *
+page_lookup (const void *address) {
+  struct page p;
+  struct hash_elem *e;
+
+  p.va = address;
+  e = hash_find (&thread_current()->spt.hash_table, &p.hash_elem);
+  return e != NULL ? hash_entry (e, struct page, hash_elem) : NULL;
 }

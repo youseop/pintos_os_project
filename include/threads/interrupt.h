@@ -58,7 +58,7 @@ struct intr_frame {
 	uint16_t __pad5;
 	uint32_t __pad6;
 	uint64_t eflags;
-	uintptr_t rsp;  //? esp랑 같다! 64비트 - rsp
+	uintptr_t rsp;  //? esp와 동일 64비트 - rsp
 	uint16_t ss;
 	uint16_t __pad7;
 	uint32_t __pad8;

@@ -14,6 +14,11 @@ static __inline int64_t syscall (uint64_t num_, uint64_t a1_, uint64_t a2_,
 	register uint64_t *a5 asm ("r8") = (uint64_t *) a5_;
 	register uint64_t *a6 asm ("r9") = (uint64_t *) a6_;
 
+	/* [인라인 어셈블리]
+	 * __asm__ __volatile__ (asms : output : input : clobber);
+	 * output의 인자들 부터 input의 인자들 까지 순서대로 %0, %1, %2 ~ 를 사용해 변수들을 사용할 수 있다.
+	 * 아래의 코드는 input으로 전달된 system call number와 6개의 인자들을 각각 
+	 * Register의 rax, rdi~r9에 집어넣는다. */
 	__asm __volatile(
 			"mov %1, %%rax\n"
 			"mov %2, %%rdi\n"

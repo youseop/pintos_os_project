@@ -8,9 +8,8 @@
 #include "hash.h"
 #include "../debug.h"
 #include "threads/malloc.h"
+#include "vm/vm.h"
 
-#define list_elem_to_hash_elem(LIST_ELEM)                       \
-	list_entry(LIST_ELEM, struct hash_elem, list_elem)
 
 static struct list *find_bucket (struct hash *, struct hash_elem *);
 static struct hash_elem *find_elem (struct hash *, struct list *,
@@ -83,6 +82,17 @@ hash_destroy (struct hash *h, hash_action_func *destructor) {
 		hash_clear (h, destructor);
 	free (h->buckets);
 }
+
+/*Now we can manipulate the hash table we've created. 
+If p is a pointer to a struct page, 
+we can insert it into the hash table with:
+
+hash_insert (&pages, &p->hash_elem);
+
+If there's a chance that pages might already contain 
+a page with the same addr, 
+then we should check hash_insert()'s return value.
+*/
 
 /* Inserts NEW into hash table H and returns a null pointer, if
    no equal element is already in the table.
@@ -391,4 +401,3 @@ remove_elem (struct hash *h, struct hash_elem *e) {
 	h->elem_cnt--;
 	list_remove (&e->list_elem);
 }
-

@@ -6,6 +6,10 @@
 #include "threads/mmu.h"
 #include "vm/inspect.h"
 
+/*
+* 채점을위한 메모리 검사 작업을 포함합니다. 이 파일을 변경하지 마십시오.
+*/
+
 static void
 inspect (struct intr_frame *f) {
 	const void *va = (const void *) f->R.rax;

@@ -11,6 +11,12 @@
 #include "vm/vm.h"
 #include "vm/uninit.h"
 
+/*
+* 	초기화되지 않은 페이지에 대한 작업을 제공합니다 (vm_type = VM_UNINIT). 
+* 	현재 디자인에서 모든 페이지는 처음에 초기화되지 않은 페이지로 설정되고 
+* 	익명 페이지 또는 파일 백업 페이지로 변환됩니다.
+*/
+
 static bool uninit_initialize (struct page *page, void *kva);
 static void uninit_destroy (struct page *page);
 

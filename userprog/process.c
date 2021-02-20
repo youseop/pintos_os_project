@@ -198,13 +198,13 @@ error:
 int
 process_exec (void *f_name) {
 	void **save_addr = malloc(sizeof(void*));
-	*save_addr = f_name;
 	char *file_name = malloc(sizeof(char)*(strlen(f_name)+1));
+	*save_addr = f_name;
 	memcpy(file_name, f_name,strlen(f_name)+1);
 
 	bool success;
   char *user_program;
-  char *save_arg[64]; //? # input argmuent limit = 10
+  char *save_arg[64];
   char *saveptr;
   char *retptr = NULL;
   int token_cnt = 0;
@@ -243,10 +243,11 @@ process_exec (void *f_name) {
 		return -1;
 	}
 	argument_stack(need_free, token_cnt, &_if.rsp);
+	
 	/* Start switched process. */
 	_if.R.rdi = token_cnt;
 	_if.R.rsi = (int64_t*)_if.rsp + 1;
-	//? palloc_free_page (f_name);   -------------- 반창고 --------------
+
 	for(int i = 0; i<token_cnt; i++){
 		free(need_free[i]);
 	}
@@ -743,6 +744,9 @@ setup_stack (struct intr_frame *if_) {
 #endif /* VM */
 
 void argument_stack(char **parse ,int count ,void **esp){
+    //parse : 파싱된 문자열들
+    //count : 문자열들의 개수
+    //esp   : stack pointer(64bit운영체제에서의 rsp와 동일)
 	int i, j;
 	void* save_pointer[count];
 
@@ -755,6 +759,7 @@ void argument_stack(char **parse ,int count ,void **esp){
 		save_pointer[i] = *(char **)esp;
 	}
 	
+	//8byte-allign
 	*esp = *(int64_t*)esp & ~(int64_t)7;
 	
 	//마지막 널값의 주소!

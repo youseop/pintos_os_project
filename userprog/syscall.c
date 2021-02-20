@@ -51,9 +51,11 @@ static char* STATUS[23] = {
  * The syscall instruction works by reading the values from the the Model
  * Specific Register (MSR). For the details, see the manual. */
 
+//c000008100000000
 #define MSR_STAR 0xc0000081         /* Segment selector msr */
 #define MSR_LSTAR 0xc0000082        /* Long mode SYSCALL target */
 #define MSR_SYSCALL_MASK 0xc0000084 /* Mask for the eflags */
+
 
 void
 syscall_init (void) {
@@ -73,11 +75,11 @@ syscall_init (void) {
 /* The main system call interface */
 void
 syscall_handler (struct intr_frame *f UNUSED) {
-	// TODO: Your implementation goes here.
+  // TODO: Your implementation goes here.
   /*
-  get stack pointer from interrupt frame //? rsp
-  get system call number from stack      //? 
-  switch (system call number){           //? sys call number별로 찾아간다.
+  get stack pointer from interrupt frame 
+  get system call number from stack      
+  switch (system call number){           
     case the number is halt:
       call halt function;
       break;
@@ -89,7 +91,7 @@ syscall_handler (struct intr_frame *f UNUSED) {
       call thread_exit function;
 
   */
-  
+
   check_address(f->rsp,f->R.rdi);
   switch((f->R.rax)){
     case SYS_HALT:
@@ -167,18 +169,17 @@ int fork (const char *thread_name){
   tid_t child_tid = process_fork(thread_name,&thread_current()->tf);
   if(child_tid == -1)
     return -1;
-  struct thread* child = get_child_process(child_tid);
+  struct thread* child = get_child_process(child_tid); 
+
   if(child == NULL){
     return -1;
-  }
-
+  }  
+  printf("addr: %p\n",thread_current());
   sema_down(&child->fork_sema);
 
   if(child->exit_status == -1){
     return -1;
   }
-
- 
   return child_tid;
 }
 
@@ -246,6 +247,7 @@ void check_address(void *addr, int status)
 
 void exit (int status) {
   struct thread * curr = thread_current();
+
   curr->exit_status = status;
   printf("%s: exit(%d)\n", thread_name(), status);
   thread_exit ();

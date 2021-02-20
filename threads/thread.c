@@ -200,7 +200,12 @@ thread_create (const char *name, int priority,
 	ASSERT (function != NULL);
 
 	/* Allocate thread. */
-	t = palloc_get_page (PAL_ZERO);
+	t = palloc_get_page (002);
+	// printf("palloc_get_page (PAL_ZERO) in thread.c addr : %p\n",t);
+	// /* Test user_pool. */
+  // void * c = palloc_get_page (004);
+  // printf("palloc_get_page (PAL_USER) in thread.c addr : %p\n",c);
+
 	if (t == NULL){
 		return TID_ERROR;
   }
@@ -603,6 +608,11 @@ next_thread_to_run (void) {
 	else
 		return list_entry (list_pop_front (&ready_list), struct thread, elem);
 }
+
+/*Returns program control from an exception or 
+interrupt handler to a program or procedure 
+that was interrupted by an exception, an external 
+interrupt, or a software-generated interrupt.*/
 
 /* Use iretq to launch the thread */
 void
