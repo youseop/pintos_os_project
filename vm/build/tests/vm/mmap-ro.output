@@ -14,17 +14,18 @@ Boot complete.
 Putting 'mmap-ro' into the file system...
 Putting 'large.txt' into the file system...
 Executing 'mmap-ro':
-Kernel PANIC at ../../userprog/process.c:84 in initd(): Fail to launch initd
-
-Call stack: 0x8004216a96 0x800421a12f 0x80042078b9.
-The `backtrace' program can make call stacks useful.
-Read "Backtraces" in the "Debugging Tools" chapter
-of the Pintos documentation for more information.
-Timer: 162 ticks
-Thread: 30 idle ticks, 131 kernel ticks, 1 user ticks
+(mmap-ro) begin
+(mmap-ro) open "large.txt"
+(mmap-ro) mmap "large.txt" with writable=0
+mmap-ro: exit(268435456)
+Execution of 'mmap-ro' complete.
+Timer: 166 ticks
+Thread: 30 idle ticks, 130 kernel ticks, 6 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 68 reads, 8074 writes
+hd0:1: 187 reads, 8074 writes
 hd1:0: 4018 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1198 characters output
-Key
+Console: 1059 characters output
+Keyboard: 0 keys pressed
+Exception: 0 page faults
+Powering off...

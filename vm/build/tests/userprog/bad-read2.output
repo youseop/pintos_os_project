@@ -13,17 +13,25 @@ Formatting file system...done.
 Boot complete.
 Putting 'bad-read2' into the file system...
 Executing 'bad-read2':
-Kernel PANIC at ../../userprog/process.c:84 in initd(): Fail to launch initd
-
-Call stack: 0x8004216a96 0x800421a12f 0x80042078b9.
-The `backtrace' program can make call stacks useful.
-Read "Backtraces" in the "Debugging Tools" chapter
-of the Pintos documentation for more information.
-Timer: 64 ticks
-Thread: 30 idle ticks, 32 kernel ticks, 2 user ticks
+(bad-read2) begin
+Page fault at 0x8004000000: rights violation error reading page in user context.
+bad-read2: dying due to interrupt 0x0e (#PF Page-Fault Exception).
+Interrupt 0x0e (#PF Page-Fault Exception) at rip=4000f6
+ cr2=0000008004000000 error=               5
+rax 0000008004000000 rbx 0000000000000000 rcx 00000000000000ff rdx 0000000000000000
+rsp 000000004747ff90 rbp 000000004747ff90 rsi 00000000006050ee rdi 00000000006051df
+rip 00000000004000f6 r8 0000000000000000  r9 0000000000000000 r10 0000000000000000
+r11 0000000000000206 r12 0000000000000000 r13 0000000000000000 r14 0000000000000000
+r15 0000000000000000 rflags 00000212
+es: 001b ds: 001b cs: 0023 ss: 001b
+Execution of 'bad-read2' complete.
+Timer: 80 ticks
+Thread: 30 idle ticks, 40 kernel ticks, 11 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 41 reads, 234 writes
+hd0:1: 156 reads, 234 writes
 hd1:0: 103 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1143 characters output
-Key
+Console: 1571 characters output
+Keyboard: 0 keys pressed
+Exception: 1 page faults
+Powering off...

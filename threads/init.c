@@ -148,8 +148,10 @@ paging_init (uint64_t mem_end) {
 	uint64_t *pml4, *pte;
 	int perm;
 	pml4 = base_pml4 = palloc_get_page (PAL_ASSERT | PAL_ZERO);
-
+	// printf("#paging_init#  base_pml4 : %p\n",base_pml4);
+	//#paging_init# start : 0x8004200000 _end_kernel_text : 0x8004225000
 	extern char start, _end_kernel_text;
+	
 	// Maps physical address [0 ~ mem_end] to
 	//   [LOADER_KERN_BASE ~ LOADER_KERN_BASE + mem_end].
 	for (uint64_t pa = 0; pa < mem_end; pa += PGSIZE) {

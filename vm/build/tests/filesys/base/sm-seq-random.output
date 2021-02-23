@@ -13,17 +13,24 @@ Formatting file system...done.
 Boot complete.
 Putting 'sm-seq-random' into the file system...
 Executing 'sm-seq-random':
-Kernel PANIC at ../../userprog/process.c:84 in initd(): Fail to launch initd
-
-Call stack: 0x8004216a96 0x800421a12f 0x80042078b9.
-The `backtrace' program can make call stacks useful.
-Read "Backtraces" in the "Debugging Tools" chapter
-of the Pintos documentation for more information.
-Timer: 62 ticks
-Thread: 30 idle ticks, 32 kernel ticks, 0 user ticks
+(sm-seq-random) begin
+(sm-seq-random) create "nibble"
+(sm-seq-random) open "nibble"
+(sm-seq-random) writing "nibble"
+(sm-seq-random) close "nibble"
+(sm-seq-random) open "nibble" for verification
+(sm-seq-random) verified contents of "nibble"
+(sm-seq-random) close "nibble"
+(sm-seq-random) end
+sm-seq-random: exit(0)
+Execution of 'sm-seq-random' complete.
+Timer: 73 ticks
+Thread: 30 idle ticks, 32 kernel ticks, 11 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 41 reads, 242 writes
+hd0:1: 220 reads, 287 writes
 hd1:0: 107 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1159 characters output
-Key
+Console: 1231 characters output
+Keyboard: 0 keys pressed
+Exception: 0 page faults
+Powering off...

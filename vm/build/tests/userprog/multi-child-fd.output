@@ -15,17 +15,29 @@ Putting 'multi-child-fd' into the file system...
 Putting 'sample.txt' into the file system...
 Putting 'child-close' into the file system...
 Executing 'multi-child-fd':
-Kernel PANIC at ../../userprog/process.c:84 in initd(): Fail to launch initd
-
-Call stack: 0x8004216a96 0x800421a12f 0x80042078b9.
-The `backtrace' program can make call stacks useful.
-Read "Backtraces" in the "Debugging Tools" chapter
-of the Pintos documentation for more information.
-Timer: 73 ticks
-Thread: 30 idle ticks, 42 kernel ticks, 1 user ticks
+(multi-child-fd) begin
+(multi-child-fd) open "sample.txt"
+child-close: dying due to interrupt 0x03 (#BP Breakpoint Exception).
+Interrupt 0x03 (#BP Breakpoint Exception) at rip=40349d
+ cr2=000000000040349c error=               0
+rax ffffffffffffffff rbx 0000000000000000 rcx 000000000040349c rdx 0000000000000000
+rsp 000000004747fea8 rbp 000000004747fef0 rsi 0000000000000000 rdi 000000004747ff08
+rip 000000000040349d r8 0000000000000000  r9 0000000000000000 r10 0000000000000000
+r11 0000000000000212 r12 0000000000000000 r13 0000000000000000 r14 0000000000000000
+r15 0000000000000000 rflags 00000212
+es: 001b ds: 001b cs: 0023 ss: 001b
+(multi-child-fd) wait(exec()) = 0
+(multi-child-fd) verified contents of "sample.txt"
+(multi-child-fd) end
+multi-child-fd: exit(0)
+Execution of 'multi-child-fd' complete.
+Timer: 90 ticks
+Thread: 30 idle ticks, 43 kernel ticks, 17 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 97 reads, 488 writes
+hd0:1: 355 reads, 488 writes
 hd1:0: 220 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1286 characters output
-Key
+Console: 1810 characters output
+Keyboard: 0 keys pressed
+Exception: 0 page faults
+Powering off...

@@ -1,7 +1,38 @@
 FAIL
-Kernel panic in run: PANIC at ../../userprog/process.c:84 in initd(): Fail to launch initd
-Call stack: 0x8004216a96 0x800421a12f 0x80042078b9
-Translation of call stack:
-0x0000008004216a96: debug_panic (lib/kernel/debug.c:32)
-0x000000800421a12f: initd (userprog/process.c:85)
-0x00000080042078b9: kernel_thread (threads/thread.c:569)
+Test output failed to match any acceptable form.
+
+Acceptable output:
+  (exec-missing) begin
+  (exec-missing) exec("no-such-file"): -1
+  exec-missing: exit(-1)
+Differences in `diff -u' format:
+  (exec-missing) begin
+- (exec-missing) exec("no-such-file"): -1
+- exec-missing: exit(-1)
++ load: no-such-file: open failed
++ exec-missing: dying due to interrupt 0x03 (#BP Breakpoint Exception).
++ Interrupt 0x03 (#BP Breakpoint Exception) at rip=4033b7
++  cr2=00000000004033b6 error=               0
++ rax ffffffffffffffff rbx 0000000000000000 rcx 00000000004033b6 rdx 0000000000000000
++ rsp 000000004747ff38 rbp 000000004747ff80 rsi 0000000000000000 rdi 0000000000404320
++ rip 00000000004033b7 r8 0000000000000000  r9 0000000000000000 r10 0000000000000000
++ r11 0000000000000212 r12 0000000000000000 r13 0000000000000000 r14 0000000000000000
++ r15 0000000000000000 rflags 00000212
++ es: 001b ds: 001b cs: 0023 ss: 001b
+Acceptable output:
+  (exec-missing) begin
+  load: no-such-file: open failed
+  exec-missing: exit(-1)
+Differences in `diff -u' format:
+  (exec-missing) begin
+  load: no-such-file: open failed
+- exec-missing: exit(-1)
++ exec-missing: dying due to interrupt 0x03 (#BP Breakpoint Exception).
++ Interrupt 0x03 (#BP Breakpoint Exception) at rip=4033b7
++  cr2=00000000004033b6 error=               0
++ rax ffffffffffffffff rbx 0000000000000000 rcx 00000000004033b6 rdx 0000000000000000
++ rsp 000000004747ff38 rbp 000000004747ff80 rsi 0000000000000000 rdi 0000000000404320
++ rip 00000000004033b7 r8 0000000000000000  r9 0000000000000000 r10 0000000000000000
++ r11 0000000000000212 r12 0000000000000000 r13 0000000000000000 r14 0000000000000000
++ r15 0000000000000000 rflags 00000212
++ es: 001b ds: 001b cs: 0023 ss: 001b

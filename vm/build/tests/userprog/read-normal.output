@@ -4,7 +4,7 @@ Kernel command line: -q -f put read-normal put sample.txt run read-normal
 Pintos booting with: 
 	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
 	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
-Calibrating timer...  157,081,600 loops/s.
+Calibrating timer...  117,760,000 loops/s.
 hd0:0: detected 313 sector (156 kB) disk, model "QEMU HARDDISK", serial "QM00001"
 hd0:1: detected 20,160 sector (9 MB) disk, model "QEMU HARDDISK", serial "QM00002"
 hd1:0: detected 105 sector (52 kB) disk, model "QEMU HARDDISK", serial "QM00003"
@@ -14,17 +14,20 @@ Boot complete.
 Putting 'read-normal' into the file system...
 Putting 'sample.txt' into the file system...
 Executing 'read-normal':
-Kernel PANIC at ../../userprog/process.c:84 in initd(): Fail to launch initd
-
-Call stack: 0x8004216a96 0x800421a12f 0x80042078b9.
-The `backtrace' program can make call stacks useful.
-Read "Backtraces" in the "Debugging Tools" chapter
-of the Pintos documentation for more information.
-Timer: 66 ticks
-Thread: 30 idle ticks, 35 kernel ticks, 1 user ticks
+(read-normal) begin
+(read-normal) open "sample.txt" for verification
+(read-normal) verified contents of "sample.txt"
+(read-normal) close "sample.txt"
+(read-normal) end
+read-normal: exit(0)
+Execution of 'read-normal' complete.
+Timer: 78 ticks
+Thread: 30 idle ticks, 39 kernel ticks, 9 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 68 reads, 248 writes
+hd0:1: 195 reads, 248 writes
 hd1:0: 105 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1211 characters output
-Key
+Console: 1154 characters output
+Keyboard: 0 keys pressed
+Exception: 0 page faults
+Powering off...

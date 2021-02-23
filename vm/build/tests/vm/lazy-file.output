@@ -15,17 +15,20 @@ Putting 'lazy-file' into the file system...
 Putting 'sample.txt' into the file system...
 Putting 'small.txt' into the file system...
 Executing 'lazy-file':
-Kernel PANIC at ../../userprog/process.c:84 in initd(): Fail to launch initd
-
-Call stack: 0x8004216a96 0x800421a12f 0x80042078b9.
-The `backtrace' program can make call stacks useful.
-Read "Backtraces" in the "Debugging Tools" chapter
-of the Pintos documentation for more information.
-Timer: 69 ticks
-Thread: 30 idle ticks, 37 kernel ticks, 2 user ticks
+(lazy-file) begin
+(lazy-file) open "small.txt"
+(lazy-file) sizeof small: 10017
+(lazy-file) page aligned size of small: 12288
+(lazy-file) mmap "small.txt"
+lazy-file: exit(268435456)
+Execution of 'lazy-file' complete.
+Timer: 76 ticks
+Thread: 30 idle ticks, 38 kernel ticks, 8 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 97 reads, 350 writes
+hd0:1: 232 reads, 350 writes
 hd1:0: 151 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1261 characters output
-Key
+Console: 1194 characters output
+Keyboard: 0 keys pressed
+Exception: 0 page faults
+Powering off...

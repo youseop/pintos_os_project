@@ -4,7 +4,7 @@ Kernel command line: -q -f put page-merge-mm put child-qsort-mm run page-merge-m
 Pintos booting with: 
 	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
 	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
-Calibrating timer...  104,755,200 loops/s.
+Calibrating timer...  157,081,600 loops/s.
 hd0:0: detected 313 sector (156 kB) disk, model "QEMU HARDDISK", serial "QM00001"
 hd0:1: detected 20,160 sector (9 MB) disk, model "QEMU HARDDISK", serial "QM00002"
 hd1:0: detected 224 sector (112 kB) disk, model "QEMU HARDDISK", serial "QM00003"
@@ -14,17 +14,19 @@ Boot complete.
 Putting 'page-merge-mm' into the file system...
 Putting 'child-qsort-mm' into the file system...
 Executing 'page-merge-mm':
-Kernel PANIC at ../../userprog/process.c:84 in initd(): Fail to launch initd
-
-Call stack: 0x8004216a96 0x800421a12f 0x80042078b9.
+(page-merge-mm) begin
+(page-merge-mm) init
+(page-merge-mm) sort chunk 0
+Kernel PANIC at ../../vm/vm.c:258 in supplemental_page_table_copy(): assertion `page->vm_type == VM_UNINIT' failed.
+Call stack: 0x8004216a96 0x800421ffc5 0x800421a2cc 0x80042078b9.
 The `backtrace' program can make call stacks useful.
 Read "Backtraces" in the "Debugging Tools" chapter
 of the Pintos documentation for more information.
-Timer: 71 ticks
-Thread: 30 idle ticks, 38 kernel ticks, 3 user ticks
+Timer: 539 ticks
+Thread: 30 idle ticks, 38 kernel ticks, 471 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 68 reads, 486 writes
+hd0:1: 240 reads, 1010 writes
 hd1:0: 224 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1228 characters output
+Console: 1356 characters output
 Key

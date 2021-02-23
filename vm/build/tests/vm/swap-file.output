@@ -14,17 +14,18 @@ Boot complete.
 Putting 'swap-file' into the file system...
 Putting 'large.txt' into the file system...
 Executing 'swap-file':
-Kernel PANIC at ../../userprog/process.c:84 in initd(): Fail to launch initd
-
-Call stack: 0x8004216a96 0x800421a12f 0x80042078b9.
-The `backtrace' program can make call stacks useful.
-Read "Backtraces" in the "Debugging Tools" chapter
-of the Pintos documentation for more information.
-Timer: 251 ticks
-Thread: 30 idle ticks, 219 kernel ticks, 2 user ticks
+(swap-file) begin
+(swap-file) open "large.txt"
+(swap-file) mmap "large.txt"
+swap-file: exit(268435456)
+Execution of 'swap-file' complete.
+Timer: 263 ticks
+Thread: 30 idle ticks, 226 kernel ticks, 7 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 68 reads, 15900 writes
+hd0:1: 200 reads, 15900 writes
 hd1:0: 7931 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1205 characters output
-Key
+Console: 1060 characters output
+Keyboard: 0 keys pressed
+Exception: 0 page faults
+Powering off...

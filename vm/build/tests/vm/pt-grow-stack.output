@@ -13,17 +13,16 @@ Formatting file system...done.
 Boot complete.
 Putting 'pt-grow-stack' into the file system...
 Executing 'pt-grow-stack':
-Kernel PANIC at ../../userprog/process.c:84 in initd(): Fail to launch initd
-
-Call stack: 0x8004216a96 0x800421a12f 0x80042078b9.
-The `backtrace' program can make call stacks useful.
-Read "Backtraces" in the "Debugging Tools" chapter
-of the Pintos documentation for more information.
+(pt-grow-stack) begin
+pt-grow-stack: exit(-1)
+Execution of 'pt-grow-stack' complete.
 Timer: 69 ticks
-Thread: 30 idle ticks, 39 kernel ticks, 0 user ticks
+Thread: 31 idle ticks, 34 kernel ticks, 4 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 41 reads, 254 writes
+hd0:1: 165 reads, 254 writes
 hd1:0: 113 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1159 characters output
-Key
+Console: 961 characters output
+Keyboard: 0 keys pressed
+Exception: 0 page faults
+Powering off...

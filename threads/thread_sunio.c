@@ -444,7 +444,6 @@ void thread_awake(int64_t ticks)
         }
     }
     next_tick_to_awake = tmp_tick;
-    //printf("#################################\nthread name : %s next_tick_to_awake: %lld\n",t->name, next_tick_to_awake);
 }
 
 /* Yields the CPU.  The current thread is not put to sleep and

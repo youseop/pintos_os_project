@@ -169,6 +169,7 @@ __do_fork (void *aux) {
   }
 #endif
 
+
 	/* TODO: Your code goes here.
 	 * TODO: Hint) To duplicate the file object, use `file_duplicate`
 	 * TODO:       in include/filesys/file.h. Note that parent should not return
@@ -255,6 +256,7 @@ process_exec (void *f_name) {
 	do_iret (&_if);
 	NOT_REACHED ();
 }
+
 
 
 /* Waits for thread TID to die and returns its exit status.  If
@@ -378,27 +380,27 @@ process_activate (struct thread *next) {
 /* Executable header.  See [ELF1] 1-4 to 1-8.
  * This appears at the very beginning of an ELF binary. */
 struct ELF64_hdr {
-	unsigned char e_ident[EI_NIDENT];
-	uint16_t e_type;
-	uint16_t e_machine;
-	uint32_t e_version;
-	uint64_t e_entry;
-	uint64_t e_phoff;
-	uint64_t e_shoff;
-	uint32_t e_flags;
-	uint16_t e_ehsize;
-	uint16_t e_phentsize;
-	uint16_t e_phnum;
-	uint16_t e_shentsize;
-	uint16_t e_shnum;
-	uint16_t e_shstrndx;
+	unsigned char e_ident[EI_NIDENT]; //Magic number and other info
+	uint16_t e_type;				  				//object file type
+	uint16_t e_machine;        	 	 	  //architecture
+	uint32_t e_version;				  			//object file version
+	uint64_t e_entry;				  				//entry point virtual address
+	uint64_t e_phoff;				 				  //program header table file offset
+	uint64_t e_shoff;				  			  //section header table file offset
+	uint32_t e_flags; 							  //processor-specific flags
+	uint16_t e_ehsize;					  	  //elf header size in bytes
+	uint16_t e_phentsize;						  //program header table entry size
+	uint16_t e_phnum;				 				  //program header table entry count
+	uint16_t e_shentsize;				   	  //section header table entry size
+	uint16_t e_shnum;				 				  //section header table entry count
+	uint16_t e_shstrndx;						  //section header string table index
 };
 
 struct ELF64_PHDR {
 	uint32_t p_type;
 	uint32_t p_flags;
-	uint64_t p_offset;
-	uint64_t p_vaddr;
+	uint64_t p_offset;								//segment file offset
+	uint64_t p_vaddr;									//segment file virtual address
 	uint64_t p_paddr;
 	uint64_t p_filesz;
 	uint64_t p_memsz;
@@ -684,6 +686,18 @@ lazy_load_segment (struct page *page, void *aux) {
 	/* TODO: Load the segment from the file */
 	/* TODO: This called when the first page fault occurs on address VA. */
 	/* TODO: VA is available when calling this function. */
+	void* kpage = (page->frame)->kva;
+	void* upage = page->va;
+	struct load_args* args = page->uninit.aux;
+	
+	file_seek(args->file, args->ofs); //? file->pos update
+	if (file_read (args->file, kpage, args->read_bytes) != (int) args->read_bytes) {
+		palloc_free_page (kpage);
+		return false;
+	}
+	memset(kpage + args->read_bytes, 0, args->zero_bytes);
+	//free(args); //? malloc으로 공간 할당해줬었다. 메모리누수를 방지하자!
+	return true;
 }
 
 /* Loads a segment starting at offset OFS in FILE at address
@@ -704,7 +718,7 @@ static bool
 load_segment (struct file *file, off_t ofs, uint8_t *upage,
 		uint32_t read_bytes, uint32_t zero_bytes, bool writable) {
 	ASSERT ((read_bytes + zero_bytes) % PGSIZE == 0);
-	ASSERT (pg_ofs (upage) == 0);
+	ASSERT (pg_ofs (upage) == 0); //?page align chck
 	ASSERT (ofs % PGSIZE == 0);
 
 	while (read_bytes > 0 || zero_bytes > 0) {
@@ -714,16 +728,27 @@ load_segment (struct file *file, off_t ofs, uint8_t *upage,
 		size_t page_read_bytes = read_bytes < PGSIZE ? read_bytes : PGSIZE;
 		size_t page_zero_bytes = PGSIZE - page_read_bytes;
 
+		/*	
+		*aux is the information you set up in load_segment. 
+		* Using this information, you have to find the file 
+		* to read the segment from and eventually 
+		* read the segment into memory.*/
+		
+		struct load_args* args = (struct load_args*)malloc(sizeof(struct load_args));
+		args->file = file;
+		args->ofs = ofs;
+		args->read_bytes = read_bytes;
+		args->zero_bytes = zero_bytes;
 		/* TODO: Set up aux to pass information to the lazy_load_segment. */
-		void *aux = NULL;
-		if (!vm_alloc_page_with_initializer (VM_ANON, upage,
-					writable, lazy_load_segment, aux))
+		if (!vm_alloc_page_with_initializer (VM_ANON, upage,   //?왜 VM_ANON만 설정해놓는걸까? 
+					writable, lazy_load_segment, args))
 			return false;
 
 		/* Advance. */
 		read_bytes -= page_read_bytes;
 		zero_bytes -= page_zero_bytes;
 		upage += PGSIZE;
+		ofs += page_read_bytes; //? important!!
 	}
 	return true;
 }
@@ -731,7 +756,7 @@ load_segment (struct file *file, off_t ofs, uint8_t *upage,
 /* Create a PAGE of stack at the USER_STACK. Return true on success. */
 static bool
 setup_stack (struct intr_frame *if_) {
-	bool success = false;
+	
 	void *stack_bottom = (void *) (((uint8_t *) USER_STACK) - PGSIZE);
 
 	/* TODO: Map the stack on stack_bottom and claim the page immediately.
@@ -739,7 +764,14 @@ setup_stack (struct intr_frame *if_) {
 	 * TODO: You should mark the page is stack. */
 	/* TODO: Your code goes here */
 
-	return success;
+	if(! (vm_alloc_page(VM_ANON|VM_STACK, stack_bottom, 1) && vm_claim_page(stack_bottom)) ){
+		struct page *page = spt_find_page(&thread_current()->spt,stack_bottom);
+		palloc_free_page(page);
+		PANIC("vm_alloc_page failed");
+	}		
+	memset(stack_bottom,0,PGSIZE);
+	if_->rsp = USER_STACK;
+	return true;
 }
 #endif /* VM */
 

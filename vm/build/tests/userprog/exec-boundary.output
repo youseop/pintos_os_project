@@ -14,17 +14,17 @@ Boot complete.
 Putting 'exec-boundary' into the file system...
 Putting 'child-simple' into the file system...
 Executing 'exec-boundary':
-Kernel PANIC at ../../userprog/process.c:84 in initd(): Fail to launch initd
-
-Call stack: 0x8004216a96 0x800421a12f 0x80042078b9.
+(exec-boundary) begin
+Kernel PANIC at ../../vm/vm.c:258 in supplemental_page_table_copy(): assertion `page->vm_type == VM_UNINIT' failed.
+Call stack: 0x8004216a96 0x800421ffc5 0x800421a2cc 0x80042078b9.
 The `backtrace' program can make call stacks useful.
 Read "Backtraces" in the "Debugging Tools" chapter
 of the Pintos documentation for more information.
-Timer: 71 ticks
-Thread: 30 idle ticks, 40 kernel ticks, 1 user ticks
+Timer: 76 ticks
+Thread: 30 idle ticks, 41 kernel ticks, 5 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 68 reads, 452 writes
+hd0:1: 183 reads, 452 writes
 hd1:0: 207 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1224 characters output
+Console: 1298 characters output
 Key

@@ -14,17 +14,18 @@ Boot complete.
 Putting 'mmap-misalign' into the file system...
 Putting 'sample.txt' into the file system...
 Executing 'mmap-misalign':
-Kernel PANIC at ../../userprog/process.c:84 in initd(): Fail to launch initd
-
-Call stack: 0x8004216a96 0x800421a12f 0x80042078b9.
-The `backtrace' program can make call stacks useful.
-Read "Backtraces" in the "Debugging Tools" chapter
-of the Pintos documentation for more information.
-Timer: 64 ticks
-Thread: 30 idle ticks, 33 kernel ticks, 1 user ticks
+(mmap-misalign) begin
+(mmap-misalign) open "sample.txt"
+(mmap-misalign) try to mmap at misaligned address
+mmap-misalign: exit(268440116)
+Execution of 'mmap-misalign' complete.
+Timer: 72 ticks
+Thread: 30 idle ticks, 37 kernel ticks, 6 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 68 reads, 250 writes
+hd0:1: 187 reads, 250 writes
 hd1:0: 106 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1219 characters output
-Key
+Console: 1112 characters output
+Keyboard: 0 keys pressed
+Exception: 0 page faults
+Powering off...

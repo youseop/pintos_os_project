@@ -1,7 +1,26 @@
 FAIL
-Kernel panic in run: PANIC at ../../userprog/process.c:84 in initd(): Fail to launch initd
-Call stack: 0x8004216a96 0x800421a12f 0x80042078b9
-Translation of call stack:
-0x0000008004216a96: debug_panic (lib/kernel/debug.c:32)
-0x000000800421a12f: initd (userprog/process.c:85)
-0x00000080042078b9: kernel_thread (threads/thread.c:569)
+Test output failed to match any acceptable form.
+
+Acceptable output:
+  (mmap-inherit) begin
+  (mmap-inherit) open "sample.txt"
+  (mmap-inherit) mmap "sample.txt"
+  (mmap-inherit) exec "child-inherit"
+  (child-inherit) begin
+  child-inherit: exit(-1)
+  (mmap-inherit) checking that mmap'd file still has same data
+  (mmap-inherit) end
+  mmap-inherit: exit(0)
+Differences in `diff -u' format:
+  (mmap-inherit) begin
+  (mmap-inherit) open "sample.txt"
+  (mmap-inherit) mmap "sample.txt"
+- (mmap-inherit) exec "child-inherit"
+- (child-inherit) begin
+- child-inherit: exit(-1)
+- (mmap-inherit) checking that mmap'd file still has same data
+- (mmap-inherit) end
+- mmap-inherit: exit(0)
++ mmap-inherit: exit(1412567040)
+
+(User fault messages are excluded for matching purposes.)

@@ -13,17 +13,22 @@ Formatting file system...done.
 Boot complete.
 Putting 'create-exists' into the file system...
 Executing 'create-exists':
-Kernel PANIC at ../../userprog/process.c:84 in initd(): Fail to launch initd
-
-Call stack: 0x8004216a96 0x800421a12f 0x80042078b9.
-The `backtrace' program can make call stacks useful.
-Read "Backtraces" in the "Debugging Tools" chapter
-of the Pintos documentation for more information.
-Timer: 66 ticks
-Thread: 30 idle ticks, 34 kernel ticks, 2 user ticks
+(create-exists) begin
+(create-exists) create quux.dat
+(create-exists) create warble.dat
+(create-exists) try to re-create quux.dat
+(create-exists) create baffle.dat
+(create-exists) try to re-create quux.dat
+(create-exists) end
+create-exists: exit(0)
+Execution of 'create-exists' complete.
+Timer: 80 ticks
+Thread: 30 idle ticks, 36 kernel ticks, 14 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 41 reads, 236 writes
+hd0:1: 243 reads, 304 writes
 hd1:0: 104 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1159 characters output
-Key
+Console: 1165 characters output
+Keyboard: 0 keys pressed
+Exception: 0 page faults
+Powering off...

@@ -1,7 +1,18 @@
 FAIL
-Kernel panic in run: PANIC at ../../userprog/process.c:84 in initd(): Fail to launch initd
-Call stack: 0x8004216a96 0x800421a12f 0x80042078b9
-Translation of call stack:
-0x0000008004216a96: debug_panic (lib/kernel/debug.c:32)
-0x000000800421a12f: initd (userprog/process.c:85)
-0x00000080042078b9: kernel_thread (threads/thread.c:569)
+Test output failed to match any acceptable form.
+
+Acceptable output:
+  (mmap-zero) begin
+  (mmap-zero) create empty file "empty"
+  (mmap-zero) open "empty"
+  (mmap-zero) mmap "empty"
+  mmap-zero: exit(-1)
+Differences in `diff -u' format:
+  (mmap-zero) begin
+  (mmap-zero) create empty file "empty"
+  (mmap-zero) open "empty"
+  (mmap-zero) mmap "empty"
+- mmap-zero: exit(-1)
++ mmap-zero: exit(2130706432)
+
+(User fault messages are excluded for matching purposes.)

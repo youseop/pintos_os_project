@@ -14,17 +14,28 @@ Boot complete.
 Putting 'wait-twice' into the file system...
 Putting 'child-simple' into the file system...
 Executing 'wait-twice':
-Kernel PANIC at ../../userprog/process.c:84 in initd(): Fail to launch initd
-
-Call stack: 0x8004216a96 0x800421a12f 0x80042078b9.
-The `backtrace' program can make call stacks useful.
-Read "Backtraces" in the "Debugging Tools" chapter
-of the Pintos documentation for more information.
-Timer: 78 ticks
-Thread: 30 idle ticks, 47 kernel ticks, 1 user ticks
+(wait-twice) begin
+child-simple: dying due to interrupt 0x03 (#BP Breakpoint Exception).
+Interrupt 0x03 (#BP Breakpoint Exception) at rip=40341b
+ cr2=000000000040341a error=               0
+rax ffffffffffffffff rbx 0000000000000000 rcx 000000000040341a rdx 0000000000000000
+rsp 000000004747ff28 rbp 000000004747ff70 rsi 0000000000000000 rdi 0000000000404380
+rip 000000000040341b r8 0000000000000000  r9 0000000000000000 r10 0000000000000000
+r11 0000000000000216 r12 0000000000000000 r13 0000000000000000 r14 0000000000000000
+r15 0000000000000000 rflags 00000216
+es: 001b ds: 001b cs: 0023 ss: 001b
+(wait-twice) wait(exec()) = 0
+(wait-twice) wait(exec()) = -1
+(wait-twice) end
+wait-twice: exit(0)
+Execution of 'wait-twice' complete.
+Timer: 89 ticks
+Thread: 30 idle ticks, 44 kernel ticks, 15 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 68 reads, 446 writes
+hd0:1: 304 reads, 446 writes
 hd1:0: 204 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1212 characters output
-Key
+Console: 1662 characters output
+Keyboard: 0 keys pressed
+Exception: 0 page faults
+Powering off...

@@ -4,7 +4,7 @@ Kernel command line: -q -f put cow-simple run cow-simple
 Pintos booting with: 
 	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
 	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
-Calibrating timer...  130,867,200 loops/s.
+Calibrating timer...  157,081,600 loops/s.
 hd0:0: detected 313 sector (156 kB) disk, model "QEMU HARDDISK", serial "QM00001"
 hd0:1: detected 20,160 sector (9 MB) disk, model "QEMU HARDDISK", serial "QM00002"
 hd1:0: detected 4,019 sector (1 MB) disk, model "QEMU HARDDISK", serial "QM00003"
@@ -13,17 +13,18 @@ Formatting file system...done.
 Boot complete.
 Putting 'cow-simple' into the file system...
 Executing 'cow-simple':
-Kernel PANIC at ../../userprog/process.c:84 in initd(): Fail to launch initd
-
-Call stack: 0x8004216a96 0x800421a12f 0x80042078b9.
+(cow-simple) begin
+(cow-simple) check data consistency
+Kernel PANIC at ../../vm/vm.c:258 in supplemental_page_table_copy(): assertion `page->vm_type == VM_UNINIT' failed.
+Call stack: 0x8004216a96 0x800421ffc5 0x800421a2cc 0x80042078b9.
 The `backtrace' program can make call stacks useful.
 Read "Backtraces" in the "Debugging Tools" chapter
 of the Pintos documentation for more information.
-Timer: 149 ticks
-Thread: 30 idle ticks, 118 kernel ticks, 1 user ticks
+Timer: 186 ticks
+Thread: 30 idle ticks, 117 kernel ticks, 39 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 41 reads, 8066 writes
+hd0:1: 4075 reads, 8066 writes
 hd1:0: 4019 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1152 characters output
+Console: 1261 characters output
 Key

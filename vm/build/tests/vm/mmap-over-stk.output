@@ -14,17 +14,18 @@ Boot complete.
 Putting 'mmap-over-stk' into the file system...
 Putting 'sample.txt' into the file system...
 Executing 'mmap-over-stk':
-Kernel PANIC at ../../userprog/process.c:84 in initd(): Fail to launch initd
-
-Call stack: 0x8004216a96 0x800421a12f 0x80042078b9.
-The `backtrace' program can make call stacks useful.
-Read "Backtraces" in the "Debugging Tools" chapter
-of the Pintos documentation for more information.
-Timer: 65 ticks
-Thread: 30 idle ticks, 34 kernel ticks, 1 user ticks
+(mmap-over-stk) begin
+(mmap-over-stk) open "sample.txt"
+(mmap-over-stk) try to mmap over stack segment
+mmap-over-stk: exit(1195896832)
+Execution of 'mmap-over-stk' complete.
+Timer: 73 ticks
+Thread: 30 idle ticks, 36 kernel ticks, 7 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 68 reads, 250 writes
+hd0:1: 187 reads, 250 writes
 hd1:0: 106 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1219 characters output
-Key
+Console: 1110 characters output
+Keyboard: 0 keys pressed
+Exception: 0 page faults
+Powering off...

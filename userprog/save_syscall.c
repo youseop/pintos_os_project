@@ -205,12 +205,10 @@ remove(const char *file) {
 
 int 
 fork(const char *thread_name) {
-	// printf("intr frame :: %p\n", &thread_current()->tf);
 	tid_t CHILD_tid = process_fork(thread_name, &thread_current()->tf);
 	struct thread *child = get_child_process(CHILD_tid);
 	if(child == NULL) return -1;
 	sema_down(&child->fork_sema);
-    //printf("[fork()] after sema_down tid :;%d\n", CHILD_tid);
     if(child->exit_status == -1) return -1;
 	if(thread_current()->tid == CHILD_tid)
 		return 0;

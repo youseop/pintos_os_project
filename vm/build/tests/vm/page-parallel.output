@@ -14,17 +14,60 @@ Boot complete.
 Putting 'page-parallel' into the file system...
 Putting 'child-linear' into the file system...
 Executing 'page-parallel':
-Kernel PANIC at ../../userprog/process.c:84 in initd(): Fail to launch initd
-
-Call stack: 0x8004216a96 0x800421a12f 0x80042078b9.
-The `backtrace' program can make call stacks useful.
-Read "Backtraces" in the "Debugging Tools" chapter
-of the Pintos documentation for more information.
-Timer: 71 ticks
-Thread: 30 idle ticks, 39 kernel ticks, 2 user ticks
+(page-parallel) begin
+child-linear: dying due to interrupt 0x03 (#BP Breakpoint Exception).
+Interrupt 0x03 (#BP Breakpoint Exception) at rip=40346e
+ cr2=000000000040346d error=               0
+rax ffffffffffffffff rbx 0000000000000000 rcx 000000000040346d rdx 0000000000000000
+rsp 000000004747ff18 rbp 000000004747ff60 rsi 0000000000000000 rdi 00000000004043d0
+rip 000000000040346e r8 0000000000000000  r9 0000000000000000 r10 0000000000000000
+r11 0000000000000216 r12 0000000000000000 r13 0000000000000000 r14 0000000000000000
+r15 0000000000000000 rflags 00000216
+es: 001b ds: 001b cs: 0023 ss: 001b
+child-linear: dying due to interrupt 0x03 (#BP Breakpoint Exception).
+Interrupt 0x03 (#BP Breakpoint Exception) at rip=40346e
+ cr2=000000000040346d error=               0
+rax ffffffffffffffff rbx 0000000000000000 rcx 000000000040346d rdx 0000000000000000
+rsp 000000004747ff18 rbp 000000004747ff60 rsi 0000000000000000 rdi 00000000004043d0
+rip 000000000040346e r8 0000000000000000  r9 0000000000000000 r10 0000000000000000
+r11 0000000000000216 r12 0000000000000000 r13 0000000000000000 r14 0000000000000000
+r15 0000000000000000 rflags 00000216
+es: 001b ds: 001b cs: 0023 ss: 001b
+child-linear: dying due to interrupt 0x03 (#BP Breakpoint Exception).
+Interrupt 0x03 (#BP Breakpoint Exception) at rip=40346e
+ cr2=000000000040346d error=               0
+rax ffffffffffffffff rbx 0000000000000000 rcx 000000000040346d rdx 0000000000000000
+rsp 000000004747ff18 rbp 000000004747ff60 rsi 0000000000000000 rdi 00000000004043d0
+rip 000000000040346e r8 0000000000000000  r9 0000000000000000 r10 0000000000000000
+r11 0000000000000216 r12 0000000000000000 r13 0000000000000000 r14 0000000000000000
+r15 0000000000000000 rflags 00000216
+es: 001b ds: 001b cs: 0023 ss: 001b
+(page-parallel) wait for child 0
+(page-parallel) wait for child 0: FAILED
+page-parallel: exit(1)
+Interrupt 0x0d (#GP General Protection Exception) at rip=800421704a
+ cr2=000000000040346d error=               0
+rax cccccccccccccccc rbx 0000000000000000 rcx 0000008004000028 rdx 0000008004000028
+rsp 0000008004241e20 rbp 0000008004241e30 rsi 0000008004000028 rdi 000000800424e028
+rip 000000800421704a r8 0000008004241e08  r9 0000008004219ed8 r10 0000000000000000
+r11 0000000000000206 r12 000000800421be2a r13 0000000000000000 r14 0000000000000000
+r15 0000000000000000 rflags 00000006
+es: 001b ds: 001b cs: 0008 ss: 0010
+Kernel PANIC at ../../userprog/exception.c:98 in kill(): Kernel bug - unexpected interrupt in kernel
+Call stack: 0x8004216a96 0x800421bb18 0x80042090d3 0x80042094f1 0x8004217e63 0x8004207165 0x800420a2bc 0x800420733c 0x800421c4e5 0x800421beaf 0x800421bd53Interrupt 0x0d (#GP General Protection Exception) at rip=800421704a
+ cr2=000000004747fef0 error=               0
+rax cccccccccccccccc rbx 0000000000000000 rcx 0000008004241028 rdx 0000008004241028
+rsp 00000080042419a0 rbp 00000080042419b0 rsi 0000008004241028 rdi 000000800424e028
+rip 000000800421704a r8 0000008004241b78  r9 0000008004219ed8 r10 0000000000000000
+r11 0000000000000206 r12 000000800421be2a r13 0000000000000000 r14 0000000000000000
+r15 0000000000000000 rflags 00000006
+es: 0010 ds: 0010 cs: 0008 ss: 0010
+Kernel PANIC recursion at ../../userprog/exception.c:98 in kill().
+Timer: 112 ticks
+Thread: 30 idle ticks, 43 kernel ticks, 39 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 68 reads, 456 writes
+hd0:1: 665 reads, 456 writes
 hd1:0: 209 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1224 characters output
+Console: 4163 characters output
 Key

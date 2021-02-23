@@ -13,17 +13,27 @@ Formatting file system...done.
 Boot complete.
 Putting 'multi-recurse' into the file system...
 Executing 'multi-recurse 15':
-Kernel PANIC at ../../userprog/process.c:84 in initd(): Fail to launch initd
-
-Call stack: 0x8004216a96 0x800421a12f 0x80042078b9.
-The `backtrace' program can make call stacks useful.
-Read "Backtraces" in the "Debugging Tools" chapter
-of the Pintos documentation for more information.
-Timer: 66 ticks
-Thread: 30 idle ticks, 34 kernel ticks, 2 user ticks
+(multi-recurse) begin 15
+(multi-recurse) exec("multi-recurse 14")
+multi-recurse: dying due to interrupt 0x03 (#BP Breakpoint Exception).
+Interrupt 0x03 (#BP Breakpoint Exception) at rip=403b2d
+ cr2=0000000000403b2c error=               0
+rax ffffffffffffffff rbx 0000000000000000 rcx 0000000000403b2c rdx 0000000000000000
+rsp 000000004747fea8 rbp 000000004747fef0 rsi 0000000000000000 rdi 000000004747ff14
+rip 0000000000403b2d r8 0000000000000000  r9 0000000000000000 r10 0000000000000000
+r11 0000000000000212 r12 0000000000000000 r13 0000000000000000 r14 0000000000000000
+r15 0000000000000000 rflags 00000212
+es: 001b ds: 001b cs: 0023 ss: 001b
+(multi-recurse) wait(exec("multi-recurse 14")) returned 0: FAILED
+multi-recurse: exit(1)
+Execution of 'multi-recurse' complete.
+Timer: 81 ticks
+Thread: 30 idle ticks, 36 kernel ticks, 15 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 41 reads, 254 writes
+hd0:1: 327 reads, 254 writes
 hd1:0: 113 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1167 characters output
-Key
+Console: 1659 characters output
+Keyboard: 0 keys pressed
+Exception: 0 page faults
+Powering off...

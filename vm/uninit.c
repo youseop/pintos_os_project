@@ -34,7 +34,6 @@ uninit_new (struct page *page, void *va, vm_initializer *init,
 		enum vm_type type, void *aux,
 		bool (*initializer)(struct page *, enum vm_type, void *)) {
 	ASSERT (page != NULL);
-
 	*page = (struct page) {
 		.operations = &uninit_ops,
 		.va = va,
@@ -44,7 +43,7 @@ uninit_new (struct page *page, void *va, vm_initializer *init,
 			.type = type,
 			.aux = aux,
 			.page_initializer = initializer,
-		}
+		},
 	};
 }
 
@@ -54,12 +53,13 @@ uninit_initialize (struct page *page, void *kva) {
 	struct uninit_page *uninit = &page->uninit;
 
 	/* Fetch first, page_initialize may overwrite the values */
-	vm_initializer *init = uninit->init;
-	void *aux = uninit->aux;
+	vm_initializer *init = uninit->init; //? lazy_load_segment
 
 	/* TODO: You may need to fix this function. */
+	//? (ex.)anon_initializer(page, type, kva)
+	//? lazy_load_segment(page, aux)
 	return uninit->page_initializer (page, uninit->type, kva) &&
-		(init ? init (page, aux) : true);
+		(init ? init (page, NULL) : true);  
 }
 
 /* Free the resources hold by uninit_page. Although most of pages are transmuted

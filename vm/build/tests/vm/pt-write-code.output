@@ -13,17 +13,16 @@ Formatting file system...done.
 Boot complete.
 Putting 'pt-write-code' into the file system...
 Executing 'pt-write-code':
-Kernel PANIC at ../../userprog/process.c:84 in initd(): Fail to launch initd
-
-Call stack: 0x8004216a96 0x800421a12f 0x80042078b9.
-The `backtrace' program can make call stacks useful.
-Read "Backtraces" in the "Debugging Tools" chapter
-of the Pintos documentation for more information.
-Timer: 64 ticks
-Thread: 30 idle ticks, 33 kernel ticks, 1 user ticks
+(pt-write-code) begin
+pt-write-code: exit(-1)
+Execution of 'pt-write-code' complete.
+Timer: 132 ticks
+Thread: 30 idle ticks, 34 kernel ticks, 68 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 41 reads, 232 writes
+hd0:1: 156 reads, 232 writes
 hd1:0: 102 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1159 characters output
-Key
+Console: 963 characters output
+Keyboard: 0 keys pressed
+Exception: 0 page faults
+Powering off...

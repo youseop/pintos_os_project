@@ -23,6 +23,8 @@ pgdir_walk (uint64_t *pdp, const uint64_t va, int create) {
 			} else
 				return NULL;
 		}
+		//#define PTX(la)  ((((uint64_t) (la)) >> 12UL) & 0x1FF)
+
 		return (uint64_t *) ptov (PTE_ADDR (pdp[idx]) + 8 * PTX (va));
 	}
 	return NULL;

@@ -190,6 +190,7 @@ protcseg:
 
 #### Load kernel starting at physical address LOADER_PHYS_BASE by
 #### frobbing the IDE controller directly.
+####IDE 컨트롤러를 직접 frobbing(억지스러운)하여 물리적 주소 LOADER_PHYS_BASE에서 시작하는 커널을 로드합니다.
 
 	movl $1, %ebx
 	movl $LOADER_PHYS_BASE, %edi

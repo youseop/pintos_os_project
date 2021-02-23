@@ -9,6 +9,13 @@ struct process_pack {
   struct intr_frame *_if;
 };
 
+struct load_args{
+  struct file *file;
+  off_t ofs;
+  uint32_t read_bytes;
+  uint32_t zero_bytes;
+};
+
 struct thread *get_child_process (int pid);
 tid_t process_create_initd (const char *file_name);
 tid_t process_fork (const char *name, struct intr_frame *if_);

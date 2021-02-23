@@ -174,7 +174,6 @@ int fork (const char *thread_name){
   if(child == NULL){
     return -1;
   }  
-  printf("addr: %p\n",thread_current());
   sema_down(&child->fork_sema);
 
   if(child->exit_status == -1){

@@ -160,9 +160,6 @@ populate_pools (struct area *base_mem, struct area *ext_mem) {
 					// generate kernel pool
 					init_pool (&kernel_pool,
 							&free_start, region_start, start + rem * PGSIZE);
-					// printf("##### region_start         : %p\n",region_start);
-					// printf("##### start + rem * PGSIZE : %p\n",start + rem * PGSIZE);
-
 					// Transition to the next state
 					if (rem == size_in_pg) {
 						rem = user_pages;
@@ -188,8 +185,7 @@ populate_pools (struct area *base_mem, struct area *ext_mem) {
 					NOT_REACHED ();
 			}
 		}
-	}
-
+	}		
 	// generate the user pool
 	init_pool(&user_pool, &free_start, region_start, end);
 	// printf("##### region_start         : %p\n",region_start);
