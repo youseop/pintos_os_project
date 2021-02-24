@@ -39,13 +39,6 @@ struct thread;
 
 #define VM_TYPE(type) ((type) & 7)
 
-struct aux{
-  struct file *file;
-  off_t ofs;
-  uint32_t read_bytes;
-  uint32_t zero_bytes;
-};
-
 /* The representation of "page".
  * This is kind of "parent class", which has four "child class"es, which are
  * uninit_page, file_page, anon_page, and page cache (project4).
@@ -70,7 +63,6 @@ struct page {
 	bool writable;
 	struct hash_elem hash_elem; 
 	enum vm_type vm_type;
-	struct aux aux;
 };
 
 //You are allowed to add more members as you implement a frame management interface.

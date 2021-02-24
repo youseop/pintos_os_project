@@ -357,11 +357,9 @@ thread_exit (void) {
 #ifdef USERPROG
 	process_exit ();
 #endif
-
 	/* 프로세스 디스크립터에 프로세스 종료를 알림 */
 	/* 부모프로세스의 대기 상태 이탈(세마포어 이용) */
 	intr_disable ();
-
   thread_current()->isTerminated = 1;
 	if(!list_empty(&thread_current()->exit_sema.waiters)){
 		sema_up(&thread_current()->exit_sema);

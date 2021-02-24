@@ -237,6 +237,11 @@ process_exec (void *f_name) {
 	/* We first kill the current context */
 	process_cleanup ();
 
+	//? destroy에서 해제된 buckets >> init
+	#ifdef VM
+		supplemental_page_table_init (&thread_current ()->spt);
+	#endif
+
 	/* And then load the binary */
 	success = load (need_free[0], &_if);
 	/* If load failed, quit. */
@@ -333,6 +338,7 @@ process_cleanup (void) {
 	/* Destroy the current process's page directory and switch back
 	 * to the kernel-only page directory. */
 	pml4 = curr->pml4;
+
 	if (pml4 != NULL) {
 		/* Correct ordering here is crucial.  We must set
 		 * cur->pagedir to NULL before switching page directories,
@@ -686,8 +692,8 @@ lazy_load_segment (struct page *page, void *aux) {
 	/* TODO: Load the segment from the file */
 	/* TODO: This called when the first page fault occurs on address VA. */
 	/* TODO: VA is available when calling this function. */
-	void* kpage = (page->frame)->kva;
-	void* upage = page->va;
+	uint8_t* kpage = (page->frame)->kva;
+	uint8_t* upage = page->va;
 	struct load_args* args = page->uninit.aux;
 	
 	file_seek(args->file, args->ofs); //? file->pos update

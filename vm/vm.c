@@ -247,48 +247,83 @@ supplemental_page_table_copy (struct supplemental_page_table *dst UNUSED,
 
 	while (hash_next (&i))
 	{
-		//?get page from src
 		struct page *page = hash_entry (hash_cur (&i), struct page, hash_elem);
 		enum vm_type type = page->operations->type;
 
-		//?copy args
-		if (VM_TYPE(type) == VM_UNINIT){    //? VM_UNINIT
+		if (VM_TYPE(type) == VM_UNINIT){    
 			struct load_args* args = (struct load_args*)malloc(sizeof(struct load_args));
-			memcpy(args, page->uninit.aux, sizeof(struct load_args)); //?
-			ASSERT(page->vm_type == VM_UNINIT);
+			memcpy(args, page->uninit.aux, sizeof(struct load_args));
 			success = vm_alloc_page_with_initializer(page->vm_type, page->va,
 					page->writable, page->uninit.init, args);
 		}
 		else if ((VM_TYPE(type) == VM_ANON)){
-			if(page->vm_type & VM_STACK){		  //? VM_ANON | VM_STACK
-				ASSERT(page->vm_type == VM_ANON | VM_STACK);
-				success = vm_alloc_page(VM_ANON|VM_STACK, page->va, 1);
-				vm_claim_page(page->va);
-				struct page *new_page = spt_find_page (&thread_current()->spt, page->va);
-				memcpy(new_page->va, page->frame->kva, PGSIZE);
-			}
-			else{        
-				struct load_args* args = (struct load_args*)malloc(sizeof(struct load_args));
-				memcpy(args, page->uninit.aux, sizeof(struct load_args)); //?
-				ASSERT(page->vm_type == VM_ANON);//? VM_ANON
-				success = vm_alloc_page_with_initializer(page->vm_type, page->va,
-					page->writable, page->uninit.init, args);
-				vm_claim_page(page->va);
-				
-				struct page *new_page = spt_find_page (&thread_current()->spt, page->va);
-				memcpy(new_page->va, page->frame->kva, PGSIZE);
-			}
+			success = vm_alloc_page(VM_ANON|VM_STACK, page->va, 1);
+			vm_claim_page(page->va);
+			struct page *new_page = spt_find_page (&thread_current()->spt, page->va);
+			//? struct page *new_page = spt_find_page (dst, page->va);
+			memcpy(new_page->va, page->frame->kva, PGSIZE);
 		}
-		ASSERT(success);
 	}
 	return success;
+}
+
+//? supplemental_page_table_copy [version 1]
+/* Copy supplemental page table from src to dst */
+// bool
+// supplemental_page_table_copy (struct supplemental_page_table *dst UNUSED,
+// 		struct supplemental_page_table *src UNUSED) {
+// 	bool success = true;
+// 	struct hash *h = &src->hash_table;
+// 	struct hash_iterator i;
+// 	hash_first (&i, h);
+
+// 	while (hash_next (&i))
+// 	{
+// 		struct page *page = hash_entry (hash_cur (&i), struct page, hash_elem);
+// 		enum vm_type type = page->operations->type;
+
+// 		if (VM_TYPE(type) == VM_UNINIT){    //? VM_UNINIT
+// 			struct load_args* args = (struct load_args*)malloc(sizeof(struct load_args));
+// 			memcpy(args, page->uninit.aux, sizeof(struct load_args)); 
+// 			ASSERT(page->vm_type == VM_UNINIT);
+// 			success = vm_alloc_page_with_initializer(page->vm_type, page->va,
+// 					page->writable, page->uninit.init, args);
+// 		}
+// 		else if ((VM_TYPE(type) == VM_ANON)){
+// 			if(page->vm_type & VM_STACK){		  //? VM_ANON | VM_STACK
+// 				ASSERT(page->vm_type == VM_ANON | VM_STACK);
+// 				success = vm_alloc_page(VM_ANON|VM_STACK, page->va, 1);
+// 				vm_claim_page(page->va);
+// 				struct page *new_page = spt_find_page (&thread_current()->spt, page->va);
+// 				memcpy(new_page->va, page->frame->kva, PGSIZE);
+// 			}
+// 			else{        
+// 				struct load_args* args = (struct load_args*)malloc(sizeof(struct load_args));
+// 				memcpy(args, page->uninit.aux, sizeof(struct load_args)); 
+// 				ASSERT(page->vm_type == VM_ANON);//? VM_ANON
+// 				success = vm_alloc_page_with_initializer(page->vm_type, page->va,
+// 					page->writable, page->uninit.init, args);
+// 				vm_claim_page(page->va);
+// 			}
+// 		}
+// 		ASSERT(success);
+// 	}
+// 	return success;
+// }
+
+void supplemental_page_table_destructor(struct hash_elem *e, void *aux){
+	struct page* p = hash_entry(e, struct page, hash_elem);
+	vm_dealloc_page(p);
 }
 
 /* Free the resource hold by the supplemental page table */
 void
 supplemental_page_table_kill (struct supplemental_page_table *spt UNUSED) {
 	/* TODO: Destroy all the supplemental_page_table hold by thread and
-	 * TODO: writeback all the modified contents to the storage. */
+	 * TODO: writeback all the modified contents to thmake
+	 e storage. */
+	struct hash *h = &spt->hash_table;
+	hash_destroy(h, supplemental_page_table_destructor);
 }
 
 

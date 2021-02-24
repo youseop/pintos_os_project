@@ -20,13 +20,13 @@ child: exit(81)
 (fork-once) end
 fork-once: exit(0)
 Execution of 'fork-once' complete.
-Timer: 82 ticks
-Thread: 30 idle ticks, 39 kernel ticks, 13 user ticks
+Timer: 74 ticks
+Thread: 30 idle ticks, 37 kernel ticks, 7 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 271 reads, 234 writes
+hd0:1: 156 reads, 234 writes
 hd1:0: 103 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1031 characters output
+Console: 1030 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

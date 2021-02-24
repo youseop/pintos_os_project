@@ -4,7 +4,7 @@ Kernel command line: -q -f put fork-boundary run fork-boundary
 Pintos booting with: 
 	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
 	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
-Calibrating timer...  157,081,600 loops/s.
+Calibrating timer...  150,528,000 loops/s.
 hd0:0: detected 313 sector (156 kB) disk, model "QEMU HARDDISK", serial "QM00001"
 hd0:1: detected 20,160 sector (9 MB) disk, model "QEMU HARDDISK", serial "QM00002"
 hd1:0: detected 106 sector (53 kB) disk, model "QEMU HARDDISK", serial "QM00003"
@@ -14,16 +14,20 @@ Boot complete.
 Putting 'fork-boundary' into the file system...
 Executing 'fork-boundary':
 (fork-boundary) begin
-Kernel PANIC at ../../vm/vm.c:258 in supplemental_page_table_copy(): assertion `page->vm_type == VM_UNINIT' failed.
-Call stack: 0x8004216a96 0x800421ffc5 0x800421a2cc 0x80042078b9.
-The `backtrace' program can make call stacks useful.
-Read "Backtraces" in the "Debugging Tools" chapter
-of the Pintos documentation for more information.
-Timer: 69 ticks
-Thread: 30 idle ticks, 34 kernel ticks, 5 user ticks
+(fork-boundary) child run
+child-simple: exit(54)
+(fork-boundary) fork
+(fork-boundary) wait
+(fork-boundary) end
+fork-boundary: exit(0)
+Execution of 'fork-boundary' complete.
+Timer: 74 ticks
+Thread: 30 idle ticks, 38 kernel ticks, 7 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 156 reads, 240 writes
 hd1:0: 106 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1233 characters output
-Key
+Console: 1071 characters output
+Keyboard: 0 keys pressed
+Exception: 0 page faults
+Powering off...

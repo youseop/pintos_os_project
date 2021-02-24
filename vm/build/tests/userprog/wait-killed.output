@@ -4,7 +4,7 @@ Kernel command line: -q -f put wait-killed put child-bad run wait-killed
 Pintos booting with: 
 	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
 	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
-Calibrating timer...  130,867,200 loops/s.
+Calibrating timer...  157,081,600 loops/s.
 hd0:0: detected 313 sector (156 kB) disk, model "QEMU HARDDISK", serial "QM00001"
 hd0:1: detected 20,160 sector (9 MB) disk, model "QEMU HARDDISK", serial "QM00002"
 hd1:0: detected 205 sector (102 kB) disk, model "QEMU HARDDISK", serial "QM00003"
@@ -15,26 +15,20 @@ Putting 'wait-killed' into the file system...
 Putting 'child-bad' into the file system...
 Executing 'wait-killed':
 (wait-killed) begin
-child-bad: dying due to interrupt 0x03 (#BP Breakpoint Exception).
-Interrupt 0x03 (#BP Breakpoint Exception) at rip=4033ed
- cr2=00000000004033ec error=               0
-rax ffffffffffffffff rbx 0000000000000000 rcx 00000000004033ec rdx 0000000000000000
-rsp 000000004747ff28 rbp 000000004747ff70 rsi 0000000000000000 rdi 0000000000404350
-rip 00000000004033ed r8 0000000000000000  r9 0000000000000000 r10 0000000000000000
-r11 0000000000000216 r12 0000000000000000 r13 0000000000000000 r14 0000000000000000
-r15 0000000000000000 rflags 00000216
-es: 001b ds: 001b cs: 0023 ss: 001b
-(wait-killed) wait(exec()) = 0
+(child-bad) begin
+load: pintos: open failed
+child-bad: exit(-1)
+(wait-killed) wait(exec()) = -1
 (wait-killed) end
 wait-killed: exit(0)
 Execution of 'wait-killed' complete.
-Timer: 88 ticks
-Thread: 30 idle ticks, 45 kernel ticks, 13 user ticks
+Timer: 85 ticks
+Thread: 30 idle ticks, 43 kernel ticks, 12 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 304 reads, 448 writes
+hd0:1: 323 reads, 448 writes
 hd1:0: 205 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1631 characters output
+Console: 1120 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

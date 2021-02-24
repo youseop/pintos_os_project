@@ -4,7 +4,7 @@ Kernel command line: -q -f put page-merge-stk put child-qsort run page-merge-stk
 Pintos booting with: 
 	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
 	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
-Calibrating timer...  65,433,600 loops/s.
+Calibrating timer...  157,081,600 loops/s.
 hd0:0: detected 313 sector (156 kB) disk, model "QEMU HARDDISK", serial "QM00001"
 hd0:1: detected 20,160 sector (9 MB) disk, model "QEMU HARDDISK", serial "QM00002"
 hd1:0: detected 224 sector (112 kB) disk, model "QEMU HARDDISK", serial "QM00003"
@@ -17,16 +17,41 @@ Executing 'page-merge-stk':
 (page-merge-stk) begin
 (page-merge-stk) init
 (page-merge-stk) sort chunk 0
-Kernel PANIC at ../../vm/vm.c:258 in supplemental_page_table_copy(): assertion `page->vm_type == VM_UNINIT' failed.
-Call stack: 0x8004216a96 0x800421ffc5 0x800421a2cc 0x80042078b9.
+(page-merge-stk) sort chunk 1
+child-qsort: exit(-1)
+(page-merge-stk) sort chunk 2
+child-qsort: exit(-1)
+(page-merge-stk) sort chunk 3
+child-qsort: exit(-1)
+(page-merge-stk) sort chunk 4
+child-qsort: exit(-1)
+(page-merge-stk) sort chunk 5
+child-qsort: exit(-1)
+child-qsort: exit(-1)
+(page-merge-stk) sort chunk 6
+(page-merge-stk) sort chunk 7
+child-qsort: exit(-1)
+(page-merge-stk) wait for child 0
+(page-merge-stk) wait for child 0: FAILED
+page-merge-stk: exit(1)
+Interrupt 0x0d (#GP General Protection Exception) at rip=800421704a
+ cr2=000000004745ff8c error=               0
+rax cccccccccccccccc rbx 0000000000000000 rcx 0000008004241028 rdx 0000008004241028
+rsp 0000008004241bd0 rbp 0000008004241be0 rsi 0000008004241028 rdi 0000008004277028
+rip 000000800421704a r8 0000008004241e08  r9 0000008004219ed8 r10 0000000000000000
+r11 0000000000000206 r12 000000800421bd91 r13 0000000000000000 r14 0000000000000000
+r15 0000000000000000 rflags 00000006
+es: 0010 ds: 0010 cs: 0008 ss: 0010
+Kernel PANIC at ../../userprog/exception.c:98 in kill(): Kernel bug - unexpected interrupt in kernel
+Call stack: 0x8004216a96 0x800421bb39 0x80042090d3 0x80042094f1 0x8004217e63 0x80042076fe 0x800420922a 0x80042094f1 0x800420c14f 0x800421fcb5 0x8004220022 0x800421905c 0x80042190df 0x8004220056 0x800421a997 0x800421a963 0x80042072d4 0x800421c44c 0x800421be16 0x800421bcba 0x400c7f 0x40048d 0x4007f7 0x400107 0x401504 0x40154d.
 The `backtrace' program can make call stacks useful.
 Read "Backtraces" in the "Debugging Tools" chapter
 of the Pintos documentation for more information.
-Timer: 541 ticks
-Thread: 30 idle ticks, 39 kernel ticks, 472 user ticks
+Timer: 711 ticks
+Thread: 30 idle ticks, 54 kernel ticks, 627 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 234 reads, 1010 writes
+hd0:1: 1060 reads, 4678 writes
 hd1:0: 224 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1356 characters output
+Console: 2590 characters output
 Key

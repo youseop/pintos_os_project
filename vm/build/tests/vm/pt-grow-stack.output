@@ -16,8 +16,8 @@ Executing 'pt-grow-stack':
 (pt-grow-stack) begin
 pt-grow-stack: exit(-1)
 Execution of 'pt-grow-stack' complete.
-Timer: 69 ticks
-Thread: 31 idle ticks, 34 kernel ticks, 4 user ticks
+Timer: 72 ticks
+Thread: 30 idle ticks, 37 kernel ticks, 5 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 165 reads, 254 writes
 hd1:0: 113 reads, 0 writes

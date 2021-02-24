@@ -18,16 +18,24 @@ Executing 'exec-read':
 (exec-read) begin
 (exec-read) open "sample.txt"
 (exec-read) read "sample.txt" first 20 bytes
-Kernel PANIC at ../../vm/vm.c:258 in supplemental_page_table_copy(): assertion `page->vm_type == VM_UNINIT' failed.
-Call stack: 0x8004216a96 0x800421ffc5 0x800421a2cc 0x80042078b9.
-The `backtrace' program can make call stacks useful.
-Read "Backtraces" in the "Debugging Tools" chapter
-of the Pintos documentation for more information.
-Timer: 79 ticks
-Thread: 30 idle ticks, 43 kernel ticks, 6 user ticks
+(child-read) begin
+(child-read) open "sample.txt"
+(child-read) read "sample.txt" first 20 bytes
+(child-read) read "sample.txt" remainders
+(child-read) Child success
+(child-read) end
+child-read: exit(0)
+(exec-read) Parent success
+(exec-read) end
+exec-read: exit(0)
+Execution of 'exec-read' complete.
+Timer: 92 ticks
+Thread: 30 idle ticks, 47 kernel ticks, 16 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 228 reads, 506 writes
+hd0:1: 392 reads, 506 writes
 hd1:0: 229 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1409 characters output
-Key
+Console: 1374 characters output
+Keyboard: 0 keys pressed
+Exception: 0 page faults
+Powering off...

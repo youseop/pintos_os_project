@@ -15,16 +15,22 @@ Putting 'cow-simple' into the file system...
 Executing 'cow-simple':
 (cow-simple) begin
 (cow-simple) check data consistency
-Kernel PANIC at ../../vm/vm.c:258 in supplemental_page_table_copy(): assertion `page->vm_type == VM_UNINIT' failed.
-Call stack: 0x8004216a96 0x800421ffc5 0x800421a2cc 0x80042078b9.
-The `backtrace' program can make call stacks useful.
-Read "Backtraces" in the "Debugging Tools" chapter
-of the Pintos documentation for more information.
-Timer: 186 ticks
-Thread: 30 idle ticks, 117 kernel ticks, 39 user ticks
+(cow-simple) check data consistency
+(cow-simple) two phys addrs should be the same.
+(cow-simple) two phys addrs should be the same.: FAILED
+child: exit(1)
+(cow-simple) two phys addrs should be the same.
+(cow-simple) check data consistency
+(cow-simple) end
+cow-simple: exit(0)
+Execution of 'cow-simple' complete.
+Timer: 194 ticks
+Thread: 30 idle ticks, 126 kernel ticks, 38 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 4075 reads, 8066 writes
 hd1:0: 4019 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1261 characters output
-Key
+Console: 1238 characters output
+Keyboard: 0 keys pressed
+Exception: 0 page faults
+Powering off...
