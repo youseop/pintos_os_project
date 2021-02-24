@@ -1,24 +1,2 @@
 FAIL
-Kernel panic in run: PANIC at ../../userprog/exception.c:98 in kill(): Kernel bug - unexpected interrupt in kernel
-Call stack: 0x8004216a96 0x800421bb39 0x80042090d3 0x80042094f1 0x8004217e63 0x80042076fe 0x800420922a 0x80042094f1 0x800420b8f7 0x800420b9a9 0x800420ccd0 0x800420cd53 0x800420cdd6 0x800420ce9f 0x800421a9e0 0x800421a963 0x80042072d4 0x800421c44c 0x800421be16 0x800421bcba
-Translation of call stack:
-0x0000008004216a96: debug_panic (lib/kernel/debug.c:32)
-0x000000800421bb39: kill (userprog/exception.c:104)
-0x00000080042090d3: intr_handler (threads/interrupt.c:352)
-0x00000080042094f1: intr_entry (threads/intr-stubs.o:?)
-0x0000008004217e63: list_insert_ordered (lib/kernel/list.c:431)
-0x00000080042076fe: thread_yield (threads/thread.c:465)
-0x000000800420922a: intr_handler (threads/interrupt.c:375)
-0x00000080042094f1: intr_entry (threads/intr-stubs.o:?)
-0x000000800420b8f7: palloc_free_multiple (threads/palloc.c:322)
-0x000000800420b9a9: palloc_free_page (threads/palloc.c:330)
-0x000000800420ccd0: pt_destroy (threads/mmu.c:166 (discriminator 2))
-0x000000800420cd53: pgdir_destroy (threads/mmu.c:176 (discriminator 2))
-0x000000800420cdd6: pdpe_destroy (threads/mmu.c:186 (discriminator 2))
-0x000000800420ce9f: pml4_destroy (threads/mmu.c:205)
-0x000000800421a9e0: process_cleanup (userprog/process.c:354)
-0x000000800421a963: process_exit (userprog/process.c:326)
-0x00000080042072d4: thread_exit (threads/thread.c:362)
-0x000000800421c44c: halt (userprog/syscall.c:256)
-0x000000800421be16: syscall_handler (userprog/syscall.c:104)
-0x000000800421bcba: no_sti (userprog/syscall-entry.o:?)
+run: open "buf0": FAILED

@@ -14,16 +14,23 @@ Boot complete.
 Putting 'pt-write-code' into the file system...
 Executing 'pt-write-code':
 (pt-write-code) begin
-Kernel PANIC at ../../vm/vm.c:157 in vm_get_frame(): todo
-Call stack: 0x8004216a96 0x800421fadd 0x800421fd69 0x800421fc69 0x800421bc30 0x80042090d3 0x80042094f1 0x400bca 0x400c13.
-The `backtrace' program can make call stacks useful.
-Read "Backtraces" in the "Debugging Tools" chapter
-of the Pintos documentation for more information.
-Timer: 135 ticks
-Thread: 30 idle ticks, 33 kernel ticks, 72 user ticks
+pt-write-code: dying due to interrupt 0x06 (#UD Invalid Opcode Exception).
+Interrupt 0x06 (#UD Invalid Opcode Exception) at rip=400106
+ cr2=00000000004000e8 error=               0
+rax 00000000004000e8 rbx 0000000000000000 rcx 00000000000000ff rdx 0000000000000000
+rsp 000000004747ff88 rbp 000000004747ff90 rsi 000000000060508e rdi 000000000060517f
+rip 0000000000400106 r8 0000000000000000  r9 0000000000000000 r10 0000000000000000
+r11 0000000000000206 r12 0000000000000000 r13 0000000000000000 r14 66dd9430c8e1a161
+r15 0000000000000000 rflags 00000212
+es: 001b ds: 001b cs: 0023 ss: 001b
+Execution of 'pt-write-code' complete.
+Timer: 132 ticks
+Thread: 30 idle ticks, 34 kernel ticks, 69 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 156 reads, 232 writes
 hd1:0: 102 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1234 characters output
-Key
+Console: 1527 characters output
+Keyboard: 0 keys pressed
+Exception: 0 page faults
+Powering off...

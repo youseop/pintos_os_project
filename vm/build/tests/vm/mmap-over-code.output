@@ -19,8 +19,8 @@ Executing 'mmap-over-code':
 (mmap-over-code) try to mmap over code segment
 mmap-over-code: exit(4194304)
 Execution of 'mmap-over-code' complete.
-Timer: 73 ticks
-Thread: 30 idle ticks, 36 kernel ticks, 7 user ticks
+Timer: 72 ticks
+Thread: 30 idle ticks, 35 kernel ticks, 7 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 187 reads, 250 writes
 hd1:0: 106 reads, 0 writes

@@ -702,7 +702,7 @@ lazy_load_segment (struct page *page, void *aux) {
 		return false;
 	}
 	memset(kpage + args->read_bytes, 0, args->zero_bytes);
-	//free(args); //? malloc으로 공간 할당해줬었다. 메모리누수를 방지하자!
+	free(args); //? malloc으로 공간 할당해줬었다. 메모리누수를 방지하자!
 	return true;
 }
 

@@ -19,8 +19,8 @@ Executing 'mmap-twice':
 (mmap-twice) mmap "sample.txt" #0 at 0x10000000
 mmap-twice: exit(268435456)
 Execution of 'mmap-twice' complete.
-Timer: 72 ticks
-Thread: 30 idle ticks, 35 kernel ticks, 7 user ticks
+Timer: 71 ticks
+Thread: 30 idle ticks, 34 kernel ticks, 7 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 193 reads, 256 writes
 hd1:0: 109 reads, 0 writes

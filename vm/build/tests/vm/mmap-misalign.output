@@ -19,8 +19,8 @@ Executing 'mmap-misalign':
 (mmap-misalign) try to mmap at misaligned address
 mmap-misalign: exit(268440116)
 Execution of 'mmap-misalign' complete.
-Timer: 72 ticks
-Thread: 30 idle ticks, 36 kernel ticks, 6 user ticks
+Timer: 73 ticks
+Thread: 30 idle ticks, 36 kernel ticks, 7 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 187 reads, 250 writes
 hd1:0: 106 reads, 0 writes

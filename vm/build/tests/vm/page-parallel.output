@@ -4,7 +4,7 @@ Kernel command line: -q -f put page-parallel put child-linear run page-parallel
 Pintos booting with: 
 	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
 	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
-Calibrating timer...  157,081,600 loops/s.
+Calibrating timer...  130,867,200 loops/s.
 hd0:0: detected 313 sector (156 kB) disk, model "QEMU HARDDISK", serial "QM00001"
 hd0:1: detected 20,160 sector (9 MB) disk, model "QEMU HARDDISK", serial "QM00002"
 hd1:0: detected 209 sector (104 kB) disk, model "QEMU HARDDISK", serial "QM00003"
@@ -16,23 +16,16 @@ Putting 'child-linear' into the file system...
 Executing 'page-parallel':
 (page-parallel) begin
 (page-parallel) wait for child 0
-(child-linear) byte 450752 != 0: FAILED
-child-linear: exit(1)
-child-linear: exit(-1)
-(child-linear) byte 73920 != 0: FAILED
-child-linear: exit(1)
-(child-linear) byte 7872 != 0: FAILED
-child-linear: exit(1)
-(page-parallel) wait for child 0: FAILED
-page-parallel: exit(1)
-Execution of 'page-parallel' complete.
-Timer: 774 ticks
-Thread: 30 idle ticks, 51 kernel ticks, 694 user ticks
+Kernel PANIC at ../../vm/vm.c:157 in vm_get_frame(): todo
+Call stack: 0x8004216a96 0x800421faf0 0x800421fd7c 0x800421fc7c 0x800421bc43 0x80042090d3 0x80042094f1 0x401256 0x40130f 0x4004ba 0x400687 0x400215 0x400ee9.
+The `backtrace' program can make call stacks useful.
+Read "Backtraces" in the "Debugging Tools" chapter
+of the Pintos documentation for more information.
+Timer: 793 ticks
+Thread: 30 idle ticks, 41 kernel ticks, 722 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 692 reads, 456 writes
+hd0:1: 532 reads, 456 writes
 hd1:0: 209 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1308 characters output
-Keyboard: 0 keys pressed
-Exception: 0 page faults
-Powering off...
+Console: 1369 characters output
+Key

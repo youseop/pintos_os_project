@@ -29,8 +29,8 @@ child-read: exit(0)
 (exec-read) end
 exec-read: exit(0)
 Execution of 'exec-read' complete.
-Timer: 92 ticks
-Thread: 30 idle ticks, 47 kernel ticks, 16 user ticks
+Timer: 97 ticks
+Thread: 30 idle ticks, 51 kernel ticks, 16 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 392 reads, 506 writes
 hd1:0: 229 reads, 0 writes
