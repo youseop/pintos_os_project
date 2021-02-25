@@ -14,15 +14,17 @@ Boot complete.
 Putting 'pt-big-stk-obj' into the file system...
 Executing 'pt-big-stk-obj':
 (pt-big-stk-obj) begin
-pt-big-stk-obj: exit(-1)
+(pt-big-stk-obj) cksum: 3256410166
+(pt-big-stk-obj) end
+pt-big-stk-obj: exit(0)
 Execution of 'pt-big-stk-obj' complete.
-Timer: 71 ticks
-Thread: 30 idle ticks, 37 kernel ticks, 4 user ticks
+Timer: 75 ticks
+Thread: 30 idle ticks, 36 kernel ticks, 10 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 165 reads, 254 writes
+hd0:1: 177 reads, 254 writes
 hd1:0: 113 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 968 characters output
+Console: 1024 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

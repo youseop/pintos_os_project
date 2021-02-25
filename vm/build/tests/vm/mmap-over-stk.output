@@ -17,15 +17,16 @@ Executing 'mmap-over-stk':
 (mmap-over-stk) begin
 (mmap-over-stk) open "sample.txt"
 (mmap-over-stk) try to mmap over stack segment
-mmap-over-stk: exit(1195896832)
+(mmap-over-stk) try to mmap over stack segment: FAILED
+mmap-over-stk: exit(1)
 Execution of 'mmap-over-stk' complete.
-Timer: 74 ticks
-Thread: 30 idle ticks, 38 kernel ticks, 6 user ticks
+Timer: 73 ticks
+Thread: 30 idle ticks, 35 kernel ticks, 8 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 187 reads, 250 writes
 hd1:0: 106 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1110 characters output
+Console: 1156 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

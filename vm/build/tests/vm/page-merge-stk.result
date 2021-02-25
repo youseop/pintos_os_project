@@ -1,6 +1,6 @@
 FAIL
 Kernel panic in run: PANIC at ../../userprog/exception.c:98 in kill(): Kernel bug - unexpected interrupt in kernel
-Call stack: 0x8004216a96 0x800421bb4c 0x80042090d3 0x80042094f1 0x8004217e63 0x80042076fe 0x800420922a 0x80042094f1 0x800420b8f7 0x800420b9a9 0x800420ccd0 0x800420cd53 0x800420cdd6 0x800420ce9f 0x800421a9e0 0x800421a963 0x80042072d4 0x800421c45f 0x800421be29 0x800421bccd
+Call stack: 0x8004216a96 0x800421bb4c 0x80042090d3 0x80042094f1 0x8004217e63 0x80042076fe 0x800420922a 0x80042094f1 0x800420b8f7 0x800420b9a9 0x800420ccd0 0x800420cd53 0x800420cdd6 0x800420ce9f 0x800421a9e0 0x800421a963 0x80042072d4 0x800421c460 0x800421be29 0x800421bccd
 Translation of call stack:
 0x0000008004216a96: debug_panic (lib/kernel/debug.c:32)
 0x000000800421bb4c: kill (userprog/exception.c:104)
@@ -19,6 +19,6 @@ Translation of call stack:
 0x000000800421a9e0: process_cleanup (userprog/process.c:354)
 0x000000800421a963: process_exit (userprog/process.c:326)
 0x00000080042072d4: thread_exit (threads/thread.c:362)
-0x000000800421c45f: halt (userprog/syscall.c:256)
+0x000000800421c460: halt (userprog/syscall.c:260)
 0x000000800421be29: syscall_handler (userprog/syscall.c:104)
 0x000000800421bccd: no_sti (userprog/syscall-entry.o:?)

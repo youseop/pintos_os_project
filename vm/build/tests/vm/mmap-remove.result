@@ -13,9 +13,9 @@ Differences in `diff -u' format:
   (mmap-remove) begin
   (mmap-remove) open "sample.txt"
   (mmap-remove) mmap "sample.txt"
-- (mmap-remove) remove "sample.txt"
-- (mmap-remove) try to open "sample.txt"
-- (mmap-remove) create "another"
+  (mmap-remove) remove "sample.txt"
+  (mmap-remove) try to open "sample.txt"
+  (mmap-remove) create "another"
 - (mmap-remove) end
 
 (Process exit codes are excluded for matching purposes.)

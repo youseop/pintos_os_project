@@ -17,15 +17,16 @@ Executing 'mmap-null':
 (mmap-null) begin
 (mmap-null) open "sample.txt"
 (mmap-null) try to mmap at address 0
-mmap-null: exit(0)
+(mmap-null) try to mmap at address 0: FAILED
+mmap-null: exit(1)
 Execution of 'mmap-null' complete.
-Timer: 74 ticks
-Thread: 30 idle ticks, 37 kernel ticks, 7 user ticks
+Timer: 72 ticks
+Thread: 30 idle ticks, 35 kernel ticks, 7 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 187 reads, 250 writes
 hd1:0: 106 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1059 characters output
+Console: 1104 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

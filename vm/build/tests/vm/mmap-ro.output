@@ -4,7 +4,7 @@ Kernel command line: -q -f put mmap-ro put large.txt run mmap-ro
 Pintos booting with: 
 	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
 	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
-Calibrating timer...  130,867,200 loops/s.
+Calibrating timer...  52,377,600 loops/s.
 hd0:0: detected 313 sector (156 kB) disk, model "QEMU HARDDISK", serial "QM00001"
 hd0:1: detected 20,160 sector (9 MB) disk, model "QEMU HARDDISK", serial "QM00002"
 hd1:0: detected 4,018 sector (1 MB) disk, model "QEMU HARDDISK", serial "QM00003"
@@ -17,15 +17,16 @@ Executing 'mmap-ro':
 (mmap-ro) begin
 (mmap-ro) open "large.txt"
 (mmap-ro) mmap "large.txt" with writable=0
-mmap-ro: exit(268435456)
+(mmap-ro) about to write into read-only mmap'd memory
+mmap-ro: exit(-1)
 Execution of 'mmap-ro' complete.
-Timer: 171 ticks
-Thread: 30 idle ticks, 134 kernel ticks, 7 user ticks
+Timer: 162 ticks
+Thread: 30 idle ticks, 125 kernel ticks, 7 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 187 reads, 8074 writes
 hd1:0: 4018 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1059 characters output
+Console: 1105 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

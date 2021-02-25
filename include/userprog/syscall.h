@@ -1,6 +1,9 @@
 #ifndef USERPROG_SYSCALL_H
 #define USERPROG_SYSCALL_H
 
+#include "filesys/off_t.h"
+#include <stddef.h>
+
 typedef int tid_t;
 
 void syscall_init (void);
@@ -19,6 +22,8 @@ int filesize (int fd);
 void seek (int fd, unsigned position);
 unsigned tell (int fd);
 void close(int fd);
+void *mmap (void *addr, size_t length, int writable, int fd, off_t offset);
+void munmap (void *addr);
 
 struct lock filesys_lock;
 

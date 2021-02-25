@@ -19,8 +19,8 @@ Executing 'pt-write-code2':
 (pt-write-code2) survived reading data into code segment: FAILED
 pt-write-code2: exit(1)
 Execution of 'pt-write-code2' complete.
-Timer: 73 ticks
-Thread: 30 idle ticks, 38 kernel ticks, 6 user ticks
+Timer: 72 ticks
+Thread: 30 idle ticks, 36 kernel ticks, 6 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 188 reads, 250 writes
 hd1:0: 106 reads, 0 writes

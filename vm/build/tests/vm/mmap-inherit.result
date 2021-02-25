@@ -21,6 +21,6 @@ Differences in `diff -u' format:
 - (mmap-inherit) checking that mmap'd file still has same data
 - (mmap-inherit) end
 - mmap-inherit: exit(0)
-+ mmap-inherit: exit(1412567040)
++ mmap-inherit: exit(-1)
 
 (User fault messages are excluded for matching purposes.)

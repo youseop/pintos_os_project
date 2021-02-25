@@ -14,5 +14,4 @@ Differences in `diff -u' format:
   (mmap-unmap) mmap "sample.txt"
 - (mmap-unmap) memory is readable 540884285
 - (mmap-unmap) memory is readable 540888381
-- mmap-unmap: exit(-1)
-+ mmap-unmap: exit(268435456)
+  mmap-unmap: exit(-1)

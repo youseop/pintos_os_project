@@ -24,8 +24,8 @@ Executing 'lg-full':
 (lg-full) end
 lg-full: exit(0)
 Execution of 'lg-full' complete.
-Timer: 82 ticks
-Thread: 30 idle ticks, 34 kernel ticks, 18 user ticks
+Timer: 80 ticks
+Thread: 30 idle ticks, 32 kernel ticks, 18 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 340 reads, 550 writes
 hd1:0: 107 reads, 0 writes

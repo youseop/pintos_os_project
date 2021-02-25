@@ -17,15 +17,18 @@ Executing 'mmap-overlap':
 (mmap-overlap) begin
 (mmap-overlap) open "zeros" once
 (mmap-overlap) mmap "zeros"
-mmap-overlap: exit(268435456)
+(mmap-overlap) open "zeros" again
+(mmap-overlap) try to mmap "zeros" again
+(mmap-overlap) try to mmap "zeros" again: FAILED
+mmap-overlap: exit(1)
 Execution of 'mmap-overlap' complete.
-Timer: 79 ticks
-Thread: 30 idle ticks, 38 kernel ticks, 11 user ticks
+Timer: 75 ticks
+Thread: 30 idle ticks, 37 kernel ticks, 8 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 187 reads, 276 writes
+hd0:1: 190 reads, 276 writes
 hd1:0: 119 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1073 characters output
+Console: 1188 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

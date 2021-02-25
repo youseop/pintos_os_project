@@ -148,6 +148,10 @@ syscall_handler (struct intr_frame *f UNUSED) {
     case SYS_CLOSE:
       close(f->R.rdi);
       break;
+    case SYS_MMAP:
+      break;
+    case SYS_MUNMAP:
+      break;
     default:
       exit(f->R.rdi);
       break;
@@ -308,4 +312,14 @@ unsigned tell (int fd){
 /* 파일 디스크립터 엔트리 초기화 */ 
 void close(int fd){
   process_close_file(fd);
+}
+
+void *mmap (void *addr, size_t length, int writable, int fd, off_t offset){
+  
+  return NULL;
+}
+
+void munmap (void *addr){
+  
+  return;
 }

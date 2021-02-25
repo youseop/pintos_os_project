@@ -1,17 +1,15 @@
 FAIL
-Kernel panic in run: PANIC at ../../vm/vm.c:157 in vm_get_frame(): todo
-Call stack: 0x8004216a96 0x800421faf0 0x800421fd7c 0x800421fc7c 0x800421bc43 0x80042090d3 0x80042094f1 0x401256 0x40130f 0x4004ba 0x400687 0x400215 0x400ee9
+Kernel panic in run: PANIC at ../../userprog/exception.c:98 in kill(): Kernel bug - unexpected interrupt in kernel
+Call stack: 0x8004216a96 0x800421bb4c 0x80042090d3 0x80042094f1 0x8004217e63 0x8004207165 0x800420a2bc 0x800420733c 0x800421c460 0x800421be29 0x800421bccd
 Translation of call stack:
 0x0000008004216a96: debug_panic (lib/kernel/debug.c:32)
-0x000000800421faf0: vm_get_frame (vm/vm.c:159)
-0x000000800421fd7c: vm_do_claim_page (vm/vm.c:215)
-0x000000800421fc7c: vm_try_handle_fault (vm/vm.c:190)
-0x000000800421bc43: page_fault (userprog/exception.c:146)
+0x000000800421bb4c: kill (userprog/exception.c:104)
 0x00000080042090d3: intr_handler (threads/interrupt.c:352)
 0x00000080042094f1: intr_entry (threads/intr-stubs.o:?)
-0x0000000000401256: (unknown)
-0x000000000040130f: (unknown)
-0x00000000004004ba: (unknown)
-0x0000000000400687: (unknown)
-0x0000000000400215: (unknown)
-0x0000000000400ee9: (unknown)
+0x0000008004217e63: list_insert_ordered (lib/kernel/list.c:431)
+0x0000008004207165: thread_unblock (threads/thread.c:317)
+0x000000800420a2bc: sema_up (threads/synch.c:117)
+0x000000800420733c: thread_exit (threads/thread.c:369)
+0x000000800421c460: halt (userprog/syscall.c:260)
+0x000000800421be29: syscall_handler (userprog/syscall.c:104)
+0x000000800421bccd: no_sti (userprog/syscall-entry.o:?)

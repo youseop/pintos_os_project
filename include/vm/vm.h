@@ -62,6 +62,7 @@ struct page {
 	/* Your implementation */
 	bool writable;
 	struct hash_elem hash_elem; 
+	struct list_elem mmap_elem; //? for mmap
 	enum vm_type vm_type;
 };
 

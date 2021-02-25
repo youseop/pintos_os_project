@@ -169,7 +169,22 @@ vm_get_frame (void) {
 
 /* Growing the stack. */
 static void
-vm_stack_growth (void *addr UNUSED) {
+vm_stack_growth(void *addr UNUSED)
+{
+	addr = pg_round_down(addr);
+	while(1){
+		if(!spt_find_page(&thread_current()->spt,addr)){
+			if (vm_alloc_page(VM_ANON | VM_STACK, addr, true)){
+				vm_claim_page(addr);
+				memset(addr, 0, PGSIZE);
+			}
+			else
+				PANIC("vm_alloc_page failed in vm_stack_growth function");
+		}
+		else
+			break;
+		addr = addr + PGSIZE;
+	}
 }
 
 /* Handle the fault on write_protected page */
@@ -184,12 +199,16 @@ vm_try_handle_fault (struct intr_frame *f UNUSED, void *addr UNUSED,
 	struct supplemental_page_table *spt UNUSED = &thread_current ()->spt;
 	/* TODO: Validate the fault */
 	/* TODO: Your code goes here */
-	
 	struct page *page = spt_find_page(spt,addr);
 	if(page)
 		return vm_do_claim_page (page);
-	else
+	else{
+		if(user && write && addr > (USER_STACK - (1<<20)) && addr < f->rsp ){
+			vm_stack_growth(addr);
+			return true;
+		}
 		return false;
+	}
 }
 
 /* Free the page.
