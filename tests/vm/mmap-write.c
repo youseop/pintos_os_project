@@ -23,9 +23,8 @@ test_main (void)
   CHECK ((map = mmap (ACTUAL, 4096, 1, handle, 0)) != MAP_FAILED, "mmap \"sample.txt\"");
   memcpy (ACTUAL, sample, strlen (sample));
   munmap (map);
-
   /* Read back via read(). */
-  read (handle, buf, strlen (sample));
+  int size = read (handle, buf, strlen (sample));
   CHECK (!memcmp (buf, sample, strlen (sample)),
          "compare read data against written data");
   close (handle);

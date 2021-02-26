@@ -149,8 +149,10 @@ syscall_handler (struct intr_frame *f UNUSED) {
       close(f->R.rdi);
       break;
     case SYS_MMAP:
+      f->R.rax = mmap(f->R.rdi, f->R.rsi, f->R.rdx, f->R.r10, f->R.r8);
       break;
     case SYS_MUNMAP:
+      munmap(f->R.rdi);
       break;
     default:
       exit(f->R.rdi);
@@ -316,10 +318,35 @@ void close(int fd){
 
 void *mmap (void *addr, size_t length, int writable, int fd, off_t offset){
   
-  return NULL;
+  struct file* file = process_get_file(fd);
+  if(file == NULL)
+    return NULL;
+  size_t file_size = file_length(file);
+  if(fd <= 2
+  || fd > thread_current()->next_fd
+  || addr == NULL 
+  || pg_round_down(addr) != addr
+  || length <= 0
+  || pg_round_down(offset) != offset
+  || file_size <= 0
+  || file_size <= offset
+  || addr >= USER_STACK - (1<<20)
+  || addr + length >= USER_STACK - (1<<20))
+    return NULL;
+
+  struct supplemental_page_table *spt = &thread_current()->spt;
+  void * page_addr = addr;
+
+  while(page_addr < addr + length){ //? <= or <
+    if(spt_find_page(spt, page_addr))
+      return NULL;
+    page_addr += PGSIZE;
+  }
+  return do_mmap(addr, length, writable, file, offset);
 }
 
 void munmap (void *addr){
-  
+  if (addr == pg_round_down(addr))
+    do_munmap(addr);
   return;
 }

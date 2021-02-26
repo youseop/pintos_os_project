@@ -2,11 +2,22 @@
 #define VM_FILE_H
 #include "filesys/file.h"
 #include "vm/vm.h"
+#include "threads/mmu.h"
 
 struct page;
 enum vm_type;
 
 struct file_page {
+	void* padding; //?
+	enum vm_type type;
+	struct load_args_tmp *aux;
+};
+
+struct load_args_tmp{
+  struct file *file;
+  off_t ofs;
+  uint32_t read_bytes;
+  uint32_t zero_bytes;
 };
 
 void vm_file_init (void);

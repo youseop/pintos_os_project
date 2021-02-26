@@ -21,7 +21,7 @@ Executing 'lg-create':
 (lg-create) end
 lg-create: exit(0)
 Execution of 'lg-create' complete.
-Timer: 74 ticks
+Timer: 75 ticks
 Thread: 30 idle ticks, 33 kernel ticks, 12 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 335 reads, 402 writes

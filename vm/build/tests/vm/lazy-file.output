@@ -26,15 +26,27 @@ Executing 'lazy-file':
 (lazy-file) check if page is not loaded
 (lazy-file) load pages (3)
 (lazy-file) load page [0]
-lazy-file: exit(-1)
+(lazy-file) check if page is loaded
+(lazy-file) check if page is not loaded
+(lazy-file) check if page is not loaded
+(lazy-file) load page [1]
+(lazy-file) check if page is loaded
+(lazy-file) check if page is loaded
+(lazy-file) check if page is not loaded
+(lazy-file) load page [2]
+(lazy-file) check if page is loaded
+(lazy-file) check if page is loaded
+(lazy-file) check if page is loaded
+(lazy-file) end
+lazy-file: exit(0)
 Execution of 'lazy-file' complete.
-Timer: 80 ticks
-Thread: 30 idle ticks, 41 kernel ticks, 10 user ticks
+Timer: 87 ticks
+Thread: 30 idle ticks, 42 kernel ticks, 16 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 232 reads, 350 writes
+hd0:1: 302 reads, 350 writes
 hd1:0: 151 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1394 characters output
+Console: 1797 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

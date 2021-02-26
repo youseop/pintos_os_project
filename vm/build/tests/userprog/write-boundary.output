@@ -19,8 +19,8 @@ Executing 'write-boundary':
 (write-boundary) end
 write-boundary: exit(0)
 Execution of 'write-boundary' complete.
-Timer: 73 ticks
-Thread: 30 idle ticks, 35 kernel ticks, 8 user ticks
+Timer: 74 ticks
+Thread: 30 idle ticks, 37 kernel ticks, 7 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 196 reads, 257 writes
 hd1:0: 109 reads, 0 writes

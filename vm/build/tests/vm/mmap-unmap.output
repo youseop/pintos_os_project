@@ -17,15 +17,17 @@ Executing 'mmap-unmap':
 (mmap-unmap) begin
 (mmap-unmap) open "sample.txt"
 (mmap-unmap) mmap "sample.txt"
+(mmap-unmap) memory is readable 540884285
+(mmap-unmap) memory is readable 540888381
 mmap-unmap: exit(-1)
 Execution of 'mmap-unmap' complete.
-Timer: 76 ticks
-Thread: 30 idle ticks, 40 kernel ticks, 6 user ticks
+Timer: 75 ticks
+Thread: 30 idle ticks, 38 kernel ticks, 8 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 188 reads, 256 writes
+hd0:1: 190 reads, 256 writes
 hd1:0: 109 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1062 characters output
+Console: 1146 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

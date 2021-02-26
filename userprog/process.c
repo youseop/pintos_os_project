@@ -496,6 +496,7 @@ load (const char *file_name, struct intr_frame *if_) {
 					bool writable = (phdr.p_flags & PF_W) != 0;
 					uint64_t file_page = phdr.p_offset & ~PGMASK;
 					uint64_t mem_page = phdr.p_vaddr & ~PGMASK;
+					// printf("p_vaddr : %p phdr.p_memsz : %p p_offset : %p ofs : %p\n",phdr.p_vaddr,phdr.p_memsz,phdr.p_offset, file_page);
 					uint64_t page_offset = phdr.p_vaddr & PGMASK;
 					uint32_t read_bytes, zero_bytes;
 					if (phdr.p_filesz > 0) {
@@ -695,14 +696,13 @@ lazy_load_segment (struct page *page, void *aux) {
 	uint8_t* kpage = (page->frame)->kva;
 	uint8_t* upage = page->va;
 	struct load_args* args = page->uninit.aux;
-	
 	file_seek(args->file, args->ofs); //? file->pos update
 	if (file_read (args->file, kpage, args->read_bytes) != (int) args->read_bytes) {
 		palloc_free_page (kpage);
 		return false;
 	}
 	memset(kpage + args->read_bytes, 0, args->zero_bytes);
-	free(args); //? malloc으로 공간 할당해줬었다. 메모리누수를 방지하자!
+	// free(args); //? malloc으로 공간 할당해줬었다. 메모리누수를 방지하자!
 	return true;
 }
 
@@ -769,8 +769,9 @@ setup_stack (struct intr_frame *if_) {
 	 * TODO: If success, set the rsp accordingly.
 	 * TODO: You should mark the page is stack. */
 	/* TODO: Your code goes here */
-
-	if(! (vm_alloc_page(VM_ANON|VM_STACK, stack_bottom, 1) && vm_claim_page(stack_bottom)) ){
+	struct load_args* args = (struct load_args*)malloc(sizeof(struct load_args));
+	if(! (vm_alloc_page_with_initializer (VM_ANON|VM_STACK, stack_bottom,   
+					1, NULL, args) && vm_claim_page(stack_bottom)) ){
 		struct page *page = spt_find_page(&thread_current()->spt,stack_bottom);
 		palloc_free_page(page);
 		PANIC("vm_alloc_page failed");

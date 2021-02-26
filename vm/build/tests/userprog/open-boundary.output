@@ -19,8 +19,8 @@ Executing 'open-boundary':
 (open-boundary) end
 open-boundary: exit(0)
 Execution of 'open-boundary' complete.
-Timer: 74 ticks
-Thread: 30 idle ticks, 39 kernel ticks, 6 user ticks
+Timer: 78 ticks
+Thread: 30 idle ticks, 40 kernel ticks, 8 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 187 reads, 252 writes
 hd1:0: 107 reads, 0 writes

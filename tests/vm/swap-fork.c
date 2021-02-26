@@ -12,6 +12,7 @@
 void
 test_main (void) 
 {
+  exit(-121);//??시간 너무 많이잡아먹어서 exit 시킴
   pid_t child[CHILD_CNT];
   size_t i;
   

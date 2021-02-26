@@ -17,15 +17,16 @@ Executing 'mmap-read':
 (mmap-read) begin
 (mmap-read) open "sample.txt"
 (mmap-read) mmap "sample.txt"
-mmap-read: exit(-1)
+(mmap-read) end
+mmap-read: exit(0)
 Execution of 'mmap-read' complete.
-Timer: 73 ticks
-Thread: 30 idle ticks, 37 kernel ticks, 7 user ticks
+Timer: 76 ticks
+Thread: 30 idle ticks, 36 kernel ticks, 10 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 202 reads, 256 writes
+hd0:1: 204 reads, 256 writes
 hd1:0: 109 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1053 characters output
+Console: 1069 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

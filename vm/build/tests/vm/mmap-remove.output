@@ -20,15 +20,16 @@ Executing 'mmap-remove':
 (mmap-remove) remove "sample.txt"
 (mmap-remove) try to open "sample.txt"
 (mmap-remove) create "another"
-mmap-remove: exit(-1)
+(mmap-remove) end
+mmap-remove: exit(0)
 Execution of 'mmap-remove' complete.
-Timer: 83 ticks
-Thread: 30 idle ticks, 37 kernel ticks, 17 user ticks
+Timer: 79 ticks
+Thread: 30 idle ticks, 36 kernel ticks, 14 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 250 reads, 361 writes
+hd0:1: 251 reads, 361 writes
 hd1:0: 110 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1176 characters output
+Console: 1193 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

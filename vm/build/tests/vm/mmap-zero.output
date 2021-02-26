@@ -19,8 +19,8 @@ Executing 'mmap-zero':
 (mmap-zero) mmap "empty"
 mmap-zero: exit(-1)
 Execution of 'mmap-zero' complete.
-Timer: 74 ticks
-Thread: 30 idle ticks, 35 kernel ticks, 9 user ticks
+Timer: 77 ticks
+Thread: 30 idle ticks, 39 kernel ticks, 8 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 182 reads, 246 writes
 hd1:0: 103 reads, 0 writes

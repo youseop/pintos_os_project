@@ -1,2 +1,1 @@
-FAIL
-run: wait for child (should return 0): FAILED
+PASS
