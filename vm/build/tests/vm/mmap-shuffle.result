@@ -1,1 +1,29 @@
-PASS
+FAIL
+Kernel panic in run: PANIC at ../../userprog/exception.c:98 in kill(): Kernel bug - unexpected interrupt in kernel
+Call stack: 0x8004216a96 0x800421bb4f 0x80042090d3 0x80042094f1 0x800421dc18 0x800421a880 0x80042072d4 0x800421c4d4 0x800421bc5b 0x80042090d3 0x80042094f1 0x800420c14f 0x80042209a3 0x8004220074 0x800422048b 0x800421905c 0x80042190df 0x80042204bf 0x800421a997 0x800421a963 0x80042072d4 0x800421c4d4 0x800421be2c 0x800421bcd0 0x401104
+Translation of call stack:
+0x0000008004216a96: debug_panic (lib/kernel/debug.c:32)
+0x000000800421bb4f: kill (userprog/exception.c:104)
+0x00000080042090d3: intr_handler (threads/interrupt.c:352)
+0x00000080042094f1: intr_entry (threads/intr-stubs.o:?)
+0x000000800421dc18: file_close (filesys/file.c:57)
+0x000000800421a880: process_exit (userprog/process.c:308 (discriminator 2))
+0x00000080042072d4: thread_exit (threads/thread.c:362)
+0x000000800421c4d4: halt (userprog/syscall.c:262)
+0x000000800421bc5b: page_fault (userprog/exception.c:146)
+0x00000080042090d3: intr_handler (threads/interrupt.c:352)
+0x00000080042094f1: intr_entry (threads/intr-stubs.o:?)
+0x000000800420c14f: free (threads/malloc.c:226 (discriminator 3))
+0x00000080042209a3: file_backed_destroy (vm/file.c:59)
+0x0000008004220074: vm_dealloc_page (vm/vm.c:221)
+0x000000800422048b: supplemental_page_table_destructor (vm/vm.c:301)
+0x000000800421905c: hash_clear (lib/kernel/hash.c:57)
+0x00000080042190df: hash_destroy (lib/kernel/hash.c:83)
+0x00000080042204bf: supplemental_page_table_kill (vm/vm.c:311)
+0x000000800421a997: process_cleanup (userprog/process.c:340)
+0x000000800421a963: process_exit (userprog/process.c:326)
+0x00000080042072d4: thread_exit (threads/thread.c:362)
+0x000000800421c4d4: halt (userprog/syscall.c:262)
+0x000000800421be2c: syscall_handler (userprog/syscall.c:104)
+0x000000800421bcd0: no_sti (userprog/syscall-entry.o:?)
+0x0000000000401104: (unknown)

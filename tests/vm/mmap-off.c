@@ -29,7 +29,6 @@ test_main (void)
   memset (zeros, 0, 0x1000);
   memcpy ((void *) 0x10000000, zeros, 0x1000);
   munmap ((void *) 0x10000000);
-
   msg ("validate contents.");
 
   CHECK ((handle = open ("large.txt")) > 1, "open \"large.txt\"");

@@ -28,7 +28,6 @@ bool
 file_backed_initializer (struct page *page, enum vm_type type, void *kva) {
 	/* Set up the handler */
 	page->operations = &file_ops;
-
 	struct file_page *file_page = &page->file;
 }
 
@@ -53,7 +52,9 @@ file_backed_destroy (struct page *page) {
 		file_write(aux->file, page->va, aux->read_bytes);
 	} 
 	memset(page->va,0 ,aux->read_bytes);
-	
+	if(page->file.aux->save_addr == page->va){
+		file_close(page->file.aux->file);
+	}
 	free(page->frame);
 	free(page->file.aux);  
 }
@@ -67,13 +68,12 @@ lazy_load_segment (struct page *page, void *aux) {
 	uint8_t* upage = page->va;
 	struct load_args_tmp* args = page->uninit.aux;
 	
-	file_seek(args->file, args->ofs); //? file->pos update
+	file_seek(args->file, args->ofs);
 	if (file_read (args->file, kpage, args->read_bytes) != (int) args->read_bytes) {
 		palloc_free_page (kpage);
 		return false;
 	}
 	memset(kpage + args->read_bytes, 0, args->zero_bytes);
-	// free(args); //? malloc으로 공간 할당해줬었다. 메모리누수를 방지하자!
 	return true;
 }
 
@@ -98,7 +98,7 @@ do_mmap (void *addr, size_t length, int writable,
 		args->ofs = offset;
 		args->read_bytes = read_bytes;
 		args->zero_bytes = zero_bytes;
-		
+		args->save_addr = addr;
 		if (!vm_alloc_page_with_initializer (VM_FILE, addr, 
 					writable, lazy_load_segment, args))
 			PANIC("vm_alloc_failed\n");
@@ -116,29 +116,12 @@ do_mmap (void *addr, size_t length, int writable,
 void
 do_munmap (void *addr) {
 	struct supplemental_page_table* spt = &thread_current()->spt;
-	struct page *new_page = spt_find_page (spt, addr);
-	struct file* get_file = new_page->file.aux->file;
-
-	struct hash *h = &spt->hash_table;
-	for (int i = 0; i < h->bucket_cnt; i++) {
-		struct list *bucket = &h->buckets[i];
-		struct list_elem *list_elem;
-		struct page* page;
-		for (list_elem = list_begin (bucket); list_elem != list_end (bucket); ){
-			struct hash_elem *hash_elem = list_elem_to_hash_elem (list_elem);
-			page = hash_entry(hash_elem, struct page, hash_elem);
-			if (VM_TYPE(page->vm_type) != VM_ANON && page->operations->type == VM_FILE && page->file.aux->file == get_file){
-				list_elem = list_remove(list_elem);
-				h->elem_cnt--;
-				supplemental_page_table_destructor (hash_elem, h->aux);
-			}
-			else{
-				list_elem = list_next(list_elem);
-			}
-		}
-
-		if(list_empty (bucket))
-			list_init (bucket);
+	struct hash *h = &(spt->hash_table);
+	struct page* new_page = spt_find_page(spt, addr);
+	int page_cnt = (((uint64_t) ((new_page->file.aux->read_bytes)) + PGSIZE - 1) & ~PGMASK)/PGSIZE;
+	for(int i = page_cnt-1; i >= 0; i--){
+		struct page* page = spt_find_page(spt, addr+i*PGSIZE);
+		hash_delete(h, &page->hash_elem);
+		supplemental_page_table_destructor (&page->hash_elem, h->aux);
 	}
-	file_close(get_file);
 }

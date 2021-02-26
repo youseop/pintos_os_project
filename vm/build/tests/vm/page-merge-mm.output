@@ -5,7 +5,7 @@ Pintos booting with:
 	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
 	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
 Calibrating timer...  157,081,600 loops/s.
-hd0:0: detected 321 sector (160 kB) disk, model "QEMU HARDDISK", serial "QM00001"
+hd0:0: detected 313 sector (156 kB) disk, model "QEMU HARDDISK", serial "QM00001"
 hd0:1: detected 20,160 sector (9 MB) disk, model "QEMU HARDDISK", serial "QM00002"
 hd1:0: detected 224 sector (112 kB) disk, model "QEMU HARDDISK", serial "QM00003"
 hd1:1: detected 8,064 sector (3 MB) disk, model "QEMU HARDDISK", serial "QM00004"
@@ -19,35 +19,26 @@ Executing 'page-merge-mm':
 (page-merge-mm) sort chunk 0
 (page-merge-mm) sort chunk 1
 (page-merge-mm) sort chunk 2
-(child-qsort-mm) open "buf1": FAILED
-child-qsort-mm: exit(1)
-User process ABORT at ../../tests/vm/qsort.c:62 in partition(): assertion `is_partitioned (array, size, pivot, left_size)' failed.
-Call stack: 0x4035aa 0x4003e8 0x40059e 0x400218 0x4010b3.
-The `backtrace' program can make call stacks useful.
-Read "Backtraces" in the "Debugging Tools" chapter
-of the Pintos documentation for more information.
-child-qsort-mm: exit(1)
-(page-merge-mm) sort chunk 3
-(page-merge-mm) open "buf3": FAILED
+(page-merge-mm) open "buf2": FAILED
 page-merge-mm: exit(1)
 Interrupt 0x0d (#GP General Protection Exception) at rip=800421704a
- cr2=0000000000402042 error=               0
-rax cccccccccccccccc rbx 0000000000000000 rcx 0000008004242028 rdx 0000008004242028
-rsp 0000008004242bc0 rbp 0000008004242bd0 rsi 0000008004242028 rdi 0000008004268028
-rip 000000800421704a r8 0000008004242e08  r9 0000008004219ed8 r10 0000000000000000
+ cr2=000000001001b000 error=               0
+rax cccccccccccccccc rbx 0000000000000000 rcx 0000008004241028 rdx 0000008004241028
+rsp 0000008004241b60 rbp 0000008004241b70 rsi 0000008004241028 rdi 0000008004272028
+rip 000000800421704a r8 0000008004241e08  r9 0000008004219ed8 r10 0000000000000000
 r11 0000000000000206 r12 000000800421bda7 r13 0000000000000000 r14 0000000000000000
 r15 0000000000000000 rflags 00000006
 es: 0010 ds: 0010 cs: 0008 ss: 0010
 Kernel PANIC at ../../userprog/exception.c:98 in kill(): Kernel bug - unexpected interrupt in kernel
-Call stack: 0x8004216a96 0x800421bb4f 0x80042090d3 0x80042094f1 0x8004217e63 0x80042076fe 0x800420922a 0x80042094f1 0x80042207f2 0x8004220074 0x800422048b 0x800421905c 0x80042190df 0x80042204bf 0x800421a997 0x800421a963 0x80042072d4 0x800421c4d4 0x800421be2c 0x800421bcd0 0x400c7f 0x4002dc 0x4007f7 0x400107 0x401504 0x40154d.
+Call stack: 0x8004216a96 0x800421bb4f 0x80042090d3 0x80042094f1 0x8004217e63 0x80042076fe 0x800420922a 0x80042094f1 0x8004208246 0x800420a2e8 0x800420a7fa 0x800420c18c 0x8004220087 0x800422048b 0x800421905c 0x80042190df 0x80042204bf 0x800421a997 0x800421a963 0x80042072d4 0x800421c4d4 0x800421be2c 0x800421bcd0 0x400c7f 0x4002dc 0x4007f7 0x400107 0x401504 0x40154d.
 The `backtrace' program can make call stacks useful.
 Read "Backtraces" in the "Debugging Tools" chapter
 of the Pintos documentation for more information.
-Timer: 684 ticks
-Thread: 30 idle ticks, 48 kernel ticks, 606 user ticks
+Timer: 626 ticks
+Thread: 30 idle ticks, 41 kernel ticks, 555 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 4802 reads, 6554 writes
+hd0:1: 4602 reads, 1806 writes
 hd1:0: 224 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 2699 characters output
+Console: 2281 characters output
 Key

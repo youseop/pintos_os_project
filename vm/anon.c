@@ -21,12 +21,25 @@ static const struct page_operations anon_ops = {
 	.type = VM_ANON,
 };
 
+struct swap_table {
+	struct lock lock;              /* Mutual exclusion. */
+	struct bitmap *used_map;       /* Bitmap of free pages. */
+	uint8_t *base;                 /* Base of pool. */
+};
+struct swap_table swap_table;
+
 /* Initialize the data for anonymous pages */
 void
 vm_anon_init (void) {
 	/* TODO: Set up the swap_disk. */
+
+// #define DISK_SECTOR_SIZE 512
+//  * Good enough for disks up to 2 TB. */
+// typedef uint32_t disk_sector_t;
 	swap_disk = disk_get(1, 1);
 	disk_sector_t swap_disk_size = disk_size(swap_disk); //? 8064
+	// lock_init(&swap_table.lock);
+	// swap_table.used_map = bitmap_create_in_buf (swap_disk_size, *bm_base, bm_pages);
 }
 
 /* Initialize the file mapping */

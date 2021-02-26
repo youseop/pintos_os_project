@@ -49,7 +49,6 @@ struct page {
 	void *va;              /* Address in terms of user space */
 	struct frame *frame;   /* Back reference for frame */
 
-
 	/* Per-type data are binded into the union.
 	 * Each function automatically detects the current union */
 	union {
@@ -63,7 +62,6 @@ struct page {
 	/* Your implementation */
 	bool writable;
 	struct hash_elem hash_elem; 
-	struct list_elem mmap_elem; //? for mmap
 	enum vm_type vm_type;
 };
 

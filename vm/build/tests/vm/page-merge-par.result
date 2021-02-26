@@ -1,6 +1,6 @@
 FAIL
 Kernel panic in run: PANIC at ../../userprog/exception.c:98 in kill(): Kernel bug - unexpected interrupt in kernel
-Call stack: 0x8004216a96 0x800421bb4f 0x80042090d3 0x80042094f1 0x8004217e63 0x80042076fe 0x800420922a 0x80042094f1 0x800420b8f7 0x800420b9a9 0x800420ccd0 0x800420cd53 0x800420cdd6 0x800420ce9f 0x800421a9e0 0x800421a963 0x80042072d4 0x800421c4d4 0x800421be2c 0x800421bcd0
+Call stack: 0x8004216a96 0x800421bb4f 0x80042090d3 0x80042094f1 0x8004217e63 0x80042076fe 0x800420922a 0x80042094f1 0x800420b8f7 0x800420b9a9 0x800420c175 0x8004220724 0x8004220074 0x800422048b 0x800421905c 0x80042190df 0x80042204bf 0x800421a997 0x800421a963 0x80042072d4 0x800421c4d4 0x800421be2c 0x800421bcd0 0x400c7f 0x4002dc 0x4007f7 0x400107 0x401504 0x40154d
 Translation of call stack:
 0x0000008004216a96: debug_panic (lib/kernel/debug.c:32)
 0x000000800421bb4f: kill (userprog/exception.c:104)
@@ -12,13 +12,22 @@ Translation of call stack:
 0x00000080042094f1: intr_entry (threads/intr-stubs.o:?)
 0x000000800420b8f7: palloc_free_multiple (threads/palloc.c:322)
 0x000000800420b9a9: palloc_free_page (threads/palloc.c:330)
-0x000000800420ccd0: pt_destroy (threads/mmu.c:166 (discriminator 2))
-0x000000800420cd53: pgdir_destroy (threads/mmu.c:176 (discriminator 2))
-0x000000800420cdd6: pdpe_destroy (threads/mmu.c:186 (discriminator 2))
-0x000000800420ce9f: pml4_destroy (threads/mmu.c:205)
-0x000000800421a9e0: process_cleanup (userprog/process.c:354)
+0x000000800420c175: free (threads/malloc.c:233)
+0x0000008004220724: uninit_destroy (vm/uninit.c:77)
+0x0000008004220074: vm_dealloc_page (vm/vm.c:221)
+0x000000800422048b: supplemental_page_table_destructor (vm/vm.c:301)
+0x000000800421905c: hash_clear (lib/kernel/hash.c:57)
+0x00000080042190df: hash_destroy (lib/kernel/hash.c:83)
+0x00000080042204bf: supplemental_page_table_kill (vm/vm.c:311)
+0x000000800421a997: process_cleanup (userprog/process.c:340)
 0x000000800421a963: process_exit (userprog/process.c:326)
 0x00000080042072d4: thread_exit (threads/thread.c:362)
 0x000000800421c4d4: halt (userprog/syscall.c:262)
 0x000000800421be2c: syscall_handler (userprog/syscall.c:104)
 0x000000800421bcd0: no_sti (userprog/syscall-entry.o:?)
+0x0000000000400c7f: (unknown)
+0x00000000004002dc: (unknown)
+0x00000000004007f7: (unknown)
+0x0000000000400107: (unknown)
+0x0000000000401504: (unknown)
+0x000000000040154d: (unknown)
