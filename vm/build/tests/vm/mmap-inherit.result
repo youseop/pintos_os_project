@@ -1,2 +1,1 @@
-FAIL
-run: mmap "sample.txt": FAILED
+PASS

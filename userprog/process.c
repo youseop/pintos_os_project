@@ -494,10 +494,9 @@ load (const char *file_name, struct intr_frame *if_) {
 			case PT_LOAD:
 				if (validate_segment (&phdr, file)) {
 					bool writable = (phdr.p_flags & PF_W) != 0;
-					uint64_t file_page = phdr.p_offset & ~PGMASK;
-					uint64_t mem_page = phdr.p_vaddr & ~PGMASK;
-					// printf("p_vaddr : %p phdr.p_memsz : %p p_offset : %p ofs : %p\n",phdr.p_vaddr,phdr.p_memsz,phdr.p_offset, file_page);
-					uint64_t page_offset = phdr.p_vaddr & PGMASK;
+					uint64_t file_page = phdr.p_offset & ~PGMASK; //?ofs
+					uint64_t mem_page = phdr.p_vaddr & ~PGMASK;   //?upage
+					uint64_t page_offset = phdr.p_vaddr & PGMASK; 
 					uint32_t read_bytes, zero_bytes;
 					if (phdr.p_filesz > 0) {
 						/* Normal segment.

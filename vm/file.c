@@ -51,11 +51,11 @@ file_backed_destroy (struct page *page) {
 	if (pml4_is_dirty(thread_current()->pml4,page->va)){
 		file_seek(aux->file, aux->ofs);
 		file_write(aux->file, page->va, aux->read_bytes);
-	}
+	} 
 	memset(page->va,0 ,aux->read_bytes);
 	
 	free(page->frame);
-	free(page->file.aux);
+	free(page->file.aux);  
 }
 
 static bool

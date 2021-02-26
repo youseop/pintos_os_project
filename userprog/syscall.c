@@ -326,14 +326,14 @@ void *mmap (void *addr, size_t length, int writable, int fd, off_t offset){
   || fd > thread_current()->next_fd
   || addr == NULL 
   || pg_round_down(addr) != addr
-  || length <= 0
+  || (length <= 0 || length >= KERN_BASE)
   || pg_round_down(offset) != offset
   || file_size <= 0
   || file_size <= offset
-  || addr >= USER_STACK - (1<<20)
-  || addr + length >= USER_STACK - (1<<20))
+  || (addr >= KERN_BASE || addr+length >= KERN_BASE)
+  || (addr <=USER_STACK && addr >= USER_STACK - (1<<20))
+  || (addr + length <= USER_STACK && addr + length >= USER_STACK - (1<<20)))
     return NULL;
-
   struct supplemental_page_table *spt = &thread_current()->spt;
   void * page_addr = addr;
 

@@ -4,8 +4,8 @@ Kernel command line: -q -f put lazy-file put sample.txt put small.txt run lazy-f
 Pintos booting with: 
 	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
 	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
-Calibrating timer...  157,081,600 loops/s.
-hd0:0: detected 313 sector (156 kB) disk, model "QEMU HARDDISK", serial "QM00001"
+Calibrating timer...  134,144,000 loops/s.
+hd0:0: detected 321 sector (160 kB) disk, model "QEMU HARDDISK", serial "QM00001"
 hd0:1: detected 20,160 sector (9 MB) disk, model "QEMU HARDDISK", serial "QM00002"
 hd1:0: detected 151 sector (75 kB) disk, model "QEMU HARDDISK", serial "QM00003"
 hd1:1: detected 8,064 sector (3 MB) disk, model "QEMU HARDDISK", serial "QM00004"
@@ -40,8 +40,8 @@ Executing 'lazy-file':
 (lazy-file) end
 lazy-file: exit(0)
 Execution of 'lazy-file' complete.
-Timer: 87 ticks
-Thread: 30 idle ticks, 42 kernel ticks, 16 user ticks
+Timer: 93 ticks
+Thread: 30 idle ticks, 47 kernel ticks, 16 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 302 reads, 350 writes
 hd1:0: 151 reads, 0 writes

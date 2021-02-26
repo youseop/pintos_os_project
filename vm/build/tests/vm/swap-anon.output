@@ -4,8 +4,8 @@ Kernel command line: -q -f put swap-anon run swap-anon
 Pintos booting with: 
 	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
 	ext_mem: 0x100000 ~ 0x9e0000 (Usable: 9,088 kB)
-Calibrating timer...  157,081,600 loops/s.
-hd0:0: detected 313 sector (156 kB) disk, model "QEMU HARDDISK", serial "QM00001"
+Calibrating timer...  130,867,200 loops/s.
+hd0:0: detected 321 sector (160 kB) disk, model "QEMU HARDDISK", serial "QM00001"
 hd0:1: detected 20,160 sector (9 MB) disk, model "QEMU HARDDISK", serial "QM00002"
 hd1:0: detected 104 sector (52 kB) disk, model "QEMU HARDDISK", serial "QM00003"
 hd1:1: detected 60,480 sector (29 MB) disk, model "QEMU HARDDISK", serial "QM00004"
@@ -17,13 +17,13 @@ Executing 'swap-anon':
 (swap-anon) write sparsely over page 0
 swap-anon: exit(-1)
 Execution of 'swap-anon' complete.
-Timer: 96 ticks
-Thread: 30 idle ticks, 35 kernel ticks, 31 user ticks
+Timer: 101 ticks
+Thread: 30 idle ticks, 40 kernel ticks, 32 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 156 reads, 236 writes
 hd1:0: 104 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 972 characters output
+Console: 973 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

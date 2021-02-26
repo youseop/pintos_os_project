@@ -72,7 +72,7 @@ pass tests/vm/pt-grow-stk-sc
 pass tests/vm/page-linear
 FAIL tests/vm/page-parallel
 pass tests/vm/page-merge-seq
-pass tests/vm/page-merge-par
+FAIL tests/vm/page-merge-par
 FAIL tests/vm/page-merge-stk
 FAIL tests/vm/page-merge-mm
 pass tests/vm/page-shuffle
@@ -86,8 +86,8 @@ pass tests/vm/mmap-ro
 pass tests/vm/mmap-exit
 pass tests/vm/mmap-shuffle
 pass tests/vm/mmap-bad-fd
-FAIL tests/vm/mmap-clean
-FAIL tests/vm/mmap-inherit
+pass tests/vm/mmap-clean
+pass tests/vm/mmap-inherit
 pass tests/vm/mmap-misalign
 pass tests/vm/mmap-null
 pass tests/vm/mmap-over-code
@@ -98,7 +98,7 @@ pass tests/vm/mmap-zero
 pass tests/vm/mmap-bad-fd2
 pass tests/vm/mmap-bad-fd3
 pass tests/vm/mmap-zero-len
-FAIL tests/vm/mmap-off
+pass tests/vm/mmap-off
 pass tests/vm/mmap-bad-off
 pass tests/vm/mmap-kernel
 pass tests/vm/lazy-file

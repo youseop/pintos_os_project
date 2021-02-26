@@ -277,12 +277,19 @@ supplemental_page_table_copy (struct supplemental_page_table *dst UNUSED,
 			success = vm_alloc_page_with_initializer(page->vm_type, page->va,
 					page->writable, page->uninit.init, args);
 		}
-		else if ((VM_TYPE(type) == VM_ANON)){
-			success = vm_alloc_page(VM_ANON|VM_STACK, page->va, 1);
+		else if (VM_TYPE(type) == VM_ANON){
+			struct load_args* args = (struct load_args*)malloc(sizeof(struct load_args));
+			success = vm_alloc_page_with_initializer(VM_ANON|VM_STACK, page->va, 
+					page->writable, NULL, args);
 			vm_claim_page(page->va);
 			struct page *new_page = spt_find_page (&thread_current()->spt, page->va);
-			//? struct page *new_page = spt_find_page (dst, page->va);
 			memcpy(new_page->va, page->frame->kva, PGSIZE);
+		}
+		else if(VM_TYPE(type) == VM_FILE){
+			struct load_args* args = (struct load_args*)malloc(sizeof(struct load_args));
+			memcpy(args, page->file.aux, sizeof(struct load_args));
+			success = vm_alloc_page_with_initializer(VM_FILE, page->va, 
+					page->writable, NULL, args);
 		}
 	}
 	return success;
