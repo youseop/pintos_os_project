@@ -1,16 +1,1 @@
-FAIL
-Kernel panic in run: PANIC at ../../threads/mmu.c:263 in pml4_clear_page(): assertion `is_user_vaddr (upage)' failed.
-Call stack: 0x8004216a70 0x800420d2de 0x8004220eee 0x800421fe3c 0x800421fef9 0x80042202c7 0x8004220186 0x800421bc31 0x80042090ad 0x80042094cb 0x400e6a 0x400eb3
-Translation of call stack:
-0x0000008004216a70: debug_panic (lib/kernel/debug.c:32)
-0x000000800420d2de: pml4_clear_page (threads/mmu.c:265)
-0x0000008004220eee: file_backed_swap_out (vm/file.c:69)
-0x000000800421fe3c: vm_get_page (vm/vm.c:168)
-0x000000800421fef9: vm_get_frame (vm/vm.c:183)
-0x00000080042202c7: vm_do_claim_page (vm/vm.c:264)
-0x0000008004220186: vm_try_handle_fault (vm/vm.c:233)
-0x000000800421bc31: page_fault (userprog/exception.c:145)
-0x00000080042090ad: intr_handler (threads/interrupt.c:352)
-0x00000080042094cb: intr_entry (threads/intr-stubs.o:?)
-0x0000000000400e6a: (unknown)
-0x0000000000400eb3: (unknown)
+PASS

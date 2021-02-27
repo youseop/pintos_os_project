@@ -65,7 +65,7 @@ file_backed_swap_out (struct page *page) {
 		file_write(aux->file, page->va, aux->read_bytes);
 	} 
 
-	pml4_clear_page(thread_current()->pml4, page->frame->kva);
+	pml4_clear_page(thread_current()->pml4, page->va);
 	palloc_free_page(page->frame->kva);
 	
 	free(page->frame);
