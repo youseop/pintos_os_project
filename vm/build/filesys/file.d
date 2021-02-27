@@ -10,4 +10,5 @@ filesys/file.o: ../../filesys/file.c ../../include/filesys/file.h \
  ../../include/lib/kernel/list.h ../../include/threads/vaddr.h \
  ../../include/threads/loader.h ../../include/vm/uninit.h \
  ../../include/vm/file.h ../../include/threads/mmu.h \
- ../../include/threads/pte.h ../../include/vm/anon.h
+ ../../include/threads/pte.h ../../include/vm/anon.h \
+ ../../include/lib/kernel/bitmap.h

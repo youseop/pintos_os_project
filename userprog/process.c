@@ -701,7 +701,6 @@ lazy_load_segment (struct page *page, void *aux) {
 		return false;
 	}
 	memset(kpage + args->read_bytes, 0, args->zero_bytes);
-	// free(args); //? malloc으로 공간 할당해줬었다. 메모리누수를 방지하자!
 	return true;
 }
 
@@ -742,8 +741,10 @@ load_segment (struct file *file, off_t ofs, uint8_t *upage,
 		struct load_args* args = (struct load_args*)malloc(sizeof(struct load_args));
 		args->file = file;
 		args->ofs = ofs;
-		args->read_bytes = read_bytes;
-		args->zero_bytes = zero_bytes;
+		args->read_bytes = page_read_bytes;
+		args->zero_bytes = page_zero_bytes;
+		args->read_bytes_sum = read_bytes;
+		// printf("page_read_bytes : %p, page_zero_bytes : %p\n",page_read_bytes, page_zero_bytes);
 		/* TODO: Set up aux to pass information to the lazy_load_segment. */
 		if (!vm_alloc_page_with_initializer (VM_ANON, upage,   //?왜 VM_ANON만 설정해놓는걸까? 
 					writable, lazy_load_segment, args))

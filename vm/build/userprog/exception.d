@@ -12,5 +12,6 @@ userprog/exception.o: ../../userprog/exception.c \
  ../../include/vm/uninit.h ../../include/vm/file.h \
  ../../include/filesys/file.h ../../include/filesys/off_t.h \
  ../../include/threads/mmu.h ../../include/threads/pte.h \
- ../../include/vm/anon.h ../../include/intrinsic.h \
- ../../include/threads/mmu.h ../../include/lib/user/syscall.h
+ ../../include/vm/anon.h ../../include/lib/kernel/bitmap.h \
+ ../../include/intrinsic.h ../../include/threads/mmu.h \
+ ../../include/lib/user/syscall.h

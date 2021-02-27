@@ -12,6 +12,7 @@ userprog/syscall.o: ../../userprog/syscall.c \
  ../../include/vm/uninit.h ../../include/vm/file.h \
  ../../include/filesys/file.h ../../include/threads/mmu.h \
  ../../include/threads/pte.h ../../include/vm/anon.h \
+ ../../include/lib/kernel/bitmap.h ../../include/lib/inttypes.h \
  ../../include/userprog/gdt.h ../../include/threads/flags.h \
  ../../include/intrinsic.h ../../include/threads/mmu.h \
  ../../include/threads/init.h ../../include/filesys/filesys.h \

@@ -23,23 +23,20 @@ static const struct page_operations anon_ops = {
 
 struct swap_table {
 	struct lock lock;              /* Mutual exclusion. */
-	struct bitmap *used_map;       /* Bitmap of free pages. */
-	uint8_t *base;                 /* Base of pool. */
+	struct bitmap *bit_map;       /* Bitmap of free pages. */ 
 };
-struct swap_table swap_table;
+static struct swap_table swap_table;
 
 /* Initialize the data for anonymous pages */
 void
 vm_anon_init (void) {
-	/* TODO: Set up the swap_disk. */
-
-// #define DISK_SECTOR_SIZE 512
-//  * Good enough for disks up to 2 TB. */
-// typedef uint32_t disk_sector_t;
 	swap_disk = disk_get(1, 1);
 	disk_sector_t swap_disk_size = disk_size(swap_disk); //? 8064
-	// lock_init(&swap_table.lock);
-	// swap_table.used_map = bitmap_create_in_buf (swap_disk_size, *bm_base, bm_pages);
+	uint64_t bit_cnt = swap_disk_size/8;                 //? 1008
+	swap_table.bit_map = bitmap_create(bit_cnt);
+	ASSERT(swap_table.bit_map);
+
+	lock_init(&swap_table.lock);
 }
 
 /* Initialize the file mapping */
@@ -48,24 +45,51 @@ anon_initializer (struct page *page, enum vm_type type, void *kva) {
 	/* Set up the handler */
 	page->operations = &anon_ops;
 	struct anon_page *anon_page = &page->anon;
+	anon_page->swap_idx = -1;
 }
 
 /* Swap in the page by read contents from the swap disk. */
 static bool
 anon_swap_in (struct page *page, void *kva) {
 	struct anon_page *anon_page = &page->anon;
+	
+	size_t swap_idx = anon_page->swap_idx;
+	size_t bitmap_idx = swap_idx / 8;
+	int PGSIZE_d8 = PGSIZE/8;
+	for(int i = 0; i < 8; i++){
+		disk_read(swap_disk, swap_idx+i, page->frame->kva + PGSIZE_d8 * i);
+	}
+	bitmap_set_multiple(swap_table.bit_map, bitmap_idx, 1, false);
 }
 
 /* Swap out the page by writing contents to the swap disk. */
 static bool
 anon_swap_out (struct page *page) {
 	struct anon_page *anon_page = &page->anon;
+
+	lock_acquire (&swap_table.lock);
+	size_t swap_idx = 8 * bitmap_scan_and_flip (swap_table.bit_map, 0, 1, false);
+	anon_page->swap_idx = swap_idx;
+	lock_release (&swap_table.lock);
+	int PGSIZE_d8 = PGSIZE/8;
+	for(int i = 0; i < 8; i++){
+		disk_write(swap_disk, swap_idx+i, page->frame->kva + PGSIZE_d8 * i);
+	}
+	
+	pml4_clear_page(thread_current()->pml4, page->va);
+	palloc_free_page(page->frame->kva);
+
+	free(page->frame);
+	page->frame = NULL;
+	return true;
 }
 
 /* Destroy the anonymous page. PAGE will be freed by the caller. */
 static void
 anon_destroy (struct page *page) {
 	struct anon_page *anon_page = &page->anon;
-	free(page->frame);
-	free(page->uninit.aux);
+	if (page->frame){
+		free(page->frame);
+	}
+	free(page->anon.aux);
 }

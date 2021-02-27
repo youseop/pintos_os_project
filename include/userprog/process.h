@@ -14,6 +14,7 @@ struct load_args{
   off_t ofs;
   uint32_t read_bytes;
   uint32_t zero_bytes;
+  size_t read_bytes_sum;
 };
 
 struct thread *get_child_process (int pid);

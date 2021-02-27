@@ -84,7 +84,7 @@ pass tests/vm/mmap-twice
 pass tests/vm/mmap-write
 pass tests/vm/mmap-ro
 pass tests/vm/mmap-exit
-FAIL tests/vm/mmap-shuffle
+pass tests/vm/mmap-shuffle
 pass tests/vm/mmap-bad-fd
 pass tests/vm/mmap-clean
 pass tests/vm/mmap-inherit
@@ -98,13 +98,13 @@ pass tests/vm/mmap-zero
 pass tests/vm/mmap-bad-fd2
 pass tests/vm/mmap-bad-fd3
 pass tests/vm/mmap-zero-len
-FAIL tests/vm/mmap-off
+pass tests/vm/mmap-off
 pass tests/vm/mmap-bad-off
 pass tests/vm/mmap-kernel
 pass tests/vm/lazy-file
 pass tests/vm/lazy-anon
-FAIL tests/vm/swap-file
-FAIL tests/vm/swap-anon
+pass tests/vm/swap-file
+pass tests/vm/swap-anon
 FAIL tests/vm/swap-iter
 FAIL tests/vm/swap-fork
 pass tests/filesys/base/lg-create

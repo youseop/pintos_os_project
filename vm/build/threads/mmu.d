@@ -10,4 +10,5 @@ threads/mmu.o: ../../threads/mmu.c ../../include/lib/stdbool.h \
  ../../include/vm/uninit.h ../../include/vm/file.h \
  ../../include/filesys/file.h ../../include/filesys/off_t.h \
  ../../include/threads/mmu.h ../../include/vm/anon.h \
+ ../../include/lib/kernel/bitmap.h ../../include/lib/inttypes.h \
  ../../include/intrinsic.h ../../include/threads/mmu.h

@@ -7,6 +7,7 @@ vm/anon.o: ../../vm/anon.c ../../include/vm/vm.h \
  ../../include/vm/file.h ../../include/filesys/file.h \
  ../../include/filesys/off_t.h ../../include/threads/mmu.h \
  ../../include/threads/pte.h ../../include/vm/anon.h \
+ ../../include/lib/kernel/bitmap.h ../../include/lib/inttypes.h \
  ../../include/threads/thread.h ../../include/lib/kernel/list.h \
  ../../include/threads/interrupt.h ../../include/threads/synch.h \
- ../../include/devices/disk.h ../../include/lib/inttypes.h
+ ../../include/devices/disk.h

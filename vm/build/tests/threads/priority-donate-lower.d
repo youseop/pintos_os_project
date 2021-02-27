@@ -12,4 +12,5 @@ tests/threads/priority-donate-lower.o: \
  ../../include/vm/uninit.h ../../include/vm/file.h \
  ../../include/filesys/file.h ../../include/filesys/off_t.h \
  ../../include/threads/mmu.h ../../include/threads/pte.h \
- ../../include/vm/anon.h
+ ../../include/vm/anon.h ../../include/lib/kernel/bitmap.h \
+ ../../include/lib/inttypes.h

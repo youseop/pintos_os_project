@@ -13,6 +13,6 @@ threads/interrupt.o: ../../threads/interrupt.c \
  ../../include/vm/file.h ../../include/filesys/file.h \
  ../../include/filesys/off_t.h ../../include/threads/mmu.h \
  ../../include/threads/pte.h ../../include/vm/anon.h \
- ../../include/devices/timer.h ../../include/lib/round.h \
- ../../include/intrinsic.h ../../include/threads/mmu.h \
- ../../include/userprog/gdt.h
+ ../../include/lib/kernel/bitmap.h ../../include/devices/timer.h \
+ ../../include/lib/round.h ../../include/intrinsic.h \
+ ../../include/threads/mmu.h ../../include/userprog/gdt.h

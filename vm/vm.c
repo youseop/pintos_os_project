@@ -123,7 +123,6 @@ spt_insert_page (struct supplemental_page_table *spt UNUSED,
 void
 spt_remove_page (struct supplemental_page_table *spt, struct page *page) {
 	vm_dealloc_page (page);
-	return true;
 }
 
 /* Get the struct frame, that will be evicted. */
@@ -145,15 +144,43 @@ vm_evict_frame (void) {
 	return NULL;
 }
 
+static void*
+vm_get_page(){
+	uint64_t* pml4 = thread_current()->pml4;
+	void* p = palloc_get_page(PAL_USER);
+	// if(((int)p)%((int)0x100000) == 0)
+	// printf("p : %p\n",p);	
+	if (p)
+		return p;
+	struct list* victim_table = &thread_current()->victim_table;
+	struct list_elem* victim_elem = list_front(victim_table);
+	while(1){
+		struct page* page = list_entry (victim_elem, struct page, victim_elem);
+
+		if (pml4_is_accessed(pml4, page->va)){
+			pml4_set_accessed(pml4, page->va, 0);
+			victim_elem = list_next(victim_elem);
+			if(victim_elem == list_end (victim_table))
+				victim_elem = list_begin (victim_table);
+		}
+		else{
+			list_remove(victim_elem);
+			ASSERT(swap_out(page));
+
+			p = palloc_get_page(PAL_USER);
+			ASSERT(p);
+			return p;
+		}
+	}
+}
+
 /* palloc() and get frame. If there is no available page, evict the page
  * and return it. This always return valid address. That is, if the user pool
  * memory is full, //?this function evicts the frame to get the available memory
  * space.*/
 static struct frame *
 vm_get_frame (void) {
-	void* p = palloc_get_page(PAL_USER);
-	if(p == NULL)
-		PANIC("todo");
+	void* p = vm_get_page();
 	
 	struct frame *frame = (struct frame*)malloc(sizeof(struct frame));
 	if (frame == NULL) 
@@ -163,6 +190,7 @@ vm_get_frame (void) {
 	frame->page = NULL;
 	ASSERT (frame != NULL);
 	ASSERT (frame->page == NULL);
+
 	return frame;
 }
 
@@ -243,6 +271,7 @@ vm_do_claim_page (struct page *page) {
 	/* TODO: Insert page table entry to map page's VA to frame's PA. */
 	int check = pml4_set_page(thread_current()->pml4, page->va, frame->kva, writable);
 	
+	list_push_back (&thread_current()->victim_table, &page->victim_elem);
 	return swap_in (page, frame->kva);
 }
 

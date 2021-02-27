@@ -20,6 +20,7 @@ struct load_args_tmp{
   uint32_t read_bytes;
   uint32_t zero_bytes;
   void *save_addr;
+  size_t read_bytes_sum;
 };
 
 void vm_file_init (void);

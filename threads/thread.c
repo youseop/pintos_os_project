@@ -455,15 +455,15 @@ thread_yield (void) {
 	struct thread *curr = thread_current ();
 	enum intr_level old_level;
 
-	ASSERT (!intr_context ());
-
-	old_level = intr_disable ();
-	if (curr != idle_thread)
-		//list_push_back (&ready_list, &curr->elem); //? sorting 해서 집어넣자.
-		list_insert_ordered(&ready_list, &curr->elem, &cmp_priority, NULL);
-	
-	do_schedule (THREAD_READY);
-	intr_set_level (old_level);
+	if (!intr_context ()){
+		old_level = intr_disable ();
+		if (curr != idle_thread)
+			//list_push_back (&ready_list, &curr->elem); //? sorting 해서 집어넣자.
+			list_insert_ordered(&ready_list, &curr->elem, &cmp_priority, NULL);
+		
+		do_schedule (THREAD_READY);
+		intr_set_level (old_level);
+	}
 }
 
 /* Sets the current thread's priority to NEW_PRIORITY. */
@@ -588,7 +588,7 @@ init_thread (struct thread *t, const char *name, int priority) {
 	list_init(&t->donations);
 	list_init(&t->child_process);
 #ifdef VM
-	list_init(&t->swap_table);
+	list_init(&t->victim_table);
 #endif
 	t->isLoad = 0;
 	t->isTerminated = 0;
