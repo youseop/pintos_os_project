@@ -308,9 +308,8 @@ supplemental_page_table_copy (struct supplemental_page_table *dst UNUSED,
 					page->writable, page->uninit.init, args);
 		}
 		else if (VM_TYPE(type) == VM_ANON){
-			struct load_args* args = (struct load_args*)malloc(sizeof(struct load_args));
-			success = vm_alloc_page_with_initializer(VM_ANON|VM_STACK, page->va, 
-					page->writable, NULL, args);
+			success = vm_alloc_page(VM_ANON|VM_STACK, page->va, 
+					page->writable);
 			vm_claim_page(page->va);
 			struct page *new_page = spt_find_page (&thread_current()->spt, page->va);
 			memcpy(new_page->va, page->frame->kva, PGSIZE);
