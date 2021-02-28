@@ -138,8 +138,6 @@ syscall_handler (struct intr_frame *f) {
 			exit(f->R.rdi);
 			break;
 	}
-	//printf ("system call!\n");
-	//thread_exit ();
 }
 
 _Bool

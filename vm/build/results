@@ -67,10 +67,10 @@ pass tests/vm/pt-big-stk-obj
 pass tests/vm/pt-bad-addr
 pass tests/vm/pt-bad-read
 pass tests/vm/pt-write-code
-FAIL tests/vm/pt-write-code2
+pass tests/vm/pt-write-code2
 pass tests/vm/pt-grow-stk-sc
 pass tests/vm/page-linear
-FAIL tests/vm/page-parallel
+pass tests/vm/page-parallel
 pass tests/vm/page-merge-seq
 FAIL tests/vm/page-merge-par
 FAIL tests/vm/page-merge-stk

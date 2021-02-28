@@ -3,6 +3,7 @@
 
 #include "filesys/off_t.h"
 #include <stddef.h>
+#include "vm/vm.h"
 
 typedef int tid_t;
 

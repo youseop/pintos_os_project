@@ -195,6 +195,10 @@ int fork (const char *thread_name){
 /* 파일 디스크립터가 0이 아닐 경우 파일의 데이터를 크기만큼 저
 장 후 읽은 바이트 수를 리턴 */
 int read (int fd, void *buffer, unsigned size){
+  struct page* page = spt_find_page(&thread_current()->spt, buffer);
+  if(!page->writable)
+    exit(-1);
+
   lock_acquire(&filesys_lock);
   if(fd == 0){
     for(int i = 0; i<size; i++){

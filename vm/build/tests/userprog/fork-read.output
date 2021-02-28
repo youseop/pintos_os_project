@@ -24,13 +24,13 @@ child: exit(0)
 (fork-read) end
 fork-read: exit(0)
 Execution of 'fork-read' complete.
-Timer: 77 ticks
-Thread: 30 idle ticks, 38 kernel ticks, 10 user ticks
+Timer: 75 ticks
+Thread: 30 idle ticks, 38 kernel ticks, 8 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 117 reads, 260 writes
 hd1:0: 111 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1155 characters output
+Console: 1154 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

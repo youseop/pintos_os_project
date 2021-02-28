@@ -6,13 +6,11 @@
 
 #define CHILD_CNT 4
 
-void
+void 
 test_main (void)
 {
-  exit(-1); //? too long...
   pid_t children[CHILD_CNT];
   int i;
-
   for (i = 0; i < CHILD_CNT; i++) {
     children[i] = fork ("child-linear");
     if (children[i] == 0) {
