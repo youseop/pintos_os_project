@@ -18,13 +18,13 @@ Executing 'swap-fork':
 (child-swap) begin
 child-swap: exit(0)
 (child-swap) begin
-child-swap: exit(0)
 (child-swap) begin
 child-swap: exit(0)
-(child-swap) begin
 child-swap: exit(0)
 (child-swap) begin
 (child-swap) begin
+(child-swap) begin
+child-swap: exit(0)
 child-swap: exit(0)
 child-swap: exit(0)
 (child-swap) begin
@@ -38,8 +38,8 @@ child-swap: exit(0)
 (swap-fork) end
 swap-fork: exit(0)
 Execution of 'swap-fork' complete.
-Timer: 339 ticks
-Thread: 54 idle ticks, 163 kernel ticks, 123 user ticks
+Timer: 350 ticks
+Thread: 56 idle ticks, 170 kernel ticks, 125 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 578 reads, 8276 writes
 hd1:0: 4119 reads, 0 writes

@@ -128,30 +128,9 @@ spt_remove_page (struct supplemental_page_table *spt, struct page *page) {
 /* Get the struct frame, that will be evicted. */
 static struct frame *
 vm_get_victim (void) {
+	uint64_t* pml4 = thread_current()->pml4;
 	struct frame *victim = NULL;
 	 /* TODO: The policy for eviction is up to you. */
-
-	return victim;
-}
-
-/* Evict one page and return the corresponding frame.
- * Return NULL on error.*/
-static struct frame *
-vm_evict_frame (void) {
-	struct frame *victim UNUSED = vm_get_victim ();
-	/* TODO: swap out the victim and return the evicted frame. */
-
-	return NULL;
-}
-
-static void*
-vm_get_page(){
-	uint64_t* pml4 = thread_current()->pml4;
-	void* p = palloc_get_page(PAL_USER);
-	// if(((int)p)%((int)0x100000) == 0)
-	// printf("p : %p\n",p);	
-	if (p)
-		return p;
 	struct list* victim_table = &thread_current()->victim_table;
 	struct list_elem* victim_elem = list_front(victim_table);
 	while(1){
@@ -165,13 +144,20 @@ vm_get_page(){
 		}
 		else{
 			list_remove(victim_elem);
-			ASSERT(swap_out(page));
-
-			p = palloc_get_page(PAL_USER);
-			ASSERT(p);
-			return p;
+			return page->frame;
 		}
 	}
+}
+
+/* Evict one page and return the corresponding frame.
+ * Return NULL on error.*/
+static struct frame *
+vm_evict_frame (void) {
+	struct frame *victim UNUSED = vm_get_victim ();
+	/* TODO: swap out the victim and return the evicted frame. */
+	ASSERT(swap_out(victim->page));
+	victim->page = NULL;
+	return victim;
 }
 
 /* palloc() and get frame. If there is no available page, evict the page
@@ -180,8 +166,10 @@ vm_get_page(){
  * space.*/
 static struct frame *
 vm_get_frame (void) {
-	void* p = vm_get_page();
-	
+	void* p = palloc_get_page(PAL_USER);
+	if(p == NULL)
+		return vm_evict_frame();
+
 	struct frame *frame = (struct frame*)malloc(sizeof(struct frame));
 	if (frame == NULL) 
 		PANIC("failed to allocate frame");
@@ -227,7 +215,6 @@ vm_try_handle_fault (struct intr_frame *f UNUSED, void *addr UNUSED,
 	/* TODO: Validate the fault */
 	/* TODO: Your code goes here */
 	struct page *page = spt_find_page(spt,addr);
-
 	if(page){
 		if (page->writable == 0 && write)
 			return false;

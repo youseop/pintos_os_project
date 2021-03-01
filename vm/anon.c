@@ -60,6 +60,7 @@ anon_swap_in (struct page *page, void *kva) {
 		disk_read(swap_disk, swap_idx+i, page->frame->kva + PGSIZE_d8 * i);
 	}
 	bitmap_set_multiple(swap_table.bit_map, bitmap_idx, 1, false);
+	return true;
 }
 
 /* Swap out the page by writing contents to the swap disk. */
@@ -78,9 +79,7 @@ anon_swap_out (struct page *page) {
 	}
 	
 	pml4_clear_page(thread_current()->pml4, page->va);
-	palloc_free_page(page->frame->kva);
 
-	free(page->frame);
 	page->frame = NULL;
 	return true;
 }
