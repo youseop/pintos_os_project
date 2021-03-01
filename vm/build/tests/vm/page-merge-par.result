@@ -35,14 +35,14 @@ Differences in `diff -u' format:
 + (page-merge-par) exec "child-sort buf1"
   (page-merge-par) sort chunk 2
 + (page-merge-par) open "buf2"
-+ (page-merge-par) exec "child-sort buf2"
   (page-merge-par) sort chunk 3
++ (page-merge-par) exec "child-sort buf2"
 + (page-merge-par) open "buf3"
-+ (page-merge-par) exec "child-sort buf3"
   (page-merge-par) sort chunk 4
++ (page-merge-par) exec "child-sort buf3"
 + (page-merge-par) open "buf4"
-  (page-merge-par) sort chunk 5
 + (page-merge-par) exec "child-sort buf4"
+  (page-merge-par) sort chunk 5
 + (page-merge-par) open "buf5"
 + (page-merge-par) exec "child-sort buf5"
   (page-merge-par) sort chunk 6

@@ -525,7 +525,7 @@ load (const char *file_name, struct intr_frame *if_) {
 		goto done;
 
 	/* Start address. */
-	if_->rip = ehdr.e_entry;
+	if_->rip = ehdr.e_entry; //? [args-none]ehdr.e_entry : 0x400c7f
 
 	/* TODO: Your code goes here.
 	 * TODO: Implement argument passing (see project2/argument_passing.html). */
@@ -768,9 +768,8 @@ setup_stack (struct intr_frame *if_) {
 	 * TODO: If success, set the rsp accordingly.
 	 * TODO: You should mark the page is stack. */
 	/* TODO: Your code goes here */
-	struct load_args* args = (struct load_args*)malloc(sizeof(struct load_args));
-	if(! (vm_alloc_page_with_initializer (VM_ANON|VM_STACK, stack_bottom,   
-					1, NULL, args) && vm_claim_page(stack_bottom)) ){
+	if(! (vm_alloc_page (VM_ANON|VM_STACK, stack_bottom, 1) 
+					&& vm_claim_page(stack_bottom))){
 		struct page *page = spt_find_page(&thread_current()->spt,stack_bottom);
 		palloc_free_page(page);
 		PANIC("vm_alloc_page failed");

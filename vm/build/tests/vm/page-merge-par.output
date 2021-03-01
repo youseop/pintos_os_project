@@ -26,16 +26,16 @@ child-sort: exit(123)
 (page-merge-par) sort chunk 2
 (page-merge-par) open "buf2"
 child-sort: exit(123)
-(page-merge-par) exec "child-sort buf2"
 (page-merge-par) sort chunk 3
+(page-merge-par) exec "child-sort buf2"
 (page-merge-par) open "buf3"
 child-sort: exit(123)
-(page-merge-par) exec "child-sort buf3"
 (page-merge-par) sort chunk 4
+(page-merge-par) exec "child-sort buf3"
 (page-merge-par) open "buf4"
 child-sort: exit(123)
-(page-merge-par) sort chunk 5
 (page-merge-par) exec "child-sort buf4"
+(page-merge-par) sort chunk 5
 (page-merge-par) open "buf5"
 child-sort: exit(123)
 (page-merge-par) exec "child-sort buf5"
@@ -62,10 +62,10 @@ child-sort: exit(123)
 (page-merge-par) end
 page-merge-par: exit(0)
 Execution of 'page-merge-par' complete.
-Timer: 447 ticks
-Thread: 30 idle ticks, 83 kernel ticks, 334 user ticks
+Timer: 426 ticks
+Thread: 30 idle ticks, 83 kernel ticks, 313 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 4862 reads, 6714 writes
+hd0:1: 4861 reads, 6714 writes
 hd1:0: 218 reads, 0 writes
 hd1:1: 0 reads, 0 writes
 Console: 2407 characters output

@@ -1,9 +1,9 @@
 FAIL
 Kernel panic in run: PANIC at ../../userprog/exception.c:98 in kill(): Kernel bug - unexpected interrupt in kernel
-Call stack: 0x8004216a70 0x800421bb3a 0x80042090ad 0x80042094cb 0x8004217e3d 0x80042076bf 0x8004209204 0x80042094cb 0x800420b8d1 0x800420b983 0x800420ccaa 0x800420cd2d 0x800420cdb0 0x800420ce79 0x800421a9ba 0x800421a93d 0x80042072d4 0x800421c50c 0x800421be17 0x800421bcbb
+Call stack: 0x8004216a70 0x800421bb24 0x80042090ad 0x80042094cb 0x8004217e3d 0x80042076bf 0x8004209204 0x80042094cb 0x800420b8d1 0x800420b983 0x800420ccaa 0x800420cd2d 0x800420cdb0 0x800420ce79 0x800421a9ba 0x800421a93d 0x80042072d4 0x800421c4f6 0x800421be01 0x800421bca5
 Translation of call stack:
 0x0000008004216a70: debug_panic (lib/kernel/debug.c:32)
-0x000000800421bb3a: kill (userprog/exception.c:104)
+0x000000800421bb24: kill (userprog/exception.c:104)
 0x00000080042090ad: intr_handler (threads/interrupt.c:352)
 0x00000080042094cb: intr_entry (threads/intr-stubs.o:?)
 0x0000008004217e3d: list_insert_ordered (lib/kernel/list.c:431)
@@ -19,6 +19,6 @@ Translation of call stack:
 0x000000800421a9ba: process_cleanup (userprog/process.c:354)
 0x000000800421a93d: process_exit (userprog/process.c:326)
 0x00000080042072d4: thread_exit (threads/thread.c:362)
-0x000000800421c50c: halt (userprog/syscall.c:266)
-0x000000800421be17: syscall_handler (userprog/syscall.c:104)
-0x000000800421bcbb: no_sti (userprog/syscall-entry.o:?)
+0x000000800421c4f6: halt (userprog/syscall.c:266)
+0x000000800421be01: syscall_handler (userprog/syscall.c:104)
+0x000000800421bca5: no_sti (userprog/syscall-entry.o:?)

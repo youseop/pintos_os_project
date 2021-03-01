@@ -71,6 +71,7 @@ anon_swap_out (struct page *page) {
 	size_t swap_idx = 8 * bitmap_scan_and_flip (swap_table.bit_map, 0, 1, false);
 	anon_page->swap_idx = swap_idx;
 	lock_release (&swap_table.lock);
+	
 	int PGSIZE_d8 = PGSIZE/8;
 	for(int i = 0; i < 8; i++){
 		disk_write(swap_disk, swap_idx+i, page->frame->kva + PGSIZE_d8 * i);

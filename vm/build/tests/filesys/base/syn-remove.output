@@ -24,13 +24,13 @@ Executing 'syn-remove':
 (syn-remove) end
 syn-remove: exit(0)
 Execution of 'syn-remove' complete.
-Timer: 77 ticks
-Thread: 30 idle ticks, 37 kernel ticks, 10 user ticks
+Timer: 73 ticks
+Thread: 30 idle ticks, 34 kernel ticks, 9 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 117 reads, 275 writes
 hd1:0: 109 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1171 characters output
+Console: 1170 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

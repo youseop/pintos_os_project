@@ -71,6 +71,7 @@ struct page {
 struct frame {
 	void *kva;          // kernel virtual address
 	struct page *page;  // page structure
+	struct frame* cow_frame;
 };
 
 /* The function table for page operations.
