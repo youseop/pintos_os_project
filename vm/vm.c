@@ -11,6 +11,8 @@
 #include <stdio.h>
 #include "userprog/process.h"
 
+struct list victim_table;
+
 /*
 * 	가상 메모리에 대한 일반 인터페이스를 제공합니다. 
 * 	헤더 파일에서 가상 메모리 시스템이 지원해야하는 
@@ -33,6 +35,7 @@ vm_init (void)
 	register_inspect_intr ();
 	/* DO NOT MODIFY UPPER LINES. */
 	/* TODO: Your code goes here. */
+	list_init(&victim_table);
 }
 
 /* Get the type of the page. This function is useful if you want to know the
@@ -131,16 +134,15 @@ vm_get_victim (void) {
 	uint64_t* pml4 = thread_current()->pml4;
 	struct frame *victim = NULL;
 	 /* TODO: The policy for eviction is up to you. */
-	struct list* victim_table = &thread_current()->victim_table;
-	struct list_elem* victim_elem = list_front(victim_table);
+	struct list_elem* victim_elem = list_front(&victim_table);
 	while(1){
 		struct page* page = list_entry (victim_elem, struct page, victim_elem);
 
 		if (pml4_is_accessed(pml4, page->va)){
 			pml4_set_accessed(pml4, page->va, 0);
 			victim_elem = list_next(victim_elem);
-			if(victim_elem == list_end (victim_table))
-				victim_elem = list_begin (victim_table);
+			if(victim_elem == list_end (&victim_table))
+				victim_elem = list_begin (&victim_table);
 		}
 		else{
 			list_remove(victim_elem);
@@ -259,7 +261,7 @@ vm_do_claim_page (struct page *page) {
 	/* TODO: Insert page table entry to map page's VA to frame's PA. */
 	int check = pml4_set_page(thread_current()->pml4, page->va, frame->kva, writable);
 	
-	list_push_back (&thread_current()->victim_table, &page->victim_elem);
+	list_push_back (&victim_table, &page->victim_elem);
 	return swap_in (page, frame->kva);
 }
 

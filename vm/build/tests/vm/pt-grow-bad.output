@@ -16,8 +16,8 @@ Executing 'pt-grow-bad':
 (pt-grow-bad) begin
 pt-grow-bad: exit(-1)
 Execution of 'pt-grow-bad' complete.
-Timer: 70 ticks
-Thread: 30 idle ticks, 37 kernel ticks, 3 user ticks
+Timer: 68 ticks
+Thread: 30 idle ticks, 35 kernel ticks, 3 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 80 reads, 232 writes
 hd1:0: 102 reads, 0 writes

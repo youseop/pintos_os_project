@@ -9,6 +9,7 @@
 static bool file_backed_swap_in (struct page *page, void *kva);
 static bool file_backed_swap_out (struct page *page);
 static void file_backed_destroy (struct page *page);
+static bool lazy_load_segment (struct page *page, void *aux);
 
 /* DO NOT MODIFY this struct */
 static const struct page_operations file_ops = {
@@ -34,22 +35,7 @@ file_backed_initializer (struct page *page, enum vm_type type, void *kva) {
 /* Swap in the page by read contents from the file. */
 static bool
 file_backed_swap_in (struct page *page, void *kva) {
-	ASSERT(page);
-	
-	struct file_page *file_page UNUSED = &page->file;
-	struct load_args_tmp* args = page->file.aux;
-	uint8_t* upage = page->va;
-
-	file_seek(args->file, args->ofs);
-	if (file_read (args->file, kva, args->read_bytes) != (int) args->read_bytes) {
-		palloc_free_page (kva);
-		PANIC("file_Backd swap in failed!");
-		return false;
-	}
-
-	memset(kva + args->read_bytes, 0, args->zero_bytes);
-
-	return true;
+	return lazy_load_segment(page, NULL);
 }
 
 /* Swap out the page by writeback contents to the file. */

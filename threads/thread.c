@@ -587,9 +587,7 @@ init_thread (struct thread *t, const char *name, int priority) {
 	t->wait_on_lock = NULL;
 	list_init(&t->donations);
 	list_init(&t->child_process);
-#ifdef VM
-	list_init(&t->victim_table);
-#endif
+	
 	t->isLoad = 0;
 	t->isTerminated = 0;
 
