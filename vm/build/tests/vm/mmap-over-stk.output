@@ -21,7 +21,7 @@ Executing 'mmap-over-stk':
 mmap-over-stk: exit(0)
 Execution of 'mmap-over-stk' complete.
 Timer: 71 ticks
-Thread: 30 idle ticks, 36 kernel ticks, 5 user ticks
+Thread: 30 idle ticks, 35 kernel ticks, 6 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 111 reads, 250 writes
 hd1:0: 106 reads, 0 writes

@@ -201,10 +201,8 @@ thread_create (const char *name, int priority,
 
 	/* Allocate thread. */
 	t = palloc_get_page (002);
-	// printf("palloc_get_page (PAL_ZERO) in thread.c addr : %p\n",t);
 	// /* Test user_pool. */
   // void * c = palloc_get_page (004);
-  // printf("palloc_get_page (PAL_USER) in thread.c addr : %p\n",c);
 
 	if (t == NULL){
 		return TID_ERROR;
@@ -308,9 +306,6 @@ thread_unblock (struct thread *t) {
 
 	old_level = intr_disable ();
 	ASSERT (t->status == THREAD_BLOCKED);
-	//list_push_back (&ready_list, &t->elem); 
-	//? 정렬한 상태로 푸쉬해야한다!
-	//? 레디큐에 넣어놓고 정렬된 상태에서 
 
 	list_insert_ordered(&ready_list, &t->elem, &cmp_priority, NULL);
 
@@ -587,7 +582,7 @@ init_thread (struct thread *t, const char *name, int priority) {
 	t->wait_on_lock = NULL;
 	list_init(&t->donations);
 	list_init(&t->child_process);
-	
+
 	t->isLoad = 0;
 	t->isTerminated = 0;
 

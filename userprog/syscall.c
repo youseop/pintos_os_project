@@ -75,23 +75,8 @@ syscall_init (void) {
 /* The main system call interface */
 void
 syscall_handler (struct intr_frame *f UNUSED) {
-  // TODO: Your implementation goes here.
-  /*
-  get stack pointer from interrupt frame 
-  get system call number from stack      
-  switch (system call number){           
-    case the number is halt:
-      call halt function;
-      break;
-    case the number is exit:
-      call exit function;
-      break;
-    …
-    default
-      call thread_exit function;
-
-  */
-
+  
+  thread_current()->save_rsp = f->rsp;
   check_address(f->rsp,f->R.rdi);
   switch((f->R.rax)){
     case SYS_HALT:
@@ -323,6 +308,11 @@ void close(int fd){
 void *mmap (void *addr, size_t length, int writable, int fd, off_t offset){
   
   struct file* file = process_get_file(fd);
+  
+  lock_acquire(&filesys_lock);
+  struct file* new_file = file_reopen(file);
+  lock_release(&filesys_lock);
+
   if(file == NULL)
     return NULL;
   size_t file_size = file_length(file);
@@ -346,7 +336,7 @@ void *mmap (void *addr, size_t length, int writable, int fd, off_t offset){
       return NULL;
     page_addr += PGSIZE;
   }
-  return do_mmap(addr, length, writable, file, offset);
+  return do_mmap(addr, length, writable, new_file, offset);
 }
 
 void munmap (void *addr){

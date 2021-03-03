@@ -214,16 +214,23 @@ bool
 vm_try_handle_fault (struct intr_frame *f UNUSED, void *addr UNUSED,
 		bool user UNUSED, bool write UNUSED, bool not_present UNUSED) {
 	struct supplemental_page_table *spt UNUSED = &thread_current ()->spt;
-	/* TODO: Validate the fault */
-	/* TODO: Your code goes here */
+	if(is_kernel_vaddr(addr))
+    return false;
+
+	void *rsp = is_kernel_vaddr(f->rsp) ? thread_current()->save_rsp : f->rsp;
 	struct page *page = spt_find_page(spt,addr);
+
 	if(page){
 		if (page->writable == 0 && write)
 			return false;
 		return vm_do_claim_page (page);
 	}
 	else{
-		if(user && write && addr > (USER_STACK - (1<<20)) && addr < f->rsp ){
+		if(is_kernel_vaddr(f->rsp) && thread_current()->save_rsp){
+			rsp = thread_current()->save_rsp;
+		}
+
+		if(user && write && addr > (USER_STACK - (1<<20)) && (int)addr >= ((int)rsp)-32 && addr < USER_STACK){
 			vm_stack_growth(addr);
 			return true;
 		}
@@ -344,6 +351,7 @@ bool page_less (const struct hash_elem *a,
 		void *aux){
 	struct page* page_a = hash_entry(a, struct page, hash_elem);
 	struct page* page_b = hash_entry(b, struct page, hash_elem);
+
 	return page_a->va < page_b->va;
 }
 

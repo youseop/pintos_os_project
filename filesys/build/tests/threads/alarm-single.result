@@ -1,0 +1,9 @@
+FAIL
+Kernel panic in run: PANIC at ../../filesys/fat.c:125 in fat_create(): FAT creation failed
+Call stack: 0x8004213bec 0x800421a643 0x8004219f94 0x8004219d82 0x8004206151
+Translation of call stack:
+0x0000008004213bec: debug_panic (lib/kernel/debug.c:32)
+0x000000800421a643: fat_create (filesys/fat.c:128)
+0x0000008004219f94: do_format (filesys/filesys.c:111)
+0x0000008004219d82: filesys_init (filesys/filesys.c:32)
+0x0000008004206151: main (threads/init.c:116)

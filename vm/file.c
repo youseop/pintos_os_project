@@ -49,6 +49,7 @@ file_backed_swap_out (struct page *page) {
 	if (pml4_is_dirty(thread_current()->pml4,page->va)){
 		file_seek(aux->file, aux->ofs);
 		file_write(aux->file, page->va, aux->read_bytes);
+		pml4_set_dirty(thread_current()->pml4, page->va, 0); //?
 	} 
 
 	pml4_clear_page(thread_current()->pml4, page->va);
@@ -105,8 +106,7 @@ do_mmap (void *addr, size_t length, int writable,
 		struct file *file, off_t offset) {
 	void* save_addr = addr;
 	ASSERT(pg_round_down(addr) == addr);
-	struct file* new_file = file_reopen(file);
-	off_t file_size = file_length(new_file);
+	off_t file_size = file_length(file);
 	
 	uint32_t read_bytes = file_size > length ? length : file_size;
 	uint32_t zero_bytes = pg_round_up(read_bytes) - read_bytes;
@@ -116,7 +116,7 @@ do_mmap (void *addr, size_t length, int writable,
 		size_t page_zero_bytes = PGSIZE - page_read_bytes;
 		
 		struct load_args_tmp* args = (struct load_args_tmp*)malloc(sizeof(struct load_args_tmp));
-		args->file = new_file;
+		args->file = file;
 		args->ofs = offset;
 		args->read_bytes = page_read_bytes;
 		args->zero_bytes = page_zero_bytes;

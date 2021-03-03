@@ -10,19 +10,19 @@
 struct fat_boot {
 	unsigned int magic;
 	unsigned int sectors_per_cluster; /* Fixed to 1 */
-	unsigned int total_sectors;
-	unsigned int fat_start;
-	unsigned int fat_sectors; /* Size of FAT in sectors. */
+	unsigned int total_sectors;				//디스크에 존재하는 sector의 수
+	unsigned int fat_start;					  //fat가 시작되는 sector의 번호
+	unsigned int fat_sectors;         /* Size of FAT in sectors. */
 	unsigned int root_dir_cluster;
 };
 
 /* FAT FS */
 struct fat_fs {
-	struct fat_boot bs;
-	unsigned int *fat;
-	unsigned int fat_length;
-	disk_sector_t data_start;
-	cluster_t last_clst;
+	struct fat_boot bs;      //fat_boot 부팅 정보
+	unsigned int *fat;		   //FAT
+	unsigned int fat_length; //데이터 영역의 섹터 수/SECTORS_PER_CLUSTER
+	disk_sector_t data_start;//데이터 여역이 시작되는 지점의 sector 번호
+	cluster_t last_clst;		 
 	struct lock write_lock;
 };
 
@@ -44,11 +44,10 @@ fat_init (void) {
 	disk_read (filesys_disk, FAT_BOOT_SECTOR, bounce);
 	memcpy (&fat_fs->bs, bounce, sizeof (fat_fs->bs));
 	free (bounce);
-
 	// Extract FAT info
 	if (fat_fs->bs.magic != FAT_MAGIC)
 		fat_boot_create ();
-	fat_fs_init ();
+	fat_fs_init ();  // fat_fs->fat_length 설정
 }
 
 void
@@ -140,6 +139,8 @@ fat_boot_create (void) {
 	unsigned int fat_sectors =
 	    (disk_size (filesys_disk) - 1)
 	    / (DISK_SECTOR_SIZE / sizeof (cluster_t) * SECTORS_PER_CLUSTER + 1) + 1;
+			//? fat_sectors : 157 disk_size (filesys_disk) : 20160
+
 	fat_fs->bs = (struct fat_boot){
 	    .magic = FAT_MAGIC,
 	    .sectors_per_cluster = SECTORS_PER_CLUSTER,
@@ -150,14 +151,31 @@ fat_boot_create (void) {
 	};
 }
 
+/* Initialize FAT file system. You have to initialize 
+ * fat_length and data_start field of fat_fs. 
+ * fat_length stores how many clusters in the filesystem 
+ * and data_start stores in which sector we can start to
+ * store files. You may want to exploit some values stored 
+ * in fat_fs->bs. Also, you may want to initialize some 
+ * other useful data in this function.*/
 void
 fat_fs_init (void) {
 	/* TODO: Your code goes here. */
+	struct fat_boot fb = fat_fs->bs;
+	fat_fs->fat_length = fb.total_sectors - fb.fat_start - fb.fat_sectors;
+	fat_fs->data_start = fb.fat_start + fb.fat_sectors;
+	lock_init(&fat_fs->write_lock);
 }
 
 /*----------------------------------------------------------------------------*/
 /* FAT handling                                                               */
 /*----------------------------------------------------------------------------*/
+
+
+/*Extend a chain by appending a cluster 
+after the cluster specified in clst (cluster indexing number). 
+If clst is equal to zero, then create a new chain. 
+Return the cluster number of newly allocated cluster.*/
 
 /* Add a cluster to the chain.
  * If CLST is 0, start a new chain.
@@ -174,20 +192,37 @@ fat_remove_chain (cluster_t clst, cluster_t pclst) {
 	/* TODO: Your code goes here. */
 }
 
+/*Update FAT entry pointed by cluster number clst to val. 
+Since each entry in FAT points the next cluster in a chain 
+(if exist; otherwise EOChain), this could be used to update 
+connectivity.*/
+
 /* Update a value in the FAT table. */
 void
 fat_put (cluster_t clst, cluster_t val) {
 	/* TODO: Your code goes here. */
+	ASSERT(clst < fat_fs->fat_length);
+	fat_fs->fat[clst] = val; 
 }
 
 /* Fetch a value in the FAT table. */
+/* Return in which cluster number 
+ * the given cluster clst points.*/
 cluster_t
 fat_get (cluster_t clst) {
 	/* TODO: Your code goes here. */
+	ASSERT(clst < fat_fs->fat_length);
+	return fat_fs->fat[clst];
 }
 
+/* Translates a cluster number clst into 
+ * the corresponding sector number and 
+ * return the sector number.*/
 /* Covert a cluster # to a sector number. */
 disk_sector_t
 cluster_to_sector (cluster_t clst) {
 	/* TODO: Your code goes here. */
+	//(X - 2) x (클러스터 당 섹터 수) + (클러스터 2의 섹터 수)
+	ASSERT(ROOT_DIR_CLUSTER != clst);
+	return (clst-2)*SECTORS_PER_CLUSTER + data_start;
 }
