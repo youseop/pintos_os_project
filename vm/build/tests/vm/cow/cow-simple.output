@@ -24,13 +24,13 @@ child: exit(1)
 (cow-simple) end
 cow-simple: exit(0)
 Execution of 'cow-simple' complete.
-Timer: 161 ticks
-Thread: 30 idle ticks, 121 kernel ticks, 10 user ticks
+Timer: 164 ticks
+Thread: 30 idle ticks, 125 kernel ticks, 9 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 90 reads, 8066 writes
 hd1:0: 4019 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1236 characters output
+Console: 1235 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

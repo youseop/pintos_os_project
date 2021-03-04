@@ -28,30 +28,31 @@ child-qsort-mm: exit(80)
 (page-merge-mm) sort chunk 5
 child-qsort-mm: exit(80)
 (page-merge-mm) sort chunk 6
+child-qsort-mm: exit(80)
 (page-merge-mm) sort chunk 7
 child-qsort-mm: exit(80)
 (page-merge-mm) wait for child 0
 (page-merge-mm) wait for child 1
-(page-merge-mm) open "buf1": FAILED
-page-merge-mm: exit(1)
-Interrupt 0x0d (#GP General Protection Exception) at rip=800421700b
- cr2=000000001001b000 error=               0
-rax cccccccccccccccc rbx 0000000000000000 rcx 0000008004243028 rdx 0000008004243028
-rsp 0000008004243b30 rbp 0000008004243b40 rsi 0000008004243028 rdi 0000008004281028
-rip 000000800421700b r8 0000008004243e08  r9 0000008004219e99 r10 0000000000000000
-r11 0000000000000206 r12 000000800421bd63 r13 0000000000000000 r14 0000000000000000
-r15 0000000000000000 rflags 00000006
-es: 0010 ds: 0010 cs: 0008 ss: 0010
-Kernel PANIC at ../../userprog/exception.c:98 in kill(): Kernel bug - unexpected interrupt in kernel
-Call stack: 0x8004216a57 0x800421bb0b 0x8004209094 0x80042094b2 0x8004217e24 0x80042076bf 0x80042091eb 0x80042094b2 0x800420b8b8 0x800420b96a 0x800420c136 0x8004220984 0x80042202e0 0x8004220702 0x800421901d 0x80042190a0 0x8004220736 0x800421a958 0x800421a924 0x80042072d4 0x800421c4fe 0x800421be09 0x800421bc8c 0x400c7f 0x400535 0x4007f7 0x400107 0x401504 0x40154d.
-The `backtrace' program can make call stacks useful.
-Read "Backtraces" in the "Debugging Tools" chapter
-of the Pintos documentation for more information.
-Timer: 335 ticks
-Thread: 30 idle ticks, 61 kernel ticks, 244 user ticks
+(page-merge-mm) wait for child 2
+(page-merge-mm) wait for child 3
+child-qsort-mm: exit(80)
+(page-merge-mm) wait for child 4
+(page-merge-mm) wait for child 5
+(page-merge-mm) wait for child 6
+(page-merge-mm) wait for child 7
+(page-merge-mm) merge
+(page-merge-mm) verify
+(page-merge-mm) success, buf_idx=1,048,576
+(page-merge-mm) end
+page-merge-mm: exit(0)
+Execution of 'page-merge-mm' complete.
+Timer: 443 ticks
+Thread: 30 idle ticks, 62 kernel ticks, 351 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 2725 reads, 6214 writes
+hd0:1: 4872 reads, 6726 writes
 hd1:0: 224 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 2642 characters output
-Key
+Console: 1859 characters output
+Keyboard: 0 keys pressed
+Exception: 0 page faults
+Powering off...

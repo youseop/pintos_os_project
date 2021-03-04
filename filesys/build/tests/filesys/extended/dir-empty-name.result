@@ -1,0 +1,13 @@
+FAIL
+Test output failed to match any acceptable form.
+
+Acceptable output:
+  (dir-empty-name) begin
+  (dir-empty-name) mkdir "" (must return false)
+  (dir-empty-name) end
+Differences in `diff -u' format:
+  (dir-empty-name) begin
+  (dir-empty-name) mkdir "" (must return false)
+- (dir-empty-name) end
+
+(Process exit codes are excluded for matching purposes.)

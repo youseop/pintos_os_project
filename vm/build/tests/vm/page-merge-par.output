@@ -20,45 +20,33 @@ Executing 'page-merge-par':
 (page-merge-par) sort chunk 1
 (child-sort) open "buf0": FAILED
 child-sort: exit(1)
+child-sort: exit(123)
 (page-merge-par) sort chunk 2
-(child-sort) open "buf1": FAILED
-child-sort: exit(1)
 (page-merge-par) sort chunk 3
 child-sort: exit(123)
 (page-merge-par) sort chunk 4
 child-sort: exit(123)
 (page-merge-par) sort chunk 5
-child-sort: exit(123)
-(page-merge-par) sort chunk 6
-child-sort: exit(123)
-(page-merge-par) sort chunk 7
-child-sort: exit(123)
-(page-merge-par) wait for child 0
-(page-merge-par) wait for child 0: FAILED
+(page-merge-par) open "buf5": FAILED
 page-merge-par: exit(1)
-Interrupt 0x0d (#GP General Protection Exception) at rip=800421700b
+Interrupt 0x0d (#GP General Protection Exception) at rip=800421702b
  cr2=0000000000625000 error=               0
 rax cccccccccccccccc rbx 0000000000000000 rcx 0000008004243028 rdx 0000008004243028
-rsp 0000008004243bd0 rbp 0000008004243be0 rsi 0000008004243028 rdi 0000008004270028
-rip 000000800421700b r8 0000008004243e08  r9 0000008004219e99 r10 0000000000000000
-r11 0000000000000206 r12 000000800421bd63 r13 0000000000000000 r14 0000000000000000
+rsp 0000008004243b80 rbp 0000008004243b90 rsi 0000008004243028 rdi 000000800426c028
+rip 000000800421702b r8 0000008004243e08  r9 0000008004219eb9 r10 0000000000000000
+r11 0000000000000206 r12 000000800421bd83 r13 0000000000000000 r14 0000000000000000
 r15 0000000000000000 rflags 00000006
 es: 0010 ds: 0010 cs: 0008 ss: 0010
 Kernel PANIC at ../../userprog/exception.c:98 in kill(): Kernel bug - unexpected interrupt in kernel
-Call stack: 0x8004216a57 0x800421bb0b 0x8004209094 0x80042094b2 0x8004217e24 0x80042076bf 0x80042091eb 0x80042094b2 0x800420b8b8 0x800420b96a 0x800420cc91 0x800420cd14 0x800420cd97 0x800420ce60 0x800421a9a1 0x800421a924 0x80042072d4 0x800421c4fe 0x800421be09 0x800421bc8cInterrupt 0x0d (#GP General Protection Exception) at rip=800421700b
- cr2=000000004747fda0 error=               0
-rax cccccccccccccccc rbx 0000000000000000 rcx 0000008004243028 rdx 0000008004243028
-rsp 0000008004243750 rbp 0000008004243760 rsi 0000008004243028 rdi 0000008004270028
-rip 000000800421700b r8 0000008004243928  r9 0000008004219e99 r10 0000000000000000
-r11 0000000000000206 r12 000000800421bd63 r13 0000000000000000 r14 0000000000000000
-r15 0000000000000000 rflags 00000006
-es: 0010 ds: 0010 cs: 0008 ss: 0010
-Kernel PANIC recursion at ../../userprog/exception.c:98 in kill().
-Timer: 282 ticks
-Thread: 30 idle ticks, 63 kernel ticks, 189 user ticks
+Call stack: 0x8004216a77 0x800421bb2b 0x8004209094 0x80042094b2 0x8004217e44 0x80042076bf 0x80042091eb 0x80042094b2 0x800420c03f 0x80042211f3 0x8004220804 0x8004220c26 0x800421903d 0x80042190c0 0x8004220c5a 0x800421a978 0x800421a944 0x80042072d4 0x800421c51e 0x800421be29 0x800421bcac 0x400c7f 0x4002dc 0x4007f7 0x400107 0x401504 0x40154d.
+The `backtrace' program can make call stacks useful.
+Read "Backtraces" in the "Debugging Tools" chapter
+of the Pintos documentation for more information.
+Timer: 209 ticks
+Thread: 30 idle ticks, 52 kernel ticks, 127 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 1971 reads, 5946 writes
+hd0:1: 1210 reads, 4134 writes
 hd1:0: 218 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 3028 characters output
+Console: 2467 characters output
 Key

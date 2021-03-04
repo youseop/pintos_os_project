@@ -1,0 +1,33 @@
+Kernel command line: -q -f put grow-file-size put tar run grow-file-size
+0 ~ 9fc00 1
+100000 ~ 13e0000 1
+Pintos booting with: 
+	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
+	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
+Calibrating timer...  157,081,600 loops/s.
+hd0:0: detected 321 sector (160 kB) disk, model "QEMU HARDDISK", serial "QM00001"
+hd0:1: detected 4,032 sector (1 MB) disk, model "QEMU HARDDISK", serial "QM00002"
+hd1:0: detected 225 sector (112 kB) disk, model "QEMU HARDDISK", serial "QM00003"
+hd1:1: detected 8,064 sector (3 MB) disk, model "QEMU HARDDISK", serial "QM00004"
+Formatting file system...done.
+Boot complete.
+Putting 'grow-file-size' into the file system...
+Putting 'tar' into the file system...
+Executing 'grow-file-size':
+(grow-file-size) begin
+(grow-file-size) create "testfile"
+(grow-file-size) open "testfile"
+(grow-file-size) writing "testfile"
+(grow-file-size) write 37 bytes at offset 0 in "testfile" failed: FAILED
+grow-file-size: exit(1)
+Execution of 'grow-file-size' complete.
+Timer: 82 ticks
+Thread: 30 idle ticks, 45 kernel ticks, 7 user ticks
+hd0:0: 0 reads, 0 writes
+hd0:1: 154 reads, 522 writes
+hd1:0: 225 reads, 0 writes
+hd1:1: 0 reads, 0 writes
+Console: 1190 characters output
+Keyboard: 0 keys pressed
+Exception: 0 page faults
+Powering off...

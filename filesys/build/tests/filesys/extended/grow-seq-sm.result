@@ -1,0 +1,2 @@
+FAIL
+run: write 1234 bytes at offset 0 in "testme" failed: FAILED

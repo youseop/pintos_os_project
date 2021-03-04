@@ -1,0 +1,44 @@
+Kernel command line: -q -f put page-merge-stk put child-qsort run page-merge-stk
+0 ~ 9fc00 1
+100000 ~ 13e0000 1
+Pintos booting with: 
+	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
+	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
+Calibrating timer...  157,081,600 loops/s.
+hd0:0: detected 321 sector (160 kB) disk, model "QEMU HARDDISK", serial "QM00001"
+hd0:1: detected 20,160 sector (9 MB) disk, model "QEMU HARDDISK", serial "QM00002"
+hd1:0: detected 224 sector (112 kB) disk, model "QEMU HARDDISK", serial "QM00003"
+hd1:1: detected 8,064 sector (3 MB) disk, model "QEMU HARDDISK", serial "QM00004"
+Formatting file system...done.
+Boot complete.
+Putting 'page-merge-stk' into the file system...
+Putting 'child-qsort' into the file system...
+Executing 'page-merge-stk':
+(page-merge-stk) begin
+(page-merge-stk) init
+(page-merge-stk) sort chunk 0
+(page-merge-stk) sort chunk 1
+child-qsort: exit(72)
+(page-merge-stk) sort chunk 2
+child-qsort: exit(72)
+(page-merge-stk) sort chunk 3
+child-qsort: exit(72)
+(page-merge-stk) sort chunk 4
+child-qsort: exit(72)
+(page-merge-stk) sort chunk 5
+(page-merge-stk) open "buf5": FAILED
+page-merge-stk: exit(1)
+Interrupt 0x0d (#GP General Protection Exception) at rip=80042141a0
+ cr2=0000000000403a0f error=               0
+rax cccccccccccccccc rbx 0000000000000000 rcx 0000008004269028 rdx 0000008004269028
+rsp 0000008004269c10 rbp 0000008004269c20 rsi 0000008004269028 rdi 0000008004290028
+rip 00000080042141a0 r8 0000008004269e08  r9 000000800421702e r10 0000000000000000
+r11 0000000000000206 r12 0000008004218ef8 r13 0000000000000000 r14 0000000000000000
+r15 0000000000000000 rflags 00000006
+es: 0010 ds: 0010 cs: 0008 ss: 0010
+Kernel PANIC at ../../userprog/exception.c:98 in kill(): Kernel bug - unexpected interrupt in kernel
+Call stack: 0x8004213bec 0x8004218ca0 0x8004209094 0x80042094b2 0x8004214fb9 0x80042076bf 0x80042091eb 0x80042094b2 0x800420b8b8 0x800420c16d 0x800421624c 0x8004220d45 0x8004217aed 0x8004217ab9 0x80042072d4 0x8004219693 0x8004218f9e 0x8004218e21 0x400c7f 0x4002dc 0x4007f7 0x400107 0x401504 0x40154d.
+The `backtrace' program can make call stacks useful.
+Read "Backtraces" in the "Debugging Tools" chapter
+of the Pintos documentation for more information.
+Kernel PANIC recursion at ../../devices/timer.c:179 in real_time_sleep().

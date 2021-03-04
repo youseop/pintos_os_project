@@ -1,0 +1,15 @@
+FAIL
+Test output failed to match any acceptable form.
+
+Acceptable output:
+  (dir-under-file) begin
+  (dir-under-file) create "abc"
+  (dir-under-file) mkdir "abc" (must return false)
+  (dir-under-file) end
+Differences in `diff -u' format:
+  (dir-under-file) begin
+  (dir-under-file) create "abc"
+  (dir-under-file) mkdir "abc" (must return false)
+- (dir-under-file) end
+
+(Process exit codes are excluded for matching purposes.)

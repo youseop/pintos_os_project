@@ -1,0 +1,49 @@
+Kernel command line: -q -f put page-merge-par put child-sort run page-merge-par
+0 ~ 9fc00 1
+100000 ~ 13e0000 1
+Pintos booting with: 
+	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
+	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
+Calibrating timer...  157,081,600 loops/s.
+hd0:0: detected 321 sector (160 kB) disk, model "QEMU HARDDISK", serial "QM00001"
+hd0:1: detected 20,160 sector (9 MB) disk, model "QEMU HARDDISK", serial "QM00002"
+hd1:0: detected 218 sector (109 kB) disk, model "QEMU HARDDISK", serial "QM00003"
+hd1:1: detected 8,064 sector (3 MB) disk, model "QEMU HARDDISK", serial "QM00004"
+Formatting file system...done.
+Boot complete.
+Putting 'page-merge-par' into the file system...
+Putting 'child-sort' into the file system...
+Executing 'page-merge-par':
+(page-merge-par) begin
+(page-merge-par) init
+(page-merge-par) sort chunk 0
+(page-merge-par) sort chunk 1
+(child-sort) open "buf0": FAILED
+child-sort: exit(1)
+(page-merge-par) sort chunk 2
+child-sort: exit(123)
+(page-merge-par) sort chunk 3
+child-sort: exit(123)
+(page-merge-par) sort chunk 4
+child-sort: exit(123)
+(page-merge-par) sort chunk 5
+(page-merge-par) open "buf5": FAILED
+page-merge-par: exit(1)
+Interrupt 0x0d (#GP General Protection Exception) at rip=80042141a0
+ cr2=0000000000625000 error=               0
+rax cccccccccccccccc rbx 0000000000000000 rcx 0000008004269028 rdx 0000008004269028
+rsp 0000008004269bd0 rbp 0000008004269be0 rsi 0000008004269028 rdi 0000008004293028
+rip 00000080042141a0 r8 0000008004269e08  r9 000000800421702e r10 0000000000000000
+r11 0000000000000206 r12 0000008004218ef8 r13 0000000000000000 r14 0000000000000000
+r15 0000000000000000 rflags 00000006
+es: 0010 ds: 0010 cs: 0008 ss: 0010
+Kernel PANIC at ../../userprog/exception.c:98 in kill(): Kernel bug - unexpected interrupt in kernel
+Call stack: 0x8004213bec 0x8004218ca0 0x8004209094 0x80042094b2 0x8004214fb9 0x80042076bf 0x80042091eb 0x80042094b2 0x800420b8b8 0x800420b96a 0x800420cc91 0x800420cd14 0x800420cd97 0x800420ce60 0x8004217b36 0x8004217ab9 0x80042072d4 0x8004219693 0x8004218f9e 0x8004218e21Interrupt 0x0d (#GP General Protection Exception) at rip=80042141a0
+ cr2=000000004747fda0 error=               0
+rax cccccccccccccccc rbx 0000000000000000 rcx 0000008004269028 rdx 0000008004269028
+rsp 0000008004269750 rbp 0000008004269760 rsi 0000008004269028 rdi 0000008004293028
+rip 00000080042141a0 r8 0000008004269928  r9 000000800421702e r10 0000000000000000
+r11 0000000000000206 r12 0000008004218ef8 r13 0000000000000000 r14 0000000000000000
+r15 0000000000000000 rflags 00000006
+es: 0010 ds: 0010 cs: 0008 ss: 0010
+Kernel PANIC recursion at ../../userprog/exception.c:98 in kill().

@@ -173,7 +173,7 @@ fat_fs_init (void) {
 	struct fat_boot fb = fat_fs->bs;
 	fat_fs->fat_length = (fb.total_sectors - fb.fat_start 
 												- fb.fat_sectors)/SECTORS_PER_CLUSTER;
-	fat_fs->data_start = fb.fat_start + fb.fat_sectors;
+	fat_fs->data_start = fb.fat_start + fb.fat_sectors + 2*SECTORS_PER_CLUSTER;
 	lock_init(&fat_fs->write_lock);
 }
 
@@ -199,10 +199,9 @@ fat_create_chain (cluster_t clst) {
 		return 0;
 	}
 	fat_fs->last_clst = fat_get(alloc_clst);
-	fat_put(alloc_clst, EOChain)
+	fat_put(alloc_clst, EOChain);
 	if(clst)
 		fat_put(clst, alloc_clst);
-
 	return alloc_clst;
 }
 
@@ -255,6 +254,28 @@ disk_sector_t
 cluster_to_sector (cluster_t clst) {
 	/* TODO: Your code goes here. */
 	//(X - 2) x (클러스터 당 섹터 수) + (클러스터 2의 섹터 수)
-	ASSERT(ROOT_DIR_CLUSTER != clst);
+	ASSERT(1 <= clst);
 	return (clst-2)*SECTORS_PER_CLUSTER + fat_fs->data_start;
+}
+
+cluster_t
+sector_to_cluster (disk_sector_t sector) {
+	ASSERT(sector >= 0);
+	return (sector - fat_fs->data_start) / SECTORS_PER_CLUSTER + 2;
+}
+
+disk_sector_t
+get_sector_using_fat (cluster_t start, off_t pos){
+	off_t pos_left = pos %(DISK_SECTOR_SIZE * SECTORS_PER_CLUSTER);
+	off_t cluster_cnt = pos / (DISK_SECTOR_SIZE * SECTORS_PER_CLUSTER);
+	
+	for(int i = 0; i < cluster_cnt; i++){
+		start = fat_get(start);
+		if(start == EOChain){
+			PANIC("Can't go further");
+		}
+	}
+	disk_sector_t sector = cluster_to_sector(start);
+	sector += pos_left / DISK_SECTOR_SIZE;
+	return sector;
 }

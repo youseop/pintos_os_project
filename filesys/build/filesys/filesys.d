@@ -6,4 +6,5 @@ filesys/filesys.o: ../../filesys/filesys.c \
  ../../include/lib/kernel/stdio.h ../../include/lib/string.h \
  ../../include/filesys/file.h ../../include/filesys/free-map.h \
  ../../include/devices/disk.h ../../include/lib/inttypes.h \
- ../../include/filesys/inode.h ../../include/filesys/directory.h
+ ../../include/filesys/inode.h ../../include/filesys/directory.h \
+ ../../include/filesys/fat.h

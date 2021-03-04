@@ -1,0 +1,15 @@
+FAIL
+Test output failed to match any acceptable form.
+
+Acceptable output:
+  (dir-vine) begin
+  (dir-vine) creating many levels of files and directories...
+  (dir-vine) removing all but top 10 levels of files and directories...
+  (dir-vine) end
+Differences in `diff -u' format:
+  (dir-vine) begin
+  (dir-vine) creating many levels of files and directories...
+- (dir-vine) removing all but top 10 levels of files and directories...
+- (dir-vine) end
+
+(Process exit codes are excluded for matching purposes.)

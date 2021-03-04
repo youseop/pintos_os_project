@@ -1,0 +1,21 @@
+FAIL
+Test output failed to match any acceptable form.
+
+Acceptable output:
+  (dir-rm-parent) begin
+  (dir-rm-parent) mkdir "a"
+  (dir-rm-parent) chdir "a"
+  (dir-rm-parent) mkdir "b"
+  (dir-rm-parent) chdir "b"
+  (dir-rm-parent) remove "/a" (must fail)
+  (dir-rm-parent) end
+Differences in `diff -u' format:
+  (dir-rm-parent) begin
+  (dir-rm-parent) mkdir "a"
+- (dir-rm-parent) chdir "a"
+- (dir-rm-parent) mkdir "b"
+- (dir-rm-parent) chdir "b"
+- (dir-rm-parent) remove "/a" (must fail)
+- (dir-rm-parent) end
+
+(Process exit codes are excluded for matching purposes.)

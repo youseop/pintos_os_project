@@ -7,6 +7,7 @@
 #include "filesys/inode.h"
 #include "filesys/directory.h"
 #include "devices/disk.h"
+#include "filesys/fat.h"
 
 /* The disk that contains the file system. */
 struct disk *filesys_disk;
@@ -53,10 +54,27 @@ filesys_done (void) {
 #endif
 }
 
+#ifdef EFILESYS
 /* Creates a file named NAME with the given INITIAL_SIZE.
  * Returns true if successful, false otherwise.
  * Fails if a file named NAME already exists,
  * or if internal memory allocation fails. */
+bool
+filesys_create (const char *name, off_t initial_size) {
+	disk_sector_t inode_sector = 0;
+	struct dir *dir = dir_open_root (); //?0x800423e048
+	bool success = (dir != NULL
+			&& (inode_sector = cluster_to_sector(fat_create_chain(0)))
+			&& inode_create (inode_sector, initial_size)
+			&& dir_add (dir, name, inode_sector));
+	if (!success && inode_sector != 0)
+		fat_remove_chain(sector_to_cluster(inode_sector), 0);
+	dir_close (dir);
+	return success;
+}
+
+#else
+
 bool
 filesys_create (const char *name, off_t initial_size) {
 	disk_sector_t inode_sector = 0;
@@ -70,6 +88,7 @@ filesys_create (const char *name, off_t initial_size) {
 	dir_close (dir);
 	return success;
 }
+#endif
 
 /* Opens the file with the given NAME.
  * Returns the new file if successful or a null pointer
@@ -108,6 +127,9 @@ do_format (void) {
 #ifdef EFILESYS
 	/* Create FAT and save it to the disk. */
 	fat_create ();
+	//? edit
+	if (!dir_create (cluster_to_sector(ROOT_DIR_CLUSTER), 16))
+		PANIC ("root directory creation failed");
 	fat_close ();
 #else
 	free_map_create ();

@@ -1,0 +1,17 @@
+FAIL
+Test output failed to match any acceptable form.
+
+Acceptable output:
+  (dir-rmdir) begin
+  (dir-rmdir) mkdir "a"
+  (dir-rmdir) rmdir "a"
+  (dir-rmdir) chdir "a" (must return false)
+  (dir-rmdir) end
+Differences in `diff -u' format:
+  (dir-rmdir) begin
+  (dir-rmdir) mkdir "a"
+- (dir-rmdir) rmdir "a"
+- (dir-rmdir) chdir "a" (must return false)
+- (dir-rmdir) end
+
+(Process exit codes are excluded for matching purposes.)

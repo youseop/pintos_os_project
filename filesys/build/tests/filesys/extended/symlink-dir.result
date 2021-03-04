@@ -1,0 +1,31 @@
+FAIL
+Test output failed to match any acceptable form.
+
+Acceptable output:
+  (symlink-dir) begin
+  (symlink-dir) mkdir "/a"
+  (symlink-dir) mkdir "a/b"
+  (symlink-dir) create symlink "a/link_b"
+  (symlink-dir) create "a/link_b/file"
+  (symlink-dir) open "file"
+  (symlink-dir) write "file"
+  (symlink-dir) close "file"
+  (symlink-dir) open "a/b/file" for verification
+  (symlink-dir) verified contents of "a/b/file"
+  (symlink-dir) close "a/b/file"
+  (symlink-dir) end
+Differences in `diff -u' format:
+  (symlink-dir) begin
+  (symlink-dir) mkdir "/a"
+- (symlink-dir) mkdir "a/b"
+- (symlink-dir) create symlink "a/link_b"
+- (symlink-dir) create "a/link_b/file"
+- (symlink-dir) open "file"
+- (symlink-dir) write "file"
+- (symlink-dir) close "file"
+- (symlink-dir) open "a/b/file" for verification
+- (symlink-dir) verified contents of "a/b/file"
+- (symlink-dir) close "a/b/file"
+- (symlink-dir) end
+
+(Process exit codes are excluded for matching purposes.)

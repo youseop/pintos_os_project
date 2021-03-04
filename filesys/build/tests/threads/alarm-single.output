@@ -8,9 +8,28 @@ Calibrating timer...  157,081,600 loops/s.
 hd0:0: detected 321 sector (160 kB) disk, model "QEMU HARDDISK", serial "QM00001"
 hd0:1: detected 20,160 sector (9 MB) disk, model "QEMU HARDDISK", serial "QM00002"
 hd1:1: detected 8,064 sector (3 MB) disk, model "QEMU HARDDISK", serial "QM00004"
-Formatting file system...Kernel PANIC at ../../filesys/fat.c:262 in cluster_to_sector(): assertion `ROOT_DIR_CLUSTER != clst' failed.
-Call stack: 0x8004213bec 0x800421abc5 0x800421a788 0x8004219f94 0x8004219d82 0x8004206151.
-The `backtrace' program can make call stacks useful.
-Read "Backtraces" in the "Debugging Tools" chapter
-of the Pintos documentation for more information.
-Kernel PANIC recursion at ../../devices/timer.c:179 in real_time_sleep().
+Formatting file system...done.
+Boot complete.
+Executing 'alarm-single':
+(alarm-single) begin
+(alarm-single) Creating 5 threads to sleep 1 times each.
+(alarm-single) Thread 0 sleeps 10 ticks each time,
+(alarm-single) thread 1 sleeps 20 ticks each time, and so on.
+(alarm-single) If successful, product of iteration count and
+(alarm-single) sleep duration will appear in nondescending order.
+(alarm-single) thread 0: duration=10, iteration=1, product=10
+(alarm-single) thread 1: duration=20, iteration=1, product=20
+(alarm-single) thread 2: duration=30, iteration=1, product=30
+(alarm-single) thread 3: duration=40, iteration=1, product=40
+(alarm-single) thread 4: duration=50, iteration=1, product=50
+(alarm-single) end
+Execution of 'alarm-single' complete.
+Timer: 318 ticks
+Thread: 279 idle ticks, 40 kernel ticks, 0 user ticks
+hd0:0: 0 reads, 0 writes
+hd0:1: 158 reads, 319 writes
+hd1:1: 0 reads, 0 writes
+Console: 1402 characters output
+Keyboard: 0 keys pressed
+Exception: 0 page faults
+Powering off...

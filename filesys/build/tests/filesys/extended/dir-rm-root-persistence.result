@@ -1,0 +1,12 @@
+FAIL
+Kernel panic in file system extraction run: PANIC at ../../filesys/fat.c:198 in fat_create_chain(): fat_create_chain - return 0??!
+Call stack: 0x8004213bec 0x800421a992 0x8004219ddd 0x8004219070 0x8004218e21 0x4001ad 0x400137 0x401765
+Translation of call stack:
+0x0000008004213bec: debug_panic (lib/kernel/debug.c:32)
+0x000000800421a992: fat_create_chain (filesys/fat.c:201)
+0x0000008004219ddd: filesys_create (filesys/filesys.c:67)
+0x0000008004219070: syscall_handler (userprog/syscall.c:102)
+0x0000008004218e21: no_sti (userprog/syscall-entry.o:?)
+0x00000000004001ad: (unknown)
+0x0000000000400137: (unknown)
+0x0000000000401765: (unknown)

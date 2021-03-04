@@ -1,0 +1,21 @@
+FAIL
+Test output failed to match any acceptable form.
+
+Acceptable output:
+  (dir-rm-tree) begin
+  (dir-rm-tree) creating /0/0/0/0 through /3/2/2/3...
+  (dir-rm-tree) open "/0/2/0/3"
+  (dir-rm-tree) close "/0/2/0/3"
+  (dir-rm-tree) removing /0/0/0/0 through /3/2/2/3...
+  (dir-rm-tree) open "/3/0/2/0" (must return -1)
+  (dir-rm-tree) end
+Differences in `diff -u' format:
+  (dir-rm-tree) begin
+  (dir-rm-tree) creating /0/0/0/0 through /3/2/2/3...
+- (dir-rm-tree) open "/0/2/0/3"
+- (dir-rm-tree) close "/0/2/0/3"
+- (dir-rm-tree) removing /0/0/0/0 through /3/2/2/3...
+- (dir-rm-tree) open "/3/0/2/0" (must return -1)
+- (dir-rm-tree) end
+
+(Process exit codes are excluded for matching purposes.)

@@ -1,0 +1,28 @@
+FAIL
+Kernel panic in run: PANIC at ../../userprog/exception.c:98 in kill(): Kernel bug - unexpected interrupt in kernel
+Call stack: 0x8004213bec 0x8004218ca0 0x8004209094 0x80042094b2 0x8004214fb9 0x80042076bf 0x80042091eb 0x80042094b2 0x800420b8b8 0x800420c16d 0x800421624c 0x8004220d45 0x8004217aed 0x8004217ab9 0x80042072d4 0x8004219693 0x8004218f9e 0x8004218e21 0x400c7f 0x4002dc 0x4007f7 0x400107 0x401504 0x40154d
+Translation of call stack:
+0x0000008004213bec: debug_panic (lib/kernel/debug.c:32)
+0x0000008004218ca0: kill (userprog/exception.c:104)
+0x0000008004209094: intr_handler (threads/interrupt.c:352)
+0x00000080042094b2: intr_entry (threads/intr-stubs.o:?)
+0x0000008004214fb9: list_insert_ordered (lib/kernel/list.c:431)
+0x00000080042076bf: thread_yield (threads/thread.c:459)
+0x00000080042091eb: intr_handler (threads/interrupt.c:375)
+0x00000080042094b2: intr_entry (threads/intr-stubs.o:?)
+0x000000800420b8b8: palloc_free_multiple (threads/palloc.c:322)
+0x000000800420c16d: free (threads/malloc.c:237)
+0x000000800421624c: hash_destroy (lib/kernel/hash.c:84)
+0x0000008004220d45: supplemental_page_table_kill (vm/vm.c:336)
+0x0000008004217aed: process_cleanup (userprog/process.c:340)
+0x0000008004217ab9: process_exit (userprog/process.c:326)
+0x00000080042072d4: thread_exit (threads/thread.c:357)
+0x0000008004219693: halt (userprog/syscall.c:251)
+0x0000008004218f9e: syscall_handler (userprog/syscall.c:89)
+0x0000008004218e21: no_sti (userprog/syscall-entry.o:?)
+0x0000000000400c7f: (unknown)
+0x00000000004002dc: (unknown)
+0x00000000004007f7: (unknown)
+0x0000000000400107: (unknown)
+0x0000000000401504: (unknown)
+0x000000000040154d: (unknown)

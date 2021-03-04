@@ -207,7 +207,9 @@ donation 을 받은 스레드의 thread 구조체를 list로 관리한다. */
 
   if(lock_holder != NULL){
     curr->wait_on_lock = lock;
-    list_insert_ordered(&(lock_holder->donations), &curr->donation_elem, &cmp_priority, NULL);
+    if(lock_holder->priority < thread_current()->priority){
+      list_insert_ordered(&(lock_holder->donations), &curr->donation_elem, &cmp_priority, NULL);
+    }
     donate_priority();
   }
 	sema_down (&lock->semaphore);

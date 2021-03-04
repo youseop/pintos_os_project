@@ -8,9 +8,23 @@ Calibrating timer...  157,081,600 loops/s.
 hd0:0: detected 321 sector (160 kB) disk, model "QEMU HARDDISK", serial "QM00001"
 hd0:1: detected 20,160 sector (9 MB) disk, model "QEMU HARDDISK", serial "QM00002"
 hd1:1: detected 8,064 sector (3 MB) disk, model "QEMU HARDDISK", serial "QM00004"
-Formatting file system...Kernel PANIC at ../../filesys/fat.c:125 in fat_create(): FAT creation failed
-Call stack: 0x8004213bec 0x800421a62d 0x8004219f94 0x8004219d82 0x8004206151.
-The `backtrace' program can make call stacks useful.
-Read "Backtraces" in the "Debugging Tools" chapter
-of the Pintos documentation for more information.
-Kernel PANIC recursion at ../../devices/timer.c:179 in real_time_sleep().
+Formatting file system...done.
+Boot complete.
+Executing 'priority-change':
+(priority-change) begin
+(priority-change) Creating a high-priority thread 2.
+(priority-change) Thread 2 now lowering priority.
+(priority-change) Thread 2 should have just lowered its priority.
+(priority-change) Thread 2 exiting.
+(priority-change) Thread 2 should have just exited.
+(priority-change) end
+Execution of 'priority-change' complete.
+Timer: 65 ticks
+Thread: 30 idle ticks, 36 kernel ticks, 0 user ticks
+hd0:0: 0 reads, 0 writes
+hd0:1: 158 reads, 319 writes
+hd1:1: 0 reads, 0 writes
+Console: 1065 characters output
+Keyboard: 0 keys pressed
+Exception: 0 page faults
+Powering off...
