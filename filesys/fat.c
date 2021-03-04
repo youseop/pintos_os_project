@@ -55,14 +55,6 @@ fat_open (void) {
 	fat_fs->fat = calloc (fat_fs->fat_length, sizeof (cluster_t));
 	if (fat_fs->fat == NULL)
 		PANIC ("FAT load failed");
-	//?---------start----------------
-	ASSERT(fat_fs->fat_length > 2);
-	fat_fs->fat[2] = 0;
-	for (int i = 3; i < fat_fs->fat_length; i++){
-		fat_fs->fat[i] = i-1;
-	}
-	fat_fs->last_clst = fat_fs->fat_length - 1;
-	//?---------end----------------
 
 	// Load FAT directly from the disk
 	uint8_t *buffer = (uint8_t *) fat_fs->fat;
@@ -130,9 +122,18 @@ fat_create (void) {
 	fat_fs->fat = calloc (fat_fs->fat_length, sizeof (cluster_t));
 	if (fat_fs->fat == NULL)
 		PANIC ("FAT creation failed");
-
+	
 	// Set up ROOT_DIR_CLST
 	fat_put (ROOT_DIR_CLUSTER, EOChain);
+	
+	//?---------start----------------
+	ASSERT(fat_fs->fat_length > 2);
+	fat_put(2, 0);
+	for (int i = 3; i < fat_fs->fat_length; i++){
+		fat_put(i, i-1);
+	}
+	fat_fs->last_clst = fat_fs->fat_length - 1;
+	//?---------end----------------
 
 	// Fill up ROOT_DIR_CLUSTER region with 0
 	uint8_t *buf = calloc (1, DISK_SECTOR_SIZE);
@@ -170,7 +171,8 @@ void
 fat_fs_init (void) {
 	/* TODO: Your code goes here. */
 	struct fat_boot fb = fat_fs->bs;
-	fat_fs->fat_length = fb.total_sectors - fb.fat_start - fb.fat_sectors;
+	fat_fs->fat_length = (fb.total_sectors - fb.fat_start 
+												- fb.fat_sectors)/SECTORS_PER_CLUSTER;
 	fat_fs->data_start = fb.fat_start + fb.fat_sectors;
 	lock_init(&fat_fs->write_lock);
 }
@@ -192,13 +194,14 @@ cluster_t
 fat_create_chain (cluster_t clst) {
 	/* TODO: Your code goes here. */
 	cluster_t alloc_clst = fat_fs->last_clst;
-	if(alloc_clst == 0)//? 2 or 0?!
+	if(alloc_clst == 0){//? 2 or 0?!
+		PANIC("fat_create_chain - return 0??!");
 		return 0;
-
-	fat_fs->last_clst = fat_fs->fat[alloc_clst];
-	fat_fs->fat[alloc_clst] = EOChain;
+	}
+	fat_fs->last_clst = fat_get(alloc_clst);
+	fat_put(alloc_clst, EOChain)
 	if(clst)
-		fat_fs->fat[clst] = alloc_clst;
+		fat_put(clst, alloc_clst);
 
 	return alloc_clst;
 }
@@ -212,14 +215,7 @@ fat_remove_chain (cluster_t clst, cluster_t pclst) {
 		ASSERT(fat_get(pclst) == clst);
 		fat_put(pclst, EOChain);
 	}
-	//?first try
-	// cluster_t next_clst;
-	// while(clst != EOChain){
-	// 	next_clst = fat_get(clst);
-	// 	fat_put(clst, fat_fs->last_clst);
-	// 	fat_fs->last_clst = clst;
-	// 	clst = next_clst;
-	// }
+
 	cluster_t origin_clst = clst;
 	while(fat_get(clst) != EOChain){
 		clst = fat_get(clst);
