@@ -55,6 +55,14 @@ fat_open (void) {
 	fat_fs->fat = calloc (fat_fs->fat_length, sizeof (cluster_t));
 	if (fat_fs->fat == NULL)
 		PANIC ("FAT load failed");
+	//?---------start----------------
+	ASSERT(fat_fs->fat_length > 2);
+	fat_fs->fat[2] = 0;
+	for (int i = 3; i < fat_fs->fat_length; i++){
+		fat_fs->fat[i] = i-1;
+	}
+	fat_fs->last_clst = fat_fs->fat_length - 1;
+	//?---------end----------------
 
 	// Load FAT directly from the disk
 	uint8_t *buffer = (uint8_t *) fat_fs->fat;
@@ -183,6 +191,16 @@ Return the cluster number of newly allocated cluster.*/
 cluster_t
 fat_create_chain (cluster_t clst) {
 	/* TODO: Your code goes here. */
+	cluster_t alloc_clst = fat_fs->last_clst;
+	if(alloc_clst == 0)//? 2 or 0?!
+		return 0;
+
+	fat_fs->last_clst = fat_fs->fat[alloc_clst];
+	fat_fs->fat[alloc_clst] = EOChain;
+	if(clst)
+		fat_fs->fat[clst] = alloc_clst;
+
+	return alloc_clst;
 }
 
 /* Remove the chain of clusters starting from CLST.
@@ -190,6 +208,24 @@ fat_create_chain (cluster_t clst) {
 void
 fat_remove_chain (cluster_t clst, cluster_t pclst) {
 	/* TODO: Your code goes here. */
+	if (pclst != 0){
+		ASSERT(fat_get(pclst) == clst);
+		fat_put(pclst, EOChain);
+	}
+	//?first try
+	// cluster_t next_clst;
+	// while(clst != EOChain){
+	// 	next_clst = fat_get(clst);
+	// 	fat_put(clst, fat_fs->last_clst);
+	// 	fat_fs->last_clst = clst;
+	// 	clst = next_clst;
+	// }
+	cluster_t origin_clst = clst;
+	while(fat_get(clst) != EOChain){
+		clst = fat_get(clst);
+	}
+	fat_put(clst, fat_fs->last_clst);
+	fat_fs->last_clst = origin_clst;
 }
 
 /*Update FAT entry pointed by cluster number clst to val. 
@@ -224,5 +260,5 @@ cluster_to_sector (cluster_t clst) {
 	/* TODO: Your code goes here. */
 	//(X - 2) x (클러스터 당 섹터 수) + (클러스터 2의 섹터 수)
 	ASSERT(ROOT_DIR_CLUSTER != clst);
-	return (clst-2)*SECTORS_PER_CLUSTER + data_start;
+	return (clst-2)*SECTORS_PER_CLUSTER + fat_fs->data_start;
 }

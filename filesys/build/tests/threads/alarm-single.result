@@ -1,9 +1,10 @@
 FAIL
-Kernel panic in run: PANIC at ../../filesys/fat.c:125 in fat_create(): FAT creation failed
-Call stack: 0x8004213bec 0x800421a643 0x8004219f94 0x8004219d82 0x8004206151
+Kernel panic in run: PANIC at ../../filesys/fat.c:262 in cluster_to_sector(): assertion `ROOT_DIR_CLUSTER != clst' failed.
+Call stack: 0x8004213bec 0x800421abc5 0x800421a788 0x8004219f94 0x8004219d82 0x8004206151
 Translation of call stack:
 0x0000008004213bec: debug_panic (lib/kernel/debug.c:32)
-0x000000800421a643: fat_create (filesys/fat.c:128)
+0x000000800421abc5: cluster_to_sector (filesys/fat.c:263)
+0x000000800421a788: fat_create (filesys/fat.c:141)
 0x0000008004219f94: do_format (filesys/filesys.c:111)
 0x0000008004219d82: filesys_init (filesys/filesys.c:32)
 0x0000008004206151: main (threads/init.c:116)
