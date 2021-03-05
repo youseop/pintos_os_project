@@ -4,7 +4,7 @@ Kernel command line: -q -f put grow-seq-lg put tar run grow-seq-lg
 Pintos booting with: 
 	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
 	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
-Calibrating timer...  157,081,600 loops/s.
+Calibrating timer...  117,760,000 loops/s.
 hd0:0: detected 321 sector (160 kB) disk, model "QEMU HARDDISK", serial "QM00001"
 hd0:1: detected 4,032 sector (1 MB) disk, model "QEMU HARDDISK", serial "QM00002"
 hd1:0: detected 224 sector (112 kB) disk, model "QEMU HARDDISK", serial "QM00003"
@@ -18,16 +18,20 @@ Executing 'grow-seq-lg':
 (grow-seq-lg) create "testme"
 (grow-seq-lg) open "testme"
 (grow-seq-lg) writing "testme"
-(grow-seq-lg) write 1234 bytes at offset 0 in "testme" failed: FAILED
-grow-seq-lg: exit(1)
+(grow-seq-lg) close "testme"
+(grow-seq-lg) open "testme" for verification
+(grow-seq-lg) verified contents of "testme"
+(grow-seq-lg) close "testme"
+(grow-seq-lg) end
+grow-seq-lg: exit(0)
 Execution of 'grow-seq-lg' complete.
-Timer: 88 ticks
-Thread: 30 idle ticks, 48 kernel ticks, 10 user ticks
+Timer: 110 ticks
+Thread: 30 idle ticks, 52 kernel ticks, 28 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 154 reads, 523 writes
+hd0:1: 389 reads, 1100 writes
 hd1:0: 224 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1152 characters output
+Console: 1249 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

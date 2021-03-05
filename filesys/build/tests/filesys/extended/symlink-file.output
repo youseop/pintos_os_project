@@ -20,10 +20,10 @@ Executing 'symlink-file':
 (symlink-file) create symlink "link_a"
 symlink-file: exit(4213788)
 Execution of 'symlink-file' complete.
-Timer: 90 ticks
-Thread: 30 idle ticks, 49 kernel ticks, 11 user ticks
+Timer: 96 ticks
+Thread: 30 idle ticks, 54 kernel ticks, 12 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 175 reads, 539 writes
+hd0:1: 130 reads, 775 writes
 hd1:0: 230 reads, 0 writes
 hd1:1: 0 reads, 0 writes
 Console: 1097 characters output

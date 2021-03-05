@@ -4,7 +4,7 @@ Kernel command line: -q -f put grow-root-lg put tar run grow-root-lg
 Pintos booting with: 
 	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
 	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
-Calibrating timer...  134,144,000 loops/s.
+Calibrating timer...  104,755,200 loops/s.
 hd0:0: detected 321 sector (160 kB) disk, model "QEMU HARDDISK", serial "QM00001"
 hd0:1: detected 4,032 sector (1 MB) disk, model "QEMU HARDDISK", serial "QM00002"
 hd1:0: detected 225 sector (112 kB) disk, model "QEMU HARDDISK", serial "QM00003"
@@ -30,16 +30,51 @@ Executing 'grow-root-lg':
 (grow-root-lg) creating and checking "file12"
 (grow-root-lg) creating and checking "file13"
 (grow-root-lg) creating and checking "file14"
-(grow-root-lg) create "file14": FAILED
-grow-root-lg: exit(1)
+(grow-root-lg) creating and checking "file15"
+(grow-root-lg) creating and checking "file16"
+(grow-root-lg) creating and checking "file17"
+(grow-root-lg) creating and checking "file18"
+(grow-root-lg) creating and checking "file19"
+(grow-root-lg) creating and checking "file20"
+(grow-root-lg) creating and checking "file21"
+(grow-root-lg) creating and checking "file22"
+(grow-root-lg) creating and checking "file23"
+(grow-root-lg) creating and checking "file24"
+(grow-root-lg) creating and checking "file25"
+(grow-root-lg) creating and checking "file26"
+(grow-root-lg) creating and checking "file27"
+(grow-root-lg) creating and checking "file28"
+(grow-root-lg) creating and checking "file29"
+(grow-root-lg) creating and checking "file30"
+(grow-root-lg) creating and checking "file31"
+(grow-root-lg) creating and checking "file32"
+(grow-root-lg) creating and checking "file33"
+(grow-root-lg) creating and checking "file34"
+(grow-root-lg) creating and checking "file35"
+(grow-root-lg) creating and checking "file36"
+(grow-root-lg) creating and checking "file37"
+(grow-root-lg) creating and checking "file38"
+(grow-root-lg) creating and checking "file39"
+(grow-root-lg) creating and checking "file40"
+(grow-root-lg) creating and checking "file41"
+(grow-root-lg) creating and checking "file42"
+(grow-root-lg) creating and checking "file43"
+(grow-root-lg) creating and checking "file44"
+(grow-root-lg) creating and checking "file45"
+(grow-root-lg) creating and checking "file46"
+(grow-root-lg) creating and checking "file47"
+(grow-root-lg) creating and checking "file48"
+(grow-root-lg) creating and checking "file49"
+(grow-root-lg) end
+grow-root-lg: exit(0)
 Execution of 'grow-root-lg' complete.
-Timer: 138 ticks
-Thread: 30 idle ticks, 48 kernel ticks, 60 user ticks
+Timer: 450 ticks
+Thread: 30 idle ticks, 47 kernel ticks, 373 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 882 reads, 594 writes
+hd0:1: 5972 reads, 1254 writes
 hd1:0: 225 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1720 characters output
+Console: 3313 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

@@ -1,30 +1,14 @@
 FAIL
-Kernel panic in run: PANIC at ../../userprog/exception.c:98 in kill(): Kernel bug - unexpected interrupt in kernel
-Call stack: 0x8004213c0c 0x8004218cc0 0x8004209094 0x80042094b2 0x8004214fd9 0x80042076bf 0x80042091eb 0x80042094b2 0x800420c056 0x8004221375 0x8004220986 0x8004220da8 0x80042161d2 0x8004216255 0x8004220ddc 0x8004217b0d 0x8004217ad9 0x80042072d4 0x80042196b3 0x8004218fbe 0x8004218e41 0x400c7f 0x4002dc 0x4007f7 0x400107 0x401504 0x40154d
+Kernel panic in run: PANIC at ../../filesys/inode.c:301 in inode_write_at(): assertion `new_clst >= old_clst' failed.
+Call stack: 0x8004213c0c 0x800421c69a 0x800421bd97 0x8004219e4b 0x8004219090 0x8004218e41 0x400266 0x4007f7 0x400107 0x401504 0x40154d
 Translation of call stack:
 0x0000008004213c0c: debug_panic (lib/kernel/debug.c:32)
-0x0000008004218cc0: kill (userprog/exception.c:104)
-0x0000008004209094: intr_handler (threads/interrupt.c:352)
-0x00000080042094b2: intr_entry (threads/intr-stubs.o:?)
-0x0000008004214fd9: list_insert_ordered (lib/kernel/list.c:431)
-0x00000080042076bf: thread_yield (threads/thread.c:459)
-0x00000080042091eb: intr_handler (threads/interrupt.c:375)
-0x00000080042094b2: intr_entry (threads/intr-stubs.o:?)
-0x000000800420c056: free (threads/malloc.c:219)
-0x0000008004221375: anon_destroy (vm/anon.c:93)
-0x0000008004220986: vm_dealloc_page (vm/vm.c:246)
-0x0000008004220da8: supplemental_page_table_destructor (vm/vm.c:326)
-0x00000080042161d2: hash_clear (lib/kernel/hash.c:57)
-0x0000008004216255: hash_destroy (lib/kernel/hash.c:83)
-0x0000008004220ddc: supplemental_page_table_kill (vm/vm.c:336)
-0x0000008004217b0d: process_cleanup (userprog/process.c:340)
-0x0000008004217ad9: process_exit (userprog/process.c:326)
-0x00000080042072d4: thread_exit (threads/thread.c:357)
-0x00000080042196b3: halt (userprog/syscall.c:251)
-0x0000008004218fbe: syscall_handler (userprog/syscall.c:89)
+0x000000800421c69a: inode_write_at (filesys/inode.c:303)
+0x000000800421bd97: dir_add (filesys/directory.c:166)
+0x0000008004219e4b: filesys_create (filesys/filesys.c:69 (discriminator 3))
+0x0000008004219090: syscall_handler (userprog/syscall.c:102)
 0x0000008004218e41: no_sti (userprog/syscall-entry.o:?)
-0x0000000000400c7f: (unknown)
-0x00000000004002dc: (unknown)
+0x0000000000400266: (unknown)
 0x00000000004007f7: (unknown)
 0x0000000000400107: (unknown)
 0x0000000000401504: (unknown)

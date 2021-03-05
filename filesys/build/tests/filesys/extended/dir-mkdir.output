@@ -18,10 +18,10 @@ Executing 'dir-mkdir':
 (dir-mkdir) mkdir "a"
 dir-mkdir: exit(4212346)
 Execution of 'dir-mkdir' complete.
-Timer: 78 ticks
-Thread: 30 idle ticks, 45 kernel ticks, 3 user ticks
+Timer: 82 ticks
+Thread: 30 idle ticks, 48 kernel ticks, 4 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 128 reads, 519 writes
+hd0:1: 112 reads, 747 writes
 hd1:0: 224 reads, 0 writes
 hd1:1: 0 reads, 0 writes
 Console: 1006 characters output

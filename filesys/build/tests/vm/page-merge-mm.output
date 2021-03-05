@@ -22,37 +22,37 @@ child-qsort-mm: exit(80)
 (page-merge-mm) sort chunk 2
 child-qsort-mm: exit(80)
 (page-merge-mm) sort chunk 3
-child-qsort-mm: exit(80)
+(child-qsort-mm) open "buf2": FAILED
+child-qsort-mm: exit(1)
 (page-merge-mm) sort chunk 4
-child-qsort-mm: exit(80)
+(child-qsort-mm) open "buf3": FAILED
+child-qsort-mm: exit(1)
 (page-merge-mm) sort chunk 5
 child-qsort-mm: exit(80)
 (page-merge-mm) sort chunk 6
 child-qsort-mm: exit(80)
 (page-merge-mm) sort chunk 7
-child-qsort-mm: exit(80)
 (page-merge-mm) wait for child 0
 (page-merge-mm) wait for child 1
-(page-merge-mm) wait for child 2
-(page-merge-mm) wait for child 3
-(page-merge-mm) wait for child 4
-(page-merge-mm) wait for child 5
-(page-merge-mm) wait for child 6
-(page-merge-mm) wait for child 7
 child-qsort-mm: exit(80)
-(page-merge-mm) merge
-(page-merge-mm) verify
-(page-merge-mm) success, buf_idx=1,048,576
-(page-merge-mm) end
-page-merge-mm: exit(0)
-Execution of 'page-merge-mm' complete.
-Timer: 459 ticks
-Thread: 30 idle ticks, 77 kernel ticks, 352 user ticks
-hd0:0: 0 reads, 0 writes
-hd0:1: 4999 reads, 6937 writes
-hd1:0: 224 reads, 0 writes
-hd1:1: 0 reads, 0 writes
-Console: 1859 characters output
-Keyboard: 0 keys pressed
-Exception: 0 page faults
-Powering off...
+(page-merge-mm) wait for child 2
+(page-merge-mm) wait for child 2: FAILED
+page-merge-mm: exit(1)
+Interrupt 0x0d (#GP General Protection Exception) at rip=80042141c0
+ cr2=000000001001b000 error=               0
+rax cccccccccccccccc rbx 0000000000000000 rcx 0000008004269028 rdx 0000008004269028
+rsp 0000008004269bd0 rbp 0000008004269be0 rsi 0000008004269028 rdi 0000008004296028
+rip 00000080042141c0 r8 0000008004269e08  r9 000000800421704e r10 0000000000000000
+r11 0000000000000206 r12 0000008004218f18 r13 0000000000000000 r14 0000000000000000
+r15 0000000000000000 rflags 00000006
+es: 0010 ds: 0010 cs: 0008 ss: 0010
+Kernel PANIC at ../../userprog/exception.c:98 in kill(): Kernel bug - unexpected interrupt in kernel
+Call stack: 0x8004213c0c 0x8004218cc0 0x8004209094 0x80042094b2 0x8004214fd9 0x80042076bf 0x80042091eb 0x80042094b2 0x800420b8d8 0x800420b98a 0x800420ccb1 0x800420cd34 0x800420cdb7 0x800420ce80 0x8004217b56 0x8004217ad9 0x80042072d4 0x80042196b3 0x8004218fbe 0x8004218e41Interrupt 0x0d (#GP General Protection Exception) at rip=80042141c0
+ cr2=000000004747fda0 error=               0
+rax cccccccccccccccc rbx 0000000000000000 rcx 0000008004269028 rdx 0000008004269028
+rsp 0000008004269750 rbp 0000008004269760 rsi 0000008004269028 rdi 0000008004296028
+rip 00000080042141c0 r8 0000008004269928  r9 000000800421704e r10 0000000000000000
+r11 0000000000000206 r12 0000008004218f18 r13 0000000000000000 r14 0000000000000000
+r15 0000000000000000 rflags 00000006
+es: 0010 ds: 0010 cs: 0008 ss: 0010
+Kernel PANIC recursion at ../../userprog/exception.c:98 in kill().

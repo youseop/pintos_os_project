@@ -25,7 +25,7 @@ Executing 'priority-donate-multiple2':
 (priority-donate-multiple2) end
 Execution of 'priority-donate-multiple2' complete.
 Timer: 69 ticks
-Thread: 30 idle ticks, 39 kernel ticks, 0 user ticks
+Thread: 30 idle ticks, 40 kernel ticks, 0 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 158 reads, 319 writes
 hd1:1: 0 reads, 0 writes

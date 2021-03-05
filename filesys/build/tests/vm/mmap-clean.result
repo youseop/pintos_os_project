@@ -1,1 +1,2 @@
-PASS
+FAIL
+run: read "sample.txt": FAILED

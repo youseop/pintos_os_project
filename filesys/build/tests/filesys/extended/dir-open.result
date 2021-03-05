@@ -6,19 +6,6 @@ Acceptable output:
   (dir-open) mkdir "xyzzy"
   (dir-open) open "xyzzy"
   (dir-open) write "xyzzy"
-  dir-open: exit(-1)
-Differences in `diff -u' format:
-  (dir-open) begin
-  (dir-open) mkdir "xyzzy"
-- (dir-open) open "xyzzy"
-- (dir-open) write "xyzzy"
-- dir-open: exit(-1)
-+ dir-open: exit(4212318)
-Acceptable output:
-  (dir-open) begin
-  (dir-open) mkdir "xyzzy"
-  (dir-open) open "xyzzy"
-  (dir-open) write "xyzzy"
   (dir-open) write "xyzzy" (must return -1, actually -1)
   (dir-open) end
   dir-open: exit(0)
@@ -30,4 +17,17 @@ Differences in `diff -u' format:
 - (dir-open) write "xyzzy" (must return -1, actually -1)
 - (dir-open) end
 - dir-open: exit(0)
++ dir-open: exit(4212318)
+Acceptable output:
+  (dir-open) begin
+  (dir-open) mkdir "xyzzy"
+  (dir-open) open "xyzzy"
+  (dir-open) write "xyzzy"
+  dir-open: exit(-1)
+Differences in `diff -u' format:
+  (dir-open) begin
+  (dir-open) mkdir "xyzzy"
+- (dir-open) open "xyzzy"
+- (dir-open) write "xyzzy"
+- dir-open: exit(-1)
 + dir-open: exit(4212318)

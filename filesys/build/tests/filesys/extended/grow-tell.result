@@ -1,2 +1,1 @@
-FAIL
-run: write 37 bytes at offset 0 in "foobar" failed: FAILED
+PASS

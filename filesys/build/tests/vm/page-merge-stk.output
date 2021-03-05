@@ -22,18 +22,14 @@ child-qsort: exit(72)
 (page-merge-stk) sort chunk 2
 child-qsort: exit(72)
 (page-merge-stk) sort chunk 3
-(page-merge-stk) open "buf3": FAILED
-page-merge-stk: exit(1)
-Interrupt 0x0d (#GP General Protection Exception) at rip=80042141c0
- cr2=0000000000403a0f error=               0
-rax cccccccccccccccc rbx 0000000000000000 rcx 0000008004269028 rdx 0000008004269028
-rsp 0000008004269b80 rbp 0000008004269b90 rsi 0000008004269028 rdi 0000008004290028
-rip 00000080042141c0 r8 0000008004269e08  r9 000000800421704e r10 0000000000000000
-r11 0000000000000206 r12 0000008004218f18 r13 0000000000000000 r14 0000000000000000
-r15 0000000000000000 rflags 00000006
-es: 0010 ds: 0010 cs: 0008 ss: 0010
-Kernel PANIC at ../../userprog/exception.c:98 in kill(): Kernel bug - unexpected interrupt in kernel
-Call stack: 0x8004213c0c 0x8004218cc0 0x8004209094 0x80042094b2 0x8004214fd9 0x80042076bf 0x80042091eb 0x80042094b2 0x800420c056 0x8004221375 0x8004220986 0x8004220da8 0x80042161d2 0x8004216255 0x8004220ddc 0x8004217b0d 0x8004217ad9 0x80042072d4 0x80042196b3 0x8004218fbe 0x8004218e41 0x400c7f 0x4002dc 0x4007f7 0x400107 0x401504 0x40154d.
+child-qsort: exit(72)
+(page-merge-stk) sort chunk 4
+child-qsort: exit(72)
+(page-merge-stk) sort chunk 5
+child-qsort: exit(72)
+(page-merge-stk) sort chunk 6
+Kernel PANIC at ../../filesys/inode.c:301 in inode_write_at(): assertion `new_clst >= old_clst' failed.
+Call stack: 0x8004213c0c 0x800421c69a 0x800421bd97 0x8004219e4b 0x8004219090 0x8004218e41 0x400266 0x4007f7 0x400107 0x401504 0x40154d.
 The `backtrace' program can make call stacks useful.
 Read "Backtraces" in the "Debugging Tools" chapter
 of the Pintos documentation for more information.

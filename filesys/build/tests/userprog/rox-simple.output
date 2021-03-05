@@ -20,13 +20,13 @@ Executing 'rox-simple':
 (rox-simple) end
 rox-simple: exit(0)
 Execution of 'rox-simple' complete.
-Timer: 82 ticks
-Thread: 30 idle ticks, 47 kernel ticks, 5 user ticks
+Timer: 84 ticks
+Thread: 30 idle ticks, 44 kernel ticks, 10 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 230 reads, 526 writes
+hd0:1: 230 reads, 633 writes
 hd1:0: 103 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1057 characters output
+Console: 1058 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

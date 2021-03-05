@@ -216,7 +216,8 @@ inode_close (struct inode *inode) {
 			free_map_release (inode->data.start,
 					bytes_to_sectors (inode->data.length));
 			#endif
-		}
+		}		
+		disk_write (filesys_disk, inode->sector, &inode->data); 
 		free (inode); 
 	}
 }
@@ -291,9 +292,28 @@ inode_write_at (struct inode *inode, const void *buffer_, off_t size,
 	uint8_t *bounce = NULL;
 	if (inode->deny_write_cnt)
 			return 0;
-	if (offset + size > inode->data.length){
-		file_growth(inode->data.start, offset + size);
+
+	//DIV_ROUND_UP (size, DISK_SECTOR_SIZE * SECTORS_PER_CLUSTER);
+	if(inode->data.length < size + offset){
+		cluster_t old_clst = bytes_to_clusters(inode->data.length);
+		// printf("old_clst : %p\n",old_clst);
+		cluster_t new_clst = bytes_to_clusters(size + offset);
+		ASSERT(new_clst >= old_clst);
+		
+		cluster_t start_clst = inode->data.start;
+		cluster_t extend_clst = inode->data.length ? 
+											new_clst - old_clst : new_clst - old_clst - 1;
+											
+		if(old_clst)
+			for (int i = 0; i < old_clst-1; i++){
+				start_clst = fat_get(start_clst);
+			}
+
+		for (int i = 0; i < extend_clst; i++){
+			start_clst = fat_create_chain(start_clst);
+		}
 	}
+	inode->data.length = size + offset;
 
 	while (size > 0) {
 		/* Sector to write, starting byte offset within sector. */
