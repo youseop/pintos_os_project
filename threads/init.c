@@ -286,7 +286,7 @@ run_actions (char **argv) {
 		for (a = actions; ; a++)
 			if (a->name == NULL)
 				PANIC ("unknown action `%s' (use -h for help)", *argv);
-			else if (!strcmp (*argv, a->name)) //?매칭되면 for문 탈출!! (매칭 안되면 다음 name과 compare)
+			else if (!strcmp (*argv, a->name)) 
 				break;
 
 		/* Check for required arguments. */

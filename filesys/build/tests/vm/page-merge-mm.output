@@ -30,27 +30,29 @@ child-qsort-mm: exit(80)
 (page-merge-mm) sort chunk 6
 child-qsort-mm: exit(80)
 (page-merge-mm) sort chunk 7
-(child-qsort-mm) open "buf6": FAILED
-child-qsort-mm: exit(1)
+child-qsort-mm: exit(80)
 (page-merge-mm) wait for child 0
-(child-qsort-mm) open "buf7": FAILED
-child-qsort-mm: exit(1)
 (page-merge-mm) wait for child 1
 (page-merge-mm) wait for child 2
 (page-merge-mm) wait for child 3
 (page-merge-mm) wait for child 4
 (page-merge-mm) wait for child 5
 (page-merge-mm) wait for child 6
-(page-merge-mm) wait for child 6: FAILED
-page-merge-mm: exit(1)
+(page-merge-mm) wait for child 7
+child-qsort-mm: exit(80)
+(page-merge-mm) merge
+(page-merge-mm) verify
+(page-merge-mm) success, buf_idx=1,048,576
+(page-merge-mm) end
+page-merge-mm: exit(0)
 Execution of 'page-merge-mm' complete.
-Timer: 387 ticks
-Thread: 30 idle ticks, 70 kernel ticks, 287 user ticks
+Timer: 459 ticks
+Thread: 30 idle ticks, 77 kernel ticks, 352 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 3968 reads, 6415 writes
+hd0:1: 4999 reads, 6937 writes
 hd1:0: 224 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1831 characters output
+Console: 1859 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

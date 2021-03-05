@@ -62,7 +62,7 @@ filesys_done (void) {
 bool
 filesys_create (const char *name, off_t initial_size) {
 	disk_sector_t inode_sector = 0;
-	struct dir *dir = dir_open_root (); //?0x800423e048
+	struct dir *dir = dir_open_root (); 
 	bool success = (dir != NULL
 			&& (inode_sector = cluster_to_sector(fat_create_chain(0)))
 			&& inode_create (inode_sector, initial_size)
@@ -127,7 +127,6 @@ do_format (void) {
 #ifdef EFILESYS
 	/* Create FAT and save it to the disk. */
 	fat_create ();
-	//? edit
 	if (!dir_create (cluster_to_sector(ROOT_DIR_CLUSTER), 16))
 		PANIC ("root directory creation failed");
 	fat_close ();

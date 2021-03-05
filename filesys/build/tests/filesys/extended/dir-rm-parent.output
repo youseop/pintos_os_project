@@ -18,10 +18,10 @@ Executing 'dir-rm-parent':
 (dir-rm-parent) mkdir "a"
 dir-rm-parent: exit(4212426)
 Execution of 'dir-rm-parent' complete.
-Timer: 78 ticks
-Thread: 30 idle ticks, 44 kernel ticks, 4 user ticks
+Timer: 79 ticks
+Thread: 30 idle ticks, 44 kernel ticks, 5 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 128 reads, 519 writes
+hd0:1: 128 reads, 521 writes
 hd1:0: 225 reads, 0 writes
 hd1:1: 0 reads, 0 writes
 Console: 1038 characters output

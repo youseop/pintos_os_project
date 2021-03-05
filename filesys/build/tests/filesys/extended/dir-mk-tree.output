@@ -18,10 +18,10 @@ Executing 'dir-mk-tree':
 (dir-mk-tree) creating /0/0/0/0 through /3/2/2/3...
 dir-mk-tree: exit(1195900432)
 Execution of 'dir-mk-tree' complete.
-Timer: 78 ticks
-Thread: 30 idle ticks, 44 kernel ticks, 5 user ticks
+Timer: 85 ticks
+Thread: 30 idle ticks, 50 kernel ticks, 5 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 130 reads, 527 writes
+hd0:1: 130 reads, 529 writes
 hd1:0: 229 reads, 0 writes
 hd1:1: 0 reads, 0 writes
 Console: 1053 characters output

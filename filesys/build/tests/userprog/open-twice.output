@@ -23,7 +23,7 @@ Execution of 'open-twice' complete.
 Timer: 82 ticks
 Thread: 30 idle ticks, 46 kernel ticks, 6 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 265 reads, 529 writes
+hd0:1: 265 reads, 531 writes
 hd1:0: 105 reads, 0 writes
 hd1:1: 0 reads, 0 writes
 Console: 1089 characters output

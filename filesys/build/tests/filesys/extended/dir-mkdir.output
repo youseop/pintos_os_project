@@ -4,7 +4,7 @@ Kernel command line: -q -f put dir-mkdir put tar run dir-mkdir
 Pintos booting with: 
 	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
 	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
-Calibrating timer...  78,540,800 loops/s.
+Calibrating timer...  157,081,600 loops/s.
 hd0:0: detected 321 sector (160 kB) disk, model "QEMU HARDDISK", serial "QM00001"
 hd0:1: detected 4,032 sector (1 MB) disk, model "QEMU HARDDISK", serial "QM00002"
 hd1:0: detected 224 sector (112 kB) disk, model "QEMU HARDDISK", serial "QM00003"
@@ -18,13 +18,13 @@ Executing 'dir-mkdir':
 (dir-mkdir) mkdir "a"
 dir-mkdir: exit(4212346)
 Execution of 'dir-mkdir' complete.
-Timer: 80 ticks
-Thread: 30 idle ticks, 46 kernel ticks, 4 user ticks
+Timer: 78 ticks
+Thread: 30 idle ticks, 45 kernel ticks, 3 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 128 reads, 517 writes
+hd0:1: 128 reads, 519 writes
 hd1:0: 224 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1005 characters output
+Console: 1006 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

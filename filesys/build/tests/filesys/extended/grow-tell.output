@@ -21,10 +21,10 @@ Executing 'grow-tell':
 (grow-tell) write 37 bytes at offset 0 in "foobar" failed: FAILED
 grow-tell: exit(1)
 Execution of 'grow-tell' complete.
-Timer: 82 ticks
-Thread: 30 idle ticks, 44 kernel ticks, 8 user ticks
+Timer: 80 ticks
+Thread: 30 idle ticks, 42 kernel ticks, 8 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 154 reads, 522 writes
+hd0:1: 154 reads, 525 writes
 hd1:0: 225 reads, 0 writes
 hd1:1: 0 reads, 0 writes
 Console: 1127 characters output

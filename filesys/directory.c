@@ -42,6 +42,7 @@ dir_open (struct inode *inode) {
 		return NULL;
 	}
 }
+
 #ifdef EFILESYS
 /* Opens the root directory and returns a directory for it.
  * Return true if successful, false on failure. */
@@ -55,6 +56,7 @@ dir_open_root (void) {
 	return dir_open (inode_open (ROOT_DIR_SECTOR));
 }
 #endif
+
 /* Opens and returns a new directory for the same inode as DIR.
  * Returns a null pointer on failure. */
 struct dir *

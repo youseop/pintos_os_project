@@ -126,14 +126,14 @@ fat_create (void) {
 	// Set up ROOT_DIR_CLST
 	fat_put (ROOT_DIR_CLUSTER, EOChain);
 	
-	//?---------start----------------
+	//?---------init free list----------------
 	ASSERT(fat_fs->fat_length > 2);
 	fat_put(2, 0);
 	for (int i = 3; i < fat_fs->fat_length; i++){
 		fat_put(i, i-1);
 	}
 	fat_fs->last_clst = fat_fs->fat_length - 1;
-	//?---------end----------------
+	//?---------------------------------------
 
 	// Fill up ROOT_DIR_CLUSTER region with 0
 	uint8_t *buf = calloc (1, DISK_SECTOR_SIZE);
@@ -192,16 +192,25 @@ Return the cluster number of newly allocated cluster.*/
  * Returns 0 if fails to allocate a new cluster. */
 cluster_t
 fat_create_chain (cluster_t clst) {
-	/* TODO: Your code goes here. */
+	lock_acquire(&fat_fs->write_lock);
 	cluster_t alloc_clst = fat_fs->last_clst;
-	if(alloc_clst == 0){//? 2 or 0?!
-		PANIC("fat_create_chain - return 0??!");
+	if(alloc_clst == 0){
+		PANIC("fat_create_chain - return 0[need to control exception case]");
 		return 0;
 	}
 	fat_fs->last_clst = fat_get(alloc_clst);
+	lock_release(&fat_fs->write_lock);
+
 	fat_put(alloc_clst, EOChain);
 	if(clst)
 		fat_put(clst, alloc_clst);
+
+	static char zeros[DISK_SECTOR_SIZE];
+	for (int i = 0; i < SECTORS_PER_CLUSTER; i++){
+		disk_write (filesys_disk, 
+									cluster_to_sector(alloc_clst) + i, zeros);
+	}
+	
 	return alloc_clst;
 }
 
@@ -214,13 +223,15 @@ fat_remove_chain (cluster_t clst, cluster_t pclst) {
 		ASSERT(fat_get(pclst) == clst);
 		fat_put(pclst, EOChain);
 	}
-
 	cluster_t origin_clst = clst;
 	while(fat_get(clst) != EOChain){
 		clst = fat_get(clst);
 	}
+
+	lock_acquire(&fat_fs->write_lock);
 	fat_put(clst, fat_fs->last_clst);
 	fat_fs->last_clst = origin_clst;
+	lock_release(&fat_fs->write_lock);
 }
 
 /*Update FAT entry pointed by cluster number clst to val. 
@@ -266,16 +277,26 @@ sector_to_cluster (disk_sector_t sector) {
 
 disk_sector_t
 get_sector_using_fat (cluster_t start, off_t pos){
-	off_t pos_left = pos %(DISK_SECTOR_SIZE * SECTORS_PER_CLUSTER);
+	off_t pos_left = pos % (DISK_SECTOR_SIZE * SECTORS_PER_CLUSTER);
 	off_t cluster_cnt = pos / (DISK_SECTOR_SIZE * SECTORS_PER_CLUSTER);
 	
 	for(int i = 0; i < cluster_cnt; i++){
 		start = fat_get(start);
 		if(start == EOChain){
-			PANIC("Can't go further");
+			PANIC("in get_sector_using_fat [Can't go further]");
 		}
 	}
 	disk_sector_t sector = cluster_to_sector(start);
 	sector += pos_left / DISK_SECTOR_SIZE;
 	return sector;
+}
+
+void 
+file_growth(cluster_t start, off_t size){
+	while (size <= 0){
+		if(fat_get(start) == EOChain){
+			start = fat_create_chain(start);
+		}
+		size -= (DISK_SECTOR_SIZE * SECTORS_PER_CLUSTER);
+	}
 }

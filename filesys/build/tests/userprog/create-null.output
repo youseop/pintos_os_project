@@ -16,10 +16,10 @@ Executing 'create-null':
 (create-null) begin
 create-null: exit(-1)
 Execution of 'create-null' complete.
-Timer: 79 ticks
-Thread: 30 idle ticks, 45 kernel ticks, 4 user ticks
+Timer: 78 ticks
+Thread: 30 idle ticks, 44 kernel ticks, 4 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 227 reads, 523 writes
+hd0:1: 227 reads, 524 writes
 hd1:0: 102 reads, 0 writes
 hd1:1: 0 reads, 0 writes
 Console: 947 characters output
