@@ -18,12 +18,12 @@ Executing 'page-merge-mm':
 (page-merge-mm) init
 (page-merge-mm) sort chunk 0
 (page-merge-mm) sort chunk 1
-child-qsort-mm: exit(80)
+(child-qsort-mm) open "buf0": FAILED
+child-qsort-mm: exit(1)
 (page-merge-mm) sort chunk 2
 child-qsort-mm: exit(80)
 (page-merge-mm) sort chunk 3
-(child-qsort-mm) open "buf2": FAILED
-child-qsort-mm: exit(1)
+child-qsort-mm: exit(80)
 (page-merge-mm) sort chunk 4
 (child-qsort-mm) open "buf3": FAILED
 child-qsort-mm: exit(1)
@@ -32,26 +32,25 @@ child-qsort-mm: exit(80)
 (page-merge-mm) sort chunk 6
 child-qsort-mm: exit(80)
 (page-merge-mm) sort chunk 7
-(page-merge-mm) wait for child 0
-(page-merge-mm) wait for child 1
 child-qsort-mm: exit(80)
-(page-merge-mm) wait for child 2
-(page-merge-mm) wait for child 2: FAILED
+(page-merge-mm) wait for child 0
+(page-merge-mm) wait for child 0: FAILED
 page-merge-mm: exit(1)
 Interrupt 0x0d (#GP General Protection Exception) at rip=80042141c0
- cr2=000000001001b000 error=               0
-rax cccccccccccccccc rbx 0000000000000000 rcx 0000008004269028 rdx 0000008004269028
-rsp 0000008004269bd0 rbp 0000008004269be0 rsi 0000008004269028 rdi 0000008004296028
+ cr2=0000000010018fff error=               0
+rax cccccccccccccccc rbx 0000000000000000 rcx 0000008004000028 rdx 0000008004000028
+rsp 0000008004269e20 rbp 0000008004269e30 rsi 0000008004000028 rdi 0000008004297028
 rip 00000080042141c0 r8 0000008004269e08  r9 000000800421704e r10 0000000000000000
 r11 0000000000000206 r12 0000008004218f18 r13 0000000000000000 r14 0000000000000000
 r15 0000000000000000 rflags 00000006
-es: 0010 ds: 0010 cs: 0008 ss: 0010
+es: 001b ds: 001b cs: 0008 ss: 0010
 Kernel PANIC at ../../userprog/exception.c:98 in kill(): Kernel bug - unexpected interrupt in kernel
-Call stack: 0x8004213c0c 0x8004218cc0 0x8004209094 0x80042094b2 0x8004214fd9 0x80042076bf 0x80042091eb 0x80042094b2 0x800420b8d8 0x800420b98a 0x800420ccb1 0x800420cd34 0x800420cdb7 0x800420ce80 0x8004217b56 0x8004217ad9 0x80042072d4 0x80042196b3 0x8004218fbe 0x8004218e41Interrupt 0x0d (#GP General Protection Exception) at rip=80042141c0
+Call stack: 0x8004213c0c 0x8004218cc0 0x8004209094 0x80042094b2 0x8004214fd9 0x8004207165 0x800420a27d 0x800420733c 0x80042196b3 0x8004218fbe 0x8004218e41Interrupt 0x0d (#GP General Protection Exception) at rip=8004220f63
+ cr2=0000000Interrupt 0x0d (#GP General Protection Exception) at rip=80042141c0
  cr2=000000004747fda0 error=               0
 rax cccccccccccccccc rbx 0000000000000000 rcx 0000008004269028 rdx 0000008004269028
-rsp 0000008004269750 rbp 0000008004269760 rsi 0000008004269028 rdi 0000008004296028
-rip 00000080042141c0 r8 0000008004269928  r9 000000800421704e r10 0000000000000000
+rsp 0000008004269420 rbp 0000008004269430 rsi 0000008004269028 rdi 0000008004297028
+rip 00000080042141c0 r8 0000008004269758  r9 000000800421704e r10 0000000000000000
 r11 0000000000000206 r12 0000008004218f18 r13 0000000000000000 r14 0000000000000000
 r15 0000000000000000 rflags 00000006
 es: 0010 ds: 0010 cs: 0008 ss: 0010

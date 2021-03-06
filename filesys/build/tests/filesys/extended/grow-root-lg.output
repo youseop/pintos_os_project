@@ -4,7 +4,7 @@ Kernel command line: -q -f put grow-root-lg put tar run grow-root-lg
 Pintos booting with: 
 	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
 	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
-Calibrating timer...  104,755,200 loops/s.
+Calibrating timer...  157,081,600 loops/s.
 hd0:0: detected 321 sector (160 kB) disk, model "QEMU HARDDISK", serial "QM00001"
 hd0:1: detected 4,032 sector (1 MB) disk, model "QEMU HARDDISK", serial "QM00002"
 hd1:0: detected 225 sector (112 kB) disk, model "QEMU HARDDISK", serial "QM00003"
@@ -68,10 +68,10 @@ Executing 'grow-root-lg':
 (grow-root-lg) end
 grow-root-lg: exit(0)
 Execution of 'grow-root-lg' complete.
-Timer: 450 ticks
-Thread: 30 idle ticks, 47 kernel ticks, 373 user ticks
+Timer: 438 ticks
+Thread: 30 idle ticks, 48 kernel ticks, 361 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 5972 reads, 1254 writes
+hd0:1: 5955 reads, 1254 writes
 hd1:0: 225 reads, 0 writes
 hd1:1: 0 reads, 0 writes
 Console: 3313 characters output

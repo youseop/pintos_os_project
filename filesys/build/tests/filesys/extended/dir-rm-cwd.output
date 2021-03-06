@@ -4,7 +4,7 @@ Kernel command line: -q -f put dir-rm-cwd put tar run dir-rm-cwd
 Pintos booting with: 
 	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
 	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
-Calibrating timer...  157,081,600 loops/s.
+Calibrating timer...  150,937,600 loops/s.
 hd0:0: detected 321 sector (160 kB) disk, model "QEMU HARDDISK", serial "QM00001"
 hd0:1: detected 4,032 sector (1 MB) disk, model "QEMU HARDDISK", serial "QM00002"
 hd1:0: detected 232 sector (116 kB) disk, model "QEMU HARDDISK", serial "QM00003"
@@ -19,10 +19,10 @@ Executing 'dir-rm-cwd':
 (dir-rm-cwd) open "/": FAILED
 dir-rm-cwd: exit(1)
 Execution of 'dir-rm-cwd' complete.
-Timer: 85 ticks
-Thread: 30 idle ticks, 49 kernel ticks, 6 user ticks
+Timer: 87 ticks
+Thread: 30 idle ticks, 51 kernel ticks, 6 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 120 reads, 772 writes
+hd0:1: 103 reads, 772 writes
 hd1:0: 232 reads, 0 writes
 hd1:1: 0 reads, 0 writes
 Console: 1037 characters output

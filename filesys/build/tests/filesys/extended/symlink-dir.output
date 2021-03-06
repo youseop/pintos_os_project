@@ -18,13 +18,13 @@ Executing 'symlink-dir':
 (symlink-dir) mkdir "/a"
 symlink-dir: exit(4212990)
 Execution of 'symlink-dir' complete.
-Timer: 84 ticks
-Thread: 30 idle ticks, 48 kernel ticks, 6 user ticks
+Timer: 83 ticks
+Thread: 30 idle ticks, 48 kernel ticks, 5 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 114 reads, 756 writes
+hd0:1: 97 reads, 756 writes
 hd1:0: 227 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1023 characters output
+Console: 1022 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

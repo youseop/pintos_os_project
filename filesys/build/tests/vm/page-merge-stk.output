@@ -4,7 +4,7 @@ Kernel command line: -q -f put page-merge-stk put child-qsort run page-merge-stk
 Pintos booting with: 
 	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
 	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
-Calibrating timer...  157,081,600 loops/s.
+Calibrating timer...  134,144,000 loops/s.
 hd0:0: detected 321 sector (160 kB) disk, model "QEMU HARDDISK", serial "QM00001"
 hd0:1: detected 20,160 sector (9 MB) disk, model "QEMU HARDDISK", serial "QM00002"
 hd1:0: detected 224 sector (112 kB) disk, model "QEMU HARDDISK", serial "QM00003"
@@ -18,16 +18,13 @@ Executing 'page-merge-stk':
 (page-merge-stk) init
 (page-merge-stk) sort chunk 0
 (page-merge-stk) sort chunk 1
-child-qsort: exit(72)
+(child-qsort) open "buf0": FAILED
+child-qsort: exit(1)
 (page-merge-stk) sort chunk 2
 child-qsort: exit(72)
 (page-merge-stk) sort chunk 3
 child-qsort: exit(72)
 (page-merge-stk) sort chunk 4
-child-qsort: exit(72)
-(page-merge-stk) sort chunk 5
-child-qsort: exit(72)
-(page-merge-stk) sort chunk 6
 Kernel PANIC at ../../filesys/inode.c:301 in inode_write_at(): assertion `new_clst >= old_clst' failed.
 Call stack: 0x8004213c0c 0x800421c69a 0x800421bd97 0x8004219e4b 0x8004219090 0x8004218e41 0x400266 0x4007f7 0x400107 0x401504 0x40154d.
 The `backtrace' program can make call stacks useful.

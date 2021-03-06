@@ -127,7 +127,7 @@ do_format (void) {
 #ifdef EFILESYS
 	/* Create FAT and save it to the disk. */
 	fat_create ();
-	if (!dir_create (cluster_to_sector(ROOT_DIR_CLUSTER), 16))
+	if (!dir_create (cluster_to_sector(ROOT_DIR_CLUSTER), 0))
 		PANIC ("root directory creation failed");
 	fat_close ();
 #else

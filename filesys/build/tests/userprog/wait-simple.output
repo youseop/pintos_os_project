@@ -24,7 +24,7 @@ Execution of 'wait-simple' complete.
 Timer: 92 ticks
 Thread: 30 idle ticks, 53 kernel ticks, 9 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 288 reads, 939 writes
+hd0:1: 271 reads, 939 writes
 hd1:0: 204 reads, 0 writes
 hd1:1: 0 reads, 0 writes
 Console: 1103 characters output

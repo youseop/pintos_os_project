@@ -21,10 +21,10 @@ Execution of 'dir-over-file' complete.
 Timer: 82 ticks
 Thread: 30 idle ticks, 48 kernel ticks, 4 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 112 reads, 747 writes
+hd0:1: 95 reads, 747 writes
 hd1:0: 224 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1040 characters output
+Console: 1039 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

@@ -25,10 +25,10 @@ Executing 'grow-file-size':
 (grow-file-size) end
 grow-file-size: exit(0)
 Execution of 'grow-file-size' complete.
-Timer: 93 ticks
-Thread: 30 idle ticks, 47 kernel ticks, 16 user ticks
+Timer: 94 ticks
+Thread: 30 idle ticks, 49 kernel ticks, 15 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 195 reads, 825 writes
+hd0:1: 178 reads, 825 writes
 hd1:0: 225 reads, 0 writes
 hd1:1: 0 reads, 0 writes
 Console: 1306 characters output

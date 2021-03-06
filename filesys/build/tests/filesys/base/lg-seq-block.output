@@ -24,10 +24,10 @@ Executing 'lg-seq-block':
 (lg-seq-block) end
 lg-seq-block: exit(0)
 Execution of 'lg-seq-block' complete.
-Timer: 99 ticks
-Thread: 30 idle ticks, 45 kernel ticks, 25 user ticks
+Timer: 93 ticks
+Thread: 30 idle ticks, 39 kernel ticks, 25 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 682 reads, 1241 writes
+hd0:1: 665 reads, 1241 writes
 hd1:0: 107 reads, 0 writes
 hd1:1: 0 reads, 0 writes
 Console: 1217 characters output

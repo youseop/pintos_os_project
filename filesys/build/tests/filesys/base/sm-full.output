@@ -24,13 +24,13 @@ Executing 'sm-full':
 (sm-full) end
 sm-full: exit(0)
 Execution of 'sm-full' complete.
-Timer: 81 ticks
-Thread: 30 idle ticks, 41 kernel ticks, 11 user ticks
+Timer: 77 ticks
+Thread: 30 idle ticks, 39 kernel ticks, 9 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 253 reads, 676 writes
+hd0:1: 236 reads, 676 writes
 hd1:0: 107 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1127 characters output
+Console: 1126 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

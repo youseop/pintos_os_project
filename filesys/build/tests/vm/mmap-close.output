@@ -21,9 +21,9 @@ Executing 'mmap-close':
 mmap-close: exit(0)
 Execution of 'mmap-close' complete.
 Timer: 83 ticks
-Thread: 30 idle ticks, 45 kernel ticks, 8 user ticks
+Thread: 30 idle ticks, 46 kernel ticks, 7 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 251 reads, 654 writes
+hd0:1: 234 reads, 654 writes
 hd1:0: 109 reads, 0 writes
 hd1:1: 0 reads, 0 writes
 Console: 1078 characters output

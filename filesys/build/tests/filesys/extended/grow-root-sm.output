@@ -38,10 +38,10 @@ Executing 'grow-root-sm':
 (grow-root-sm) end
 grow-root-sm: exit(0)
 Execution of 'grow-root-sm' complete.
-Timer: 166 ticks
-Thread: 30 idle ticks, 47 kernel ticks, 89 user ticks
+Timer: 164 ticks
+Thread: 30 idle ticks, 48 kernel ticks, 86 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 1212 reads, 950 writes
+hd0:1: 1195 reads, 950 writes
 hd1:0: 225 reads, 0 writes
 hd1:1: 0 reads, 0 writes
 Console: 1931 characters output

@@ -4,7 +4,7 @@ Kernel command line: -q -f put dir-rm-tree put tar run dir-rm-tree
 Pintos booting with: 
 	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
 	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
-Calibrating timer...  26,188,800 loops/s.
+Calibrating timer...  157,081,600 loops/s.
 hd0:0: detected 321 sector (160 kB) disk, model "QEMU HARDDISK", serial "QM00001"
 hd0:1: detected 4,032 sector (1 MB) disk, model "QEMU HARDDISK", serial "QM00002"
 hd1:0: detected 233 sector (116 kB) disk, model "QEMU HARDDISK", serial "QM00003"
@@ -18,10 +18,10 @@ Executing 'dir-rm-tree':
 (dir-rm-tree) creating /0/0/0/0 through /3/2/2/3...
 dir-rm-tree: exit(1195900432)
 Execution of 'dir-rm-tree' complete.
-Timer: 79 ticks
-Thread: 30 idle ticks, 45 kernel ticks, 5 user ticks
+Timer: 82 ticks
+Thread: 30 idle ticks, 47 kernel ticks, 5 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 116 reads, 774 writes
+hd0:1: 99 reads, 774 writes
 hd1:0: 233 reads, 0 writes
 hd1:1: 0 reads, 0 writes
 Console: 1052 characters output

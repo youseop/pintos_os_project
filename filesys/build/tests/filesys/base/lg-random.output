@@ -33,10 +33,10 @@ Executing 'lg-random':
 (lg-random) 93 bytes read starting at offset 19968 in "bazzle" differ from expected: FAILED
 lg-random: exit(1)
 Execution of 'lg-random' complete.
-Timer: 131 ticks
-Thread: 30 idle ticks, 42 kernel ticks, 59 user ticks
+Timer: 121 ticks
+Thread: 30 idle ticks, 39 kernel ticks, 53 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 239 reads, 4672 writes
+hd0:1: 222 reads, 4672 writes
 hd1:0: 110 reads, 0 writes
 hd1:1: 0 reads, 0 writes
 Console: 2036 characters output

@@ -24,13 +24,13 @@ child-rox: exit(-1)
 (rox-child) fork() returned -1: FAILED
 rox-child: exit(1)
 Execution of 'rox-child' complete.
-Timer: 100 ticks
-Thread: 30 idle ticks, 62 kernel ticks, 8 user ticks
+Timer: 91 ticks
+Thread: 30 idle ticks, 53 kernel ticks, 8 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 247 reads, 989 writes
+hd0:1: 230 reads, 989 writes
 hd1:0: 220 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1212 characters output
+Console: 1211 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

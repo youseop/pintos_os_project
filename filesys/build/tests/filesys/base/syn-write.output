@@ -20,8 +20,8 @@ child-syn-wrt: exit(0)
 (syn-write) exec child 1 of 10: "child-syn-wrt 0"
 child-syn-wrt: exit(1)
 (syn-write) exec child 2 of 10: "child-syn-wrt 1"
-child-syn-wrt: exit(2)
 (syn-write) exec child 3 of 10: "child-syn-wrt 2"
+child-syn-wrt: exit(2)
 child-syn-wrt: exit(3)
 (syn-write) exec child 4 of 10: "child-syn-wrt 3"
 child-syn-wrt: exit(4)
@@ -32,8 +32,8 @@ child-syn-wrt: exit(6)
 (syn-write) exec child 7 of 10: "child-syn-wrt 6"
 child-syn-wrt: exit(7)
 (syn-write) exec child 8 of 10: "child-syn-wrt 7"
-child-syn-wrt: exit(8)
 (syn-write) exec child 9 of 10: "child-syn-wrt 8"
+child-syn-wrt: exit(8)
 child-syn-wrt: exit(9)
 (syn-write) exec child 10 of 10: "child-syn-wrt 9"
 (syn-write) wait for child 1 of 10 returned 0 (expected 0)
@@ -51,10 +51,10 @@ child-syn-wrt: exit(9)
 (syn-write) end
 syn-write: exit(0)
 Execution of 'syn-write' complete.
-Timer: 133 ticks
-Thread: 30 idle ticks, 65 kernel ticks, 39 user ticks
+Timer: 134 ticks
+Thread: 30 idle ticks, 52 kernel ticks, 52 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 788 reads, 1078 writes
+hd0:1: 771 reads, 1078 writes
 hd1:0: 226 reads, 0 writes
 hd1:1: 0 reads, 0 writes
 Console: 2417 characters output
