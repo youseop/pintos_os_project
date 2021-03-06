@@ -67,6 +67,7 @@ int main (void) NO_RETURN;
 /* Pintos main program. */
 int
 main (void) {
+	printf("main start\n");
 	uint64_t mem_end;
 	char **argv;
 
@@ -77,6 +78,7 @@ main (void) {
 	argv = read_command_line ();
 	argv = parse_options (argv);
 
+	printf("thread_init start\n");
 	/* Initialize ourselves as a thread so we can use locks,
 	   then enable console locking. */
 	thread_init ();

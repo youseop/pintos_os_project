@@ -1,11 +1,13 @@
+main start
 Kernel command line: -q -f put page-merge-par put child-sort run page-merge-par
+thread_init start
 0 ~ 9fc00 1
 100000 ~ 13e0000 1
 Pintos booting with: 
 	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
 	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
 Calibrating timer...  157,081,600 loops/s.
-hd0:0: detected 321 sector (160 kB) disk, model "QEMU HARDDISK", serial "QM00001"
+hd0:0: detected 329 sector (164 kB) disk, model "QEMU HARDDISK", serial "QM00001"
 hd0:1: detected 20,160 sector (9 MB) disk, model "QEMU HARDDISK", serial "QM00002"
 hd1:0: detected 218 sector (109 kB) disk, model "QEMU HARDDISK", serial "QM00003"
 hd1:1: detected 8,064 sector (3 MB) disk, model "QEMU HARDDISK", serial "QM00004"
@@ -33,19 +35,26 @@ child-sort: exit(123)
 child-sort: exit(123)
 (page-merge-par) wait for child 0
 (page-merge-par) wait for child 1
-(page-merge-par) open "buf1": FAILED
-page-merge-par: exit(1)
-Interrupt 0x0d (#GP General Protection Exception) at rip=80042141c0
- cr2=0000000000625000 error=               0
-rax cccccccccccccccc rbx 0000000000000000 rcx 0000008004269028 rdx 0000008004269028
-rsp 0000008004269bb0 rbp 0000008004269bc0 rsi 0000008004269028 rdi 0000008004294028
-rip 00000080042141c0 r8 0000008004269e08  r9 000000800421704e r10 0000000000000000
-r11 0000000000000206 r12 0000008004218f18 r13 0000000000000000 r14 0000000000000000
-r15 0000000000000000 rflags 00000006
-es: 0010 ds: 0010 cs: 0008 ss: 0010
-Kernel PANIC at ../../userprog/exception.c:98 in kill(): Kernel bug - unexpected interrupt in kernel
-Call stack: 0x8004213c0c 0x8004218cc0 0x8004209094 0x80042094b2 0x8004214fd9 0x80042076bf 0x80042091eb 0x80042094b2 0x800420c03f 0x8004220ab3 0x8004220ec2 0x80042161d2 0x8004216255 0x8004220ef6 0x8004217b0d 0x8004217ad9 0x80042072d4 0x80042196b3 0x8004218fbe 0x8004218e41 0x400c7f 0x400535 0x4007f7 0x400107 0x401504 0x40154d.
-The `backtrace' program can make call stacks useful.
-Read "Backtraces" in the "Debugging Tools" chapter
-of the Pintos documentation for more information.
-Kernel PANIC recursion at ../../devices/timer.c:179 in real_time_sleep().
+(page-merge-par) wait for child 2
+(page-merge-par) wait for child 3
+(page-merge-par) wait for child 4
+(page-merge-par) wait for child 5
+(page-merge-par) wait for child 6
+(page-merge-par) wait for child 7
+child-sort: exit(123)
+(page-merge-par) merge
+(page-merge-par) verify
+(page-merge-par) success, buf_idx=1,048,576
+(page-merge-par) end
+page-merge-par: exit(0)
+Execution of 'page-merge-par' complete.
+Timer: 402 ticks
+Thread: 30 idle ticks, 81 kernel ticks, 291 user ticks
+hd0:0: 0 reads, 0 writes
+hd0:1: 4831 reads, 7174 writes
+hd1:0: 218 reads, 0 writes
+hd1:1: 0 reads, 0 writes
+Console: 1873 characters output
+Keyboard: 0 keys pressed
+Exception: 0 page faults
+Powering off...

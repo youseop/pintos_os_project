@@ -10,4 +10,5 @@ vm/inspect.o: ../../vm/inspect.c ../../include/threads/interrupt.h \
  ../../include/filesys/off_t.h ../../include/threads/mmu.h \
  ../../include/threads/pte.h ../../include/vm/anon.h \
  ../../include/lib/kernel/bitmap.h ../../include/lib/inttypes.h \
- ../../include/filesys/page_cache.h ../../include/vm/inspect.h
+ ../../include/filesys/page_cache.h ../../include/filesys/directory.h \
+ ../../include/devices/disk.h ../../include/vm/inspect.h

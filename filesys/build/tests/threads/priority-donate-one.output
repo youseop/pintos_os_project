@@ -1,11 +1,13 @@
+main start
 Kernel command line: -q -threads-tests -f run priority-donate-one
+thread_init start
 0 ~ 9fc00 1
 100000 ~ 13e0000 1
 Pintos booting with: 
 	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
 	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
 Calibrating timer...  157,081,600 loops/s.
-hd0:0: detected 321 sector (160 kB) disk, model "QEMU HARDDISK", serial "QM00001"
+hd0:0: detected 329 sector (164 kB) disk, model "QEMU HARDDISK", serial "QM00001"
 hd0:1: detected 20,160 sector (9 MB) disk, model "QEMU HARDDISK", serial "QM00002"
 hd1:1: detected 8,064 sector (3 MB) disk, model "QEMU HARDDISK", serial "QM00004"
 Formatting file system...done.
@@ -22,12 +24,12 @@ Executing 'priority-donate-one':
 (priority-donate-one) This should be the last line before finishing this test.
 (priority-donate-one) end
 Execution of 'priority-donate-one' complete.
-Timer: 67 ticks
-Thread: 30 idle ticks, 37 kernel ticks, 0 user ticks
+Timer: 70 ticks
+Thread: 30 idle ticks, 41 kernel ticks, 0 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 158 reads, 319 writes
+hd0:1: 159 reads, 319 writes
 hd1:1: 0 reads, 0 writes
-Console: 1317 characters output
+Console: 1335 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

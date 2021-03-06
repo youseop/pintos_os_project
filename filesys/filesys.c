@@ -8,6 +8,7 @@
 #include "filesys/directory.h"
 #include "devices/disk.h"
 #include "filesys/fat.h"
+#include "threads/thread.h"
 
 /* The disk that contains the file system. */
 struct disk *filesys_disk;
@@ -65,7 +66,7 @@ filesys_create (const char *name, off_t initial_size) {
 	struct dir *dir = dir_open_root (); 
 	bool success = (dir != NULL
 			&& (inode_sector = cluster_to_sector(fat_create_chain(0)))
-			&& inode_create (inode_sector, initial_size)
+			&& inode_create (inode_sector, initial_size, false)
 			&& dir_add (dir, name, inode_sector));
 	if (!success && inode_sector != 0)
 		fat_remove_chain(sector_to_cluster(inode_sector), 0);
@@ -81,7 +82,7 @@ filesys_create (const char *name, off_t initial_size) {
 	struct dir *dir = dir_open_root ();
 	bool success = (dir != NULL
 			&& free_map_allocate (1, &inode_sector)
-			&& inode_create (inode_sector, initial_size)
+			&& inode_create (inode_sector, initial_size, false)
 			&& dir_add (dir, name, inode_sector));
 	if (!success && inode_sector != 0)
 		free_map_release (inode_sector, 1);
@@ -130,6 +131,7 @@ do_format (void) {
 	if (!dir_create (cluster_to_sector(ROOT_DIR_CLUSTER), 0))
 		PANIC ("root directory creation failed");
 	fat_close ();
+	thread_current()->curr_dir = dir_open (inode_open (cluster_to_sector (ROOT_DIR_CLUSTER)));
 #else
 	free_map_create ();
 	if (!dir_create (ROOT_DIR_SECTOR, 16))

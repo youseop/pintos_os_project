@@ -1,12 +1,7 @@
 FAIL
-Kernel panic in file system extraction run: PANIC at ../../filesys/fat.c:198 in fat_create_chain(): fat_create_chain - return 0[need to control exception case]
-Call stack: 0x8004213c0c 0x800421a9d2 0x8004219dfd 0x8004219090 0x8004218e41 0x4001ad 0x400137 0x401765
+Kernel panic in file system extraction run: PANIC at ../../userprog/process.c:90 in initd(): Fail to launch initd
+Call stack: 0x8004213c38 0x80042172d1 0x80042078a6
 Translation of call stack:
-0x0000008004213c0c: debug_panic (lib/kernel/debug.c:32)
-0x000000800421a9d2: fat_create_chain (filesys/fat.c:201)
-0x0000008004219dfd: filesys_create (filesys/filesys.c:67)
-0x0000008004219090: syscall_handler (userprog/syscall.c:102)
-0x0000008004218e41: no_sti (userprog/syscall-entry.o:?)
-0x00000000004001ad: (unknown)
-0x0000000000400137: (unknown)
-0x0000000000401765: (unknown)
+0x0000008004213c38: debug_panic (lib/kernel/debug.c:32)
+0x00000080042172d1: initd (userprog/process.c:91)
+0x00000080042078a6: kernel_thread (threads/thread.c:562)

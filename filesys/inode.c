@@ -17,7 +17,8 @@ struct inode_disk {
 	cluster_t start;                	  //?edit /* First data cluster. */
 	off_t length;                  			/* file length */
 	unsigned magic;                     /* Magic number. */
-	uint32_t unused[125];               /* Not used. */
+	bool is_dir;
+	uint32_t unused[124];               /* Not used. */
 };
 
 /* Returns the number of sectors to allocate for an inode SIZE
@@ -83,7 +84,7 @@ inode_init (void) {
  * Returns true if successful.
  * Returns false if memory or disk allocation fails. */
 bool
-inode_create (disk_sector_t sector, off_t length) {
+inode_create (disk_sector_t sector, off_t length, bool is_dir) {
 	struct inode_disk *disk_inode = NULL;
 	bool success = false;
 
@@ -95,7 +96,7 @@ inode_create (disk_sector_t sector, off_t length) {
 		size_t clusters = bytes_to_clusters (length);
 		disk_inode->length = length;
 		disk_inode->magic = INODE_MAGIC;
-
+		disk_inode->is_dir = is_dir;
 		static char zeros[DISK_SECTOR_SIZE];
 		cluster_t first_cluster = fat_create_chain(0);
 		if (first_cluster == 0)
@@ -119,7 +120,7 @@ inode_create (disk_sector_t sector, off_t length) {
 }
 #else
 bool
-inode_create (disk_sector_t sector, off_t length) {
+inode_create (disk_sector_t sector, off_t length, bool is_dir) {
 	struct inode_disk *disk_inode = NULL;
 	bool success = false;
 
@@ -134,6 +135,7 @@ inode_create (disk_sector_t sector, off_t length) {
 		size_t sectors = bytes_to_sectors (length);
 		disk_inode->length = length;
 		disk_inode->magic = INODE_MAGIC;
+		disk_inode->is_dir = is_dir;
 		if (free_map_allocate (sectors, &disk_inode->start)) {
 			disk_write (filesys_disk, sector, disk_inode);
 			if (sectors > 0) {
@@ -211,6 +213,7 @@ inode_close (struct inode *inode) {
 		if (inode->removed) {
 			#ifdef EFILESYS
 			fat_remove_chain(inode->data.start, 0);
+			fat_remove_chain(inode->sector, 0);
 			#else
 			free_map_release (inode->sector, 1);
 			free_map_release (inode->data.start,

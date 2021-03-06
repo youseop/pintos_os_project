@@ -1,11 +1,13 @@
+main start
 Kernel command line: -q -f put page-parallel put child-linear run page-parallel
+thread_init start
 0 ~ 9fc00 1
 100000 ~ 13e0000 1
 Pintos booting with: 
 	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
 	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
-Calibrating timer...  65,433,600 loops/s.
-hd0:0: detected 321 sector (160 kB) disk, model "QEMU HARDDISK", serial "QM00001"
+Calibrating timer...  130,867,200 loops/s.
+hd0:0: detected 329 sector (164 kB) disk, model "QEMU HARDDISK", serial "QM00001"
 hd0:1: detected 20,160 sector (9 MB) disk, model "QEMU HARDDISK", serial "QM00002"
 hd1:0: detected 209 sector (104 kB) disk, model "QEMU HARDDISK", serial "QM00003"
 hd1:1: detected 8,064 sector (3 MB) disk, model "QEMU HARDDISK", serial "QM00004"
@@ -17,22 +19,22 @@ Executing 'page-parallel':
 (page-parallel) begin
 (page-parallel) wait for child 0
 child-linear: exit(66)
+child-linear: exit(66)
 (page-parallel) wait for child 1
-child-linear: exit(66)
-child-linear: exit(66)
-child-linear: exit(66)
 (page-parallel) wait for child 2
+child-linear: exit(66)
 (page-parallel) wait for child 3
+child-linear: exit(66)
 (page-parallel) end
 page-parallel: exit(0)
 Execution of 'page-parallel' complete.
-Timer: 225 ticks
-Thread: 30 idle ticks, 66 kernel ticks, 129 user ticks
+Timer: 229 ticks
+Thread: 30 idle ticks, 64 kernel ticks, 135 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 344 reads, 957 writes
+hd0:1: 336 reads, 948 writes
 hd1:0: 209 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1271 characters output
+Console: 1290 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

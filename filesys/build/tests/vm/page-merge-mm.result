@@ -1,15 +1,11 @@
 FAIL
-Kernel panic in run: PANIC at ../../userprog/exception.c:98 in kill(): Kernel bug - unexpected interrupt in kernel
-Call stack: 0x8004213c0c 0x8004218cc0 0x8004209094 0x80042094b2 0x8004214fd9 0x8004207165 0x800420a27d 0x800420733c 0x80042196b3 0x8004218fbe 0x8004218e41
+Kernel panic in run: PANIC at ../../threads/synch.c:248 in lock_release(): assertion `lock_held_by_current_thread (lock)' failed.
+Call stack: 0x8004213c38 0x800420a7c6 0x8004217e26 0x800421789e 0x800421979c 0x80042190e4 0x8004218efbc
 Translation of call stack:
-0x0000008004213c0c: debug_panic (lib/kernel/debug.c:32)
-0x0000008004218cc0: kill (userprog/exception.c:104)
-0x0000008004209094: intr_handler (threads/interrupt.c:352)
-0x00000080042094b2: intr_entry (threads/intr-stubs.o:?)
-0x0000008004214fd9: list_insert_ordered (lib/kernel/list.c:431)
-0x0000008004207165: thread_unblock (threads/thread.c:312)
-0x000000800420a27d: sema_up (threads/synch.c:117)
-0x000000800420733c: thread_exit (threads/thread.c:364)
-0x00000080042196b3: halt (userprog/syscall.c:251)
-0x0000008004218fbe: syscall_handler (userprog/syscall.c:89)
-0x0000008004218e41: no_sti (userprog/syscall-entry.o:?)
+0x0000008004213c38: debug_panic (lib/kernel/debug.c:32)
+0x000000800420a7c6: lock_release (threads/synch.c:250)
+0x0000008004217e26: load (userprog/process.c:487)
+0x000000800421789e: process_exec (userprog/process.c:259)
+0x000000800421979c: exec (userprog/syscall.c:257)
+0x00000080042190e4: syscall_handler (userprog/syscall.c:93)
+0x000008004218efbc: (unknown)

@@ -10,4 +10,5 @@ vm/uninit.o: ../../vm/uninit.c ../../include/vm/vm.h \
  ../../include/lib/kernel/bitmap.h ../../include/lib/inttypes.h \
  ../../include/filesys/page_cache.h ../../include/threads/thread.h \
  ../../include/lib/kernel/list.h ../../include/threads/interrupt.h \
- ../../include/threads/synch.h
+ ../../include/threads/synch.h ../../include/filesys/directory.h \
+ ../../include/devices/disk.h

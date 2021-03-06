@@ -12,4 +12,5 @@ threads/synch.o: ../../threads/synch.c ../../include/threads/synch.h \
  ../../include/filesys/off_t.h ../../include/threads/mmu.h \
  ../../include/threads/pte.h ../../include/vm/anon.h \
  ../../include/lib/kernel/bitmap.h ../../include/lib/inttypes.h \
- ../../include/filesys/page_cache.h
+ ../../include/filesys/page_cache.h ../../include/filesys/directory.h \
+ ../../include/devices/disk.h

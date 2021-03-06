@@ -1,11 +1,13 @@
+main start
 Kernel command line: -q -f put dir-empty-name put tar run dir-empty-name
+thread_init start
 0 ~ 9fc00 1
 100000 ~ 13e0000 1
 Pintos booting with: 
 	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
 	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
 Calibrating timer...  157,081,600 loops/s.
-hd0:0: detected 321 sector (160 kB) disk, model "QEMU HARDDISK", serial "QM00001"
+hd0:0: detected 329 sector (164 kB) disk, model "QEMU HARDDISK", serial "QM00001"
 hd0:1: detected 4,032 sector (1 MB) disk, model "QEMU HARDDISK", serial "QM00002"
 hd1:0: detected 223 sector (111 kB) disk, model "QEMU HARDDISK", serial "QM00003"
 hd1:1: detected 8,064 sector (3 MB) disk, model "QEMU HARDDISK", serial "QM00004"
@@ -18,13 +20,13 @@ Executing 'dir-empty-name':
 (dir-empty-name) mkdir "" (must return false)
 dir-empty-name: exit(4212109)
 Execution of 'dir-empty-name' complete.
-Timer: 82 ticks
-Thread: 30 idle ticks, 48 kernel ticks, 4 user ticks
+Timer: 80 ticks
+Thread: 30 idle ticks, 46 kernel ticks, 4 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 95 reads, 744 writes
+hd0:1: 91 reads, 739 writes
 hd1:0: 223 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1064 characters output
+Console: 1082 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

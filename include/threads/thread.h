@@ -10,7 +10,9 @@
 #ifdef VM
 #include "vm/vm.h"
 #endif
-
+#ifdef EFILESYS
+#include "filesys/directory.h"
+#endif
 
 /* States in a thread's life cycle. */
 enum thread_status {
@@ -127,8 +129,9 @@ struct thread {
   int next_fd;
   struct file *exec_file;
 
-
-
+#ifdef EFILESYS
+	struct dir* curr_dir;
+#endif
 #ifdef USERPROG
 	/* Owned by userprog/process.c. */
 	uint64_t *pml4;                     /* Page map level 4 */

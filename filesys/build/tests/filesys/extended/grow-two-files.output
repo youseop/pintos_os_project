@@ -1,11 +1,13 @@
+main start
 Kernel command line: -q -f put grow-two-files put tar run grow-two-files
+thread_init start
 0 ~ 9fc00 1
 100000 ~ 13e0000 1
 Pintos booting with: 
 	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
 	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
 Calibrating timer...  157,081,600 loops/s.
-hd0:0: detected 321 sector (160 kB) disk, model "QEMU HARDDISK", serial "QM00001"
+hd0:0: detected 329 sector (164 kB) disk, model "QEMU HARDDISK", serial "QM00001"
 hd0:1: detected 4,032 sector (1 MB) disk, model "QEMU HARDDISK", serial "QM00002"
 hd1:0: detected 228 sector (114 kB) disk, model "QEMU HARDDISK", serial "QM00003"
 hd1:1: detected 8,064 sector (3 MB) disk, model "QEMU HARDDISK", serial "QM00004"
@@ -31,13 +33,13 @@ Executing 'grow-two-files':
 (grow-two-files) end
 grow-two-files: exit(0)
 Execution of 'grow-two-files' complete.
-Timer: 98 ticks
-Thread: 30 idle ticks, 48 kernel ticks, 20 user ticks
+Timer: 96 ticks
+Thread: 30 idle ticks, 47 kernel ticks, 19 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 226 reads, 874 writes
+hd0:1: 216 reads, 863 writes
 hd1:0: 228 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1468 characters output
+Console: 1486 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

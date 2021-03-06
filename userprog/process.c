@@ -21,6 +21,12 @@
 #ifdef VM
 #include "vm/vm.h"
 #endif
+#ifdef FILESYS
+#include "filesys/fat.h"
+#include "filesys/directory.h"
+#include "filesys/inode.h"
+#endif
+
 #define running_thread() ((struct thread *) (pg_round_down (rrsp ())))
 #define THREAD_MAGIC 0xcd6abf4b
 #define is_thread(t) ((t) != NULL && (t)->magic == THREAD_MAGIC)
@@ -169,6 +175,10 @@ __do_fork (void *aux) {
   }
 #endif
 
+#ifdef FILESYS
+	current->curr_dir = dir_reopen(parent->curr_dir);
+#endif
+
 
 	/* TODO: Your code goes here.
 	 * TODO: Hint) To duplicate the file object, use `file_duplicate`
@@ -239,7 +249,10 @@ process_exec (void *f_name) {
 
 	//? destroy에서 해제된 buckets >> init
 	#ifdef VM
-		supplemental_page_table_init (&thread_current ()->spt);
+		supplemental_page_table_init (&curr->spt);
+	#endif
+	#ifdef FILESYS
+		thread_current()->curr_dir = dir_open (inode_open (cluster_to_sector (ROOT_DIR_CLUSTER)));
 	#endif
 
 	/* And then load the binary */
@@ -322,6 +335,9 @@ process_exit (void) {
 		e = list_remove(&cmp_thread->child_elem);
 		palloc_free_page(cmp_thread);
 	}
+#ifdef FILESYS
+	dir_close(curr->curr_dir);
+#endif
 	process_cleanup ();
 }
 

@@ -14,6 +14,7 @@ threads/interrupt.o: ../../threads/interrupt.c \
  ../../include/filesys/off_t.h ../../include/threads/mmu.h \
  ../../include/threads/pte.h ../../include/vm/anon.h \
  ../../include/lib/kernel/bitmap.h ../../include/filesys/page_cache.h \
+ ../../include/filesys/directory.h ../../include/devices/disk.h \
  ../../include/devices/timer.h ../../include/lib/round.h \
  ../../include/intrinsic.h ../../include/threads/mmu.h \
  ../../include/userprog/gdt.h

@@ -1,15 +1,1 @@
-FAIL
-Kernel panic in run: PANIC at ../../filesys/inode.c:301 in inode_write_at(): assertion `new_clst >= old_clst' failed.
-Call stack: 0x8004213c0c 0x800421c69a 0x800421bd97 0x8004219e4b 0x8004219090 0x8004218e41 0x400266 0x4007f7 0x400107 0x401504 0x40154d
-Translation of call stack:
-0x0000008004213c0c: debug_panic (lib/kernel/debug.c:32)
-0x000000800421c69a: inode_write_at (filesys/inode.c:303)
-0x000000800421bd97: dir_add (filesys/directory.c:166)
-0x0000008004219e4b: filesys_create (filesys/filesys.c:69 (discriminator 3))
-0x0000008004219090: syscall_handler (userprog/syscall.c:102)
-0x0000008004218e41: no_sti (userprog/syscall-entry.o:?)
-0x0000000000400266: (unknown)
-0x00000000004007f7: (unknown)
-0x0000000000400107: (unknown)
-0x0000000000401504: (unknown)
-0x000000000040154d: (unknown)
+PASS

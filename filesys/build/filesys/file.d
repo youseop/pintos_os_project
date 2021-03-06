@@ -11,4 +11,5 @@ filesys/file.o: ../../filesys/file.c ../../include/filesys/file.h \
  ../../include/threads/loader.h ../../include/vm/uninit.h \
  ../../include/vm/file.h ../../include/threads/mmu.h \
  ../../include/threads/pte.h ../../include/vm/anon.h \
- ../../include/lib/kernel/bitmap.h ../../include/filesys/page_cache.h
+ ../../include/lib/kernel/bitmap.h ../../include/filesys/page_cache.h \
+ ../../include/filesys/directory.h

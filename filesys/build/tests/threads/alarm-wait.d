@@ -14,4 +14,5 @@ tests/threads/alarm-wait.o: ../../tests/threads/alarm-wait.c \
  ../../include/threads/mmu.h ../../include/threads/pte.h \
  ../../include/vm/anon.h ../../include/lib/kernel/bitmap.h \
  ../../include/lib/inttypes.h ../../include/filesys/page_cache.h \
+ ../../include/filesys/directory.h ../../include/devices/disk.h \
  ../../include/devices/timer.h ../../include/lib/round.h

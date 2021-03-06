@@ -11,6 +11,7 @@ vm/vm.o: ../../vm/vm.c ../../include/threads/malloc.h \
  ../../include/lib/inttypes.h ../../include/filesys/page_cache.h \
  ../../include/threads/thread.h ../../include/lib/kernel/list.h \
  ../../include/threads/interrupt.h ../../include/threads/synch.h \
+ ../../include/filesys/directory.h ../../include/devices/disk.h \
  ../../include/vm/inspect.h ../../include/lib/stdio.h \
  ../../include/lib/stdarg.h ../../include/lib/kernel/stdio.h \
  ../../include/userprog/process.h

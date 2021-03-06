@@ -1,11 +1,13 @@
+main start
 Kernel command line: -q -f put page-merge-mm put child-qsort-mm run page-merge-mm
+thread_init start
 0 ~ 9fc00 1
 100000 ~ 13e0000 1
 Pintos booting with: 
 	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
 	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
-Calibrating timer...  157,081,600 loops/s.
-hd0:0: detected 321 sector (160 kB) disk, model "QEMU HARDDISK", serial "QM00001"
+Calibrating timer...  104,755,200 loops/s.
+hd0:0: detected 329 sector (164 kB) disk, model "QEMU HARDDISK", serial "QM00001"
 hd0:1: detected 20,160 sector (9 MB) disk, model "QEMU HARDDISK", serial "QM00002"
 hd1:0: detected 224 sector (112 kB) disk, model "QEMU HARDDISK", serial "QM00003"
 hd1:1: detected 8,064 sector (3 MB) disk, model "QEMU HARDDISK", serial "QM00004"
@@ -18,40 +20,12 @@ Executing 'page-merge-mm':
 (page-merge-mm) init
 (page-merge-mm) sort chunk 0
 (page-merge-mm) sort chunk 1
-(child-qsort-mm) open "buf0": FAILED
-child-qsort-mm: exit(1)
 (page-merge-mm) sort chunk 2
 child-qsort-mm: exit(80)
 (page-merge-mm) sort chunk 3
 child-qsort-mm: exit(80)
 (page-merge-mm) sort chunk 4
-(child-qsort-mm) open "buf3": FAILED
-child-qsort-mm: exit(1)
-(page-merge-mm) sort chunk 5
 child-qsort-mm: exit(80)
-(page-merge-mm) sort chunk 6
-child-qsort-mm: exit(80)
-(page-merge-mm) sort chunk 7
-child-qsort-mm: exit(80)
-(page-merge-mm) wait for child 0
-(page-merge-mm) wait for child 0: FAILED
-page-merge-mm: exit(1)
-Interrupt 0x0d (#GP General Protection Exception) at rip=80042141c0
- cr2=0000000010018fff error=               0
-rax cccccccccccccccc rbx 0000000000000000 rcx 0000008004000028 rdx 0000008004000028
-rsp 0000008004269e20 rbp 0000008004269e30 rsi 0000008004000028 rdi 0000008004297028
-rip 00000080042141c0 r8 0000008004269e08  r9 000000800421704e r10 0000000000000000
-r11 0000000000000206 r12 0000008004218f18 r13 0000000000000000 r14 0000000000000000
-r15 0000000000000000 rflags 00000006
-es: 001b ds: 001b cs: 0008 ss: 0010
-Kernel PANIC at ../../userprog/exception.c:98 in kill(): Kernel bug - unexpected interrupt in kernel
-Call stack: 0x8004213c0c 0x8004218cc0 0x8004209094 0x80042094b2 0x8004214fd9 0x8004207165 0x800420a27d 0x800420733c 0x80042196b3 0x8004218fbe 0x8004218e41Interrupt 0x0d (#GP General Protection Exception) at rip=8004220f63
- cr2=0000000Interrupt 0x0d (#GP General Protection Exception) at rip=80042141c0
- cr2=000000004747fda0 error=               0
-rax cccccccccccccccc rbx 0000000000000000 rcx 0000008004269028 rdx 0000008004269028
-rsp 0000008004269420 rbp 0000008004269430 rsi 0000008004269028 rdi 0000008004297028
-rip 00000080042141c0 r8 0000008004269758  r9 000000800421704e r10 0000000000000000
-r11 0000000000000206 r12 0000008004218f18 r13 0000000000000000 r14 0000000000000000
-r15 0000000000000000 rflags 00000006
-es: 0010 ds: 0010 cs: 0008 ss: 0010
-Kernel PANIC recursion at ../../userprog/exception.c:98 in kill().
+Kernel PANIC at ../../threads/synch.c:248 in lock_release(): assertion `lock_held_by_current_thread (lock)' failed.
+Call stack: 0x8004213c38 0x800420a7c6 0x8004217e26 0x800421789e 0x800421979c 0x80042190e4 0x8004218efbchild-qsort-mm: exit(-1)
+Kernel PANIC recursion at ../../threads/thread.c:334 in thread_current().

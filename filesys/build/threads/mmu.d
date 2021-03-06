@@ -11,5 +11,6 @@ threads/mmu.o: ../../threads/mmu.c ../../include/lib/stdbool.h \
  ../../include/filesys/file.h ../../include/filesys/off_t.h \
  ../../include/threads/mmu.h ../../include/vm/anon.h \
  ../../include/lib/kernel/bitmap.h ../../include/lib/inttypes.h \
- ../../include/filesys/page_cache.h ../../include/intrinsic.h \
+ ../../include/filesys/page_cache.h ../../include/filesys/directory.h \
+ ../../include/devices/disk.h ../../include/intrinsic.h \
  ../../include/threads/mmu.h

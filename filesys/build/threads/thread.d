@@ -10,7 +10,8 @@ threads/thread.o: ../../threads/thread.c ../../include/threads/thread.h \
  ../../include/filesys/off_t.h ../../include/threads/mmu.h \
  ../../include/threads/pte.h ../../include/vm/anon.h \
  ../../include/lib/kernel/bitmap.h ../../include/lib/inttypes.h \
- ../../include/filesys/page_cache.h ../../include/lib/random.h \
+ ../../include/filesys/page_cache.h ../../include/filesys/directory.h \
+ ../../include/devices/disk.h ../../include/lib/random.h \
  ../../include/lib/stdio.h ../../include/lib/stdarg.h \
  ../../include/lib/kernel/stdio.h ../../include/lib/string.h \
  ../../include/threads/flags.h ../../include/threads/intr-stubs.h \

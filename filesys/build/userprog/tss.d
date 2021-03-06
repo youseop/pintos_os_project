@@ -11,5 +11,6 @@ userprog/tss.o: ../../userprog/tss.c ../../include/userprog/tss.h \
  ../../include/threads/mmu.h ../../include/threads/pte.h \
  ../../include/vm/anon.h ../../include/lib/kernel/bitmap.h \
  ../../include/lib/inttypes.h ../../include/filesys/page_cache.h \
+ ../../include/filesys/directory.h ../../include/devices/disk.h \
  ../../include/userprog/gdt.h ../../include/intrinsic.h \
  ../../include/threads/mmu.h
