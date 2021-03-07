@@ -205,22 +205,24 @@ inode_close (struct inode *inode) {
 	/* Ignore null pointer. */
 	if (inode == NULL)
 		return;
+
+	disk_write (filesys_disk, inode->sector, &inode->data); 
+	
 	/* Release resources if this was the last opener. */
 	if (--inode->open_cnt == 0) {
 		/* Remove from inode list and release lock. */
 		list_remove (&inode->elem);
 		/* Deallocate blocks if removed. */
 		if (inode->removed) {
-			#ifdef EFILESYS
+#ifdef EFILESYS
 			fat_remove_chain(inode->data.start, 0);
 			fat_remove_chain(inode->sector, 0);
-			#else
+#else
 			free_map_release (inode->sector, 1);
 			free_map_release (inode->data.start,
 					bytes_to_sectors (inode->data.length));
-			#endif
-		}		
-		disk_write (filesys_disk, inode->sector, &inode->data); 
+#endif
+		}
 		free (inode); 
 	}
 }
@@ -388,4 +390,14 @@ inode_allow_write (struct inode *inode) {
 off_t
 inode_length (const struct inode *inode) {
 	return inode->data.length;
+}
+
+bool
+inode_is_dir (const struct inode* inode) {
+	return inode->data.is_dir;
+}
+
+bool
+inode_is_file (const struct inode* inode) {
+	return !inode->data.is_dir;
 }

@@ -175,10 +175,6 @@ __do_fork (void *aux) {
   }
 #endif
 
-#ifdef FILESYS
-	current->curr_dir = dir_reopen(parent->curr_dir);
-#endif
-
 
 	/* TODO: Your code goes here.
 	 * TODO: Hint) To duplicate the file object, use `file_duplicate`
@@ -335,9 +331,11 @@ process_exit (void) {
 		e = list_remove(&cmp_thread->child_elem);
 		palloc_free_page(cmp_thread);
 	}
+	
 #ifdef FILESYS
 	dir_close(curr->curr_dir);
 #endif
+
 	process_cleanup ();
 }
 

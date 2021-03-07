@@ -1,2 +1,15 @@
 FAIL
-run: open "/": FAILED
+Kernel panic in run: PANIC at ../../lib/string.c:274 in strlen(): assertion `string' failed.
+Call stack: 0x8004213c73 0x8004213541 0x800421a80b 0x800421a445 0x8004219901 0x80042191c9 0x8004218f0e 0x400129 0x4001f6 0x4015ae 0x4015f7
+Translation of call stack:
+0x0000008004213c73: debug_panic (lib/kernel/debug.c:32)
+0x0000008004213541: strlen (lib/string.c:276)
+0x000000800421a80b: parse_path (filesys/filesys.c:184)
+0x000000800421a445: filesys_open (filesys/filesys.c:110)
+0x0000008004219901: open (userprog/syscall.c:290)
+0x00000080042191c9: syscall_handler (userprog/syscall.c:119)
+0x0000008004218f0e: no_sti (userprog/syscall-entry.o:?)
+0x0000000000400129: (unknown)
+0x00000000004001f6: (unknown)
+0x00000000004015ae: (unknown)
+0x00000000004015f7: (unknown)

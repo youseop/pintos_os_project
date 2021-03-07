@@ -11,8 +11,7 @@ hd0:0: detected 329 sector (164 kB) disk, model "QEMU HARDDISK", serial "QM00001
 hd0:1: detected 4,032 sector (1 MB) disk, model "QEMU HARDDISK", serial "QM00002"
 hd1:0: detected 344 sector (172 kB) disk, model "QEMU HARDDISK", serial "QM00003"
 hd1:1: detected 8,064 sector (3 MB) disk, model "QEMU HARDDISK", serial "QM00004"
-Formatting file system...done.
-Boot complete.
+Formatting file system...Boot complete.
 Putting 'syn-rw' into the file system...
 Putting 'tar' into the file system...
 Putting 'child-syn-rw' into the file system...
@@ -35,13 +34,13 @@ child-syn-rw: exit(0)
 (syn-rw) end
 syn-rw: exit(0)
 Execution of 'syn-rw' complete.
-Timer: 212 ticks
-Thread: 30 idle ticks, 64 kernel ticks, 118 user ticks
+Timer: 241 ticks
+Thread: 30 idle ticks, 67 kernel ticks, 144 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 882 reads, 1627 writes
+hd0:1: 931 reads, 1662 writes
 hd1:0: 344 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1594 characters output
+Console: 1588 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

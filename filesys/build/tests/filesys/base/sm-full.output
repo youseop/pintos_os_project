@@ -11,8 +11,7 @@ hd0:0: detected 329 sector (164 kB) disk, model "QEMU HARDDISK", serial "QM00001
 hd0:1: detected 20,160 sector (9 MB) disk, model "QEMU HARDDISK", serial "QM00002"
 hd1:0: detected 107 sector (53 kB) disk, model "QEMU HARDDISK", serial "QM00003"
 hd1:1: detected 8,064 sector (3 MB) disk, model "QEMU HARDDISK", serial "QM00004"
-Formatting file system...done.
-Boot complete.
+Formatting file system...Boot complete.
 Putting 'sm-full' into the file system...
 Executing 'sm-full':
 (sm-full) begin
@@ -26,13 +25,13 @@ Executing 'sm-full':
 (sm-full) end
 sm-full: exit(0)
 Execution of 'sm-full' complete.
-Timer: 78 ticks
-Thread: 30 idle ticks, 41 kernel ticks, 8 user ticks
+Timer: 83 ticks
+Thread: 30 idle ticks, 43 kernel ticks, 10 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 231 reads, 670 writes
+hd0:1: 254 reads, 679 writes
 hd1:0: 107 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1144 characters output
+Console: 1139 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

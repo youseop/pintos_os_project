@@ -11,8 +11,7 @@ hd0:0: detected 329 sector (164 kB) disk, model "QEMU HARDDISK", serial "QM00001
 hd0:1: detected 20,160 sector (9 MB) disk, model "QEMU HARDDISK", serial "QM00002"
 hd1:0: detected 4,119 sector (2 MB) disk, model "QEMU HARDDISK", serial "QM00003"
 hd1:1: detected 403,200 sector (196 MB) disk, model "QEMU HARDDISK", serial "QM00004"
-Formatting file system...done.
-Boot complete.
+Formatting file system...Boot complete.
 Putting 'swap-fork' into the file system...
 Putting 'child-swap' into the file system...
 Executing 'swap-fork':
@@ -20,14 +19,14 @@ Executing 'swap-fork':
 (child-swap) begin
 child-swap: exit(0)
 (child-swap) begin
-(child-swap) begin
 child-swap: exit(0)
 (child-swap) begin
 child-swap: exit(0)
 (child-swap) begin
-child-swap: exit(0)
 (child-swap) begin
 child-swap: exit(0)
+child-swap: exit(0)
+(child-swap) begin
 child-swap: exit(0)
 (child-swap) begin
 child-swap: exit(0)
@@ -40,13 +39,13 @@ child-swap: exit(0)
 (swap-fork) end
 swap-fork: exit(0)
 Execution of 'swap-fork' complete.
-Timer: 484 ticks
-Thread: 49 idle ticks, 306 kernel ticks, 129 user ticks
+Timer: 507 ticks
+Thread: 83 idle ticks, 299 kernel ticks, 125 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 677 reads, 12682 writes
+hd0:1: 717 reads, 12715 writes
 hd1:0: 4119 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1428 characters output
+Console: 1422 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

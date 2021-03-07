@@ -11,8 +11,7 @@ hd0:0: detected 329 sector (164 kB) disk, model "QEMU HARDDISK", serial "QM00001
 hd0:1: detected 20,160 sector (9 MB) disk, model "QEMU HARDDISK", serial "QM00002"
 hd1:0: detected 107 sector (53 kB) disk, model "QEMU HARDDISK", serial "QM00003"
 hd1:1: detected 8,064 sector (3 MB) disk, model "QEMU HARDDISK", serial "QM00004"
-Formatting file system...done.
-Boot complete.
+Formatting file system...Boot complete.
 Putting 'mmap-kernel' into the file system...
 Putting 'sample.txt' into the file system...
 Executing 'mmap-kernel':
@@ -24,13 +23,13 @@ Executing 'mmap-kernel':
 (mmap-kernel) end
 mmap-kernel: exit(0)
 Execution of 'mmap-kernel' complete.
-Timer: 79 ticks
-Thread: 30 idle ticks, 42 kernel ticks, 7 user ticks
+Timer: 83 ticks
+Thread: 30 idle ticks, 46 kernel ticks, 7 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 219 reads, 641 writes
+hd0:1: 242 reads, 651 writes
 hd1:0: 107 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1194 characters output
+Console: 1188 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

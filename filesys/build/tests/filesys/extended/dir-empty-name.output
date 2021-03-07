@@ -6,27 +6,20 @@ thread_init start
 Pintos booting with: 
 	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
 	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
-Calibrating timer...  157,081,600 loops/s.
+Calibrating timer...  104,755,200 loops/s.
 hd0:0: detected 329 sector (164 kB) disk, model "QEMU HARDDISK", serial "QM00001"
 hd0:1: detected 4,032 sector (1 MB) disk, model "QEMU HARDDISK", serial "QM00002"
 hd1:0: detected 223 sector (111 kB) disk, model "QEMU HARDDISK", serial "QM00003"
 hd1:1: detected 8,064 sector (3 MB) disk, model "QEMU HARDDISK", serial "QM00004"
-Formatting file system...done.
-Boot complete.
+Formatting file system...Boot complete.
 Putting 'dir-empty-name' into the file system...
 Putting 'tar' into the file system...
 Executing 'dir-empty-name':
 (dir-empty-name) begin
 (dir-empty-name) mkdir "" (must return false)
-dir-empty-name: exit(4212109)
-Execution of 'dir-empty-name' complete.
-Timer: 80 ticks
-Thread: 30 idle ticks, 46 kernel ticks, 4 user ticks
-hd0:0: 0 reads, 0 writes
-hd0:1: 91 reads, 739 writes
-hd1:0: 223 reads, 0 writes
-hd1:1: 0 reads, 0 writes
-Console: 1082 characters output
-Keyboard: 0 keys pressed
-Exception: 0 page faults
-Powering off...
+Kernel PANIC at ../../devices/disk.c:408 in select_sector(): assertion `sec_no < d->capacity' failed.
+Call stack: 0x8004213c73 0x800420fe41 0x800420f3f5 0x800421cf6c 0x800421c312 0x800421c50f 0x800421c8e1 0x8004219d7f 0x800421939f 0x8004218f0e 0x40011d 0x400e25 0x400e6e.
+The `backtrace' program can make call stacks useful.
+Read "Backtraces" in the "Debugging Tools" chapter
+of the Pintos documentation for more information.
+Kernel PANIC recursion at ../../threads/synch.c:203 in lock_acquire().

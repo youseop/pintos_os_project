@@ -11,8 +11,7 @@ hd0:0: detected 329 sector (164 kB) disk, model "QEMU HARDDISK", serial "QM00001
 hd0:1: detected 20,160 sector (9 MB) disk, model "QEMU HARDDISK", serial "QM00002"
 hd1:0: detected 111 sector (55 kB) disk, model "QEMU HARDDISK", serial "QM00003"
 hd1:1: detected 8,064 sector (3 MB) disk, model "QEMU HARDDISK", serial "QM00004"
-Formatting file system...done.
-Boot complete.
+Formatting file system...Boot complete.
 Putting 'fork-read' into the file system...
 Putting 'sample.txt' into the file system...
 Executing 'fork-read':
@@ -26,13 +25,13 @@ child: exit(0)
 (fork-read) end
 fork-read: exit(0)
 Execution of 'fork-read' complete.
-Timer: 84 ticks
-Thread: 30 idle ticks, 45 kernel ticks, 9 user ticks
+Timer: 89 ticks
+Thread: 30 idle ticks, 51 kernel ticks, 9 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 224 reads, 654 writes
+hd0:1: 247 reads, 665 writes
 hd1:0: 111 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1172 characters output
+Console: 1166 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

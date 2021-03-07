@@ -11,8 +11,7 @@ hd0:0: detected 329 sector (164 kB) disk, model "QEMU HARDDISK", serial "QM00001
 hd0:1: detected 20,160 sector (9 MB) disk, model "QEMU HARDDISK", serial "QM00002"
 hd1:0: detected 226 sector (113 kB) disk, model "QEMU HARDDISK", serial "QM00003"
 hd1:1: detected 8,064 sector (3 MB) disk, model "QEMU HARDDISK", serial "QM00004"
-Formatting file system...done.
-Boot complete.
+Formatting file system...Boot complete.
 Putting 'syn-write' into the file system...
 Putting 'child-syn-wrt' into the file system...
 Executing 'syn-write':
@@ -22,8 +21,8 @@ child-syn-wrt: exit(0)
 (syn-write) exec child 1 of 10: "child-syn-wrt 0"
 child-syn-wrt: exit(1)
 (syn-write) exec child 2 of 10: "child-syn-wrt 1"
-child-syn-wrt: exit(2)
 (syn-write) exec child 3 of 10: "child-syn-wrt 2"
+child-syn-wrt: exit(2)
 child-syn-wrt: exit(3)
 (syn-write) exec child 4 of 10: "child-syn-wrt 3"
 child-syn-wrt: exit(4)
@@ -53,13 +52,13 @@ child-syn-wrt: exit(9)
 (syn-write) end
 syn-write: exit(0)
 Execution of 'syn-write' complete.
-Timer: 128 ticks
-Thread: 30 idle ticks, 61 kernel ticks, 37 user ticks
+Timer: 132 ticks
+Thread: 30 idle ticks, 56 kernel ticks, 47 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 745 reads, 1051 writes
+hd0:1: 812 reads, 1091 writes
 hd1:0: 226 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 2435 characters output
+Console: 2429 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

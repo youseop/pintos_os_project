@@ -218,8 +218,8 @@ thread_create (const char *name, int priority,
 	t->tf.R.rsi = (uint64_t) aux;
 	t->tf.ds = SEL_KDSEG;
 	t->tf.es = SEL_KDSEG;
-	t->tf.ss = SEL_KDSEG; //? 10
-	t->tf.cs = SEL_KCSEG; //? 8
+	t->tf.ss = SEL_KDSEG; 
+	t->tf.cs = SEL_KCSEG; 
 	t->tf.eflags = FLAG_IF;
 
 	t->parent_process = curr;
@@ -231,16 +231,19 @@ thread_create (const char *name, int priority,
 	t->next_fd = 2;
 	t->fd_table = palloc_get_multiple(PAL_ZERO,2);
 	if(t->fd_table == NULL){
-		//? palloc_free_multiple(t->fd_table,2);
 		palloc_free_page(t);
 		return TID_ERROR;
 	}
-
+	
 	list_push_back(&curr->child_process, &t->child_elem);
+
+	#ifdef FILESYS
+	if(curr->curr_dir)//? 첫 init thread가 생성될때 이 문장이 없으면 문제가 되는듯
+		t->curr_dir = dir_reopen(curr->curr_dir);
+	#endif
 
 	/* Add to run queue. */
 	thread_unblock (t); //!
-	//? if문으로 우선순위 판단해서 thread_block 실행
 	if(curr->priority < priority){
 		thread_yield();
 	}

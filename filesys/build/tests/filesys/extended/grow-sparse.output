@@ -11,8 +11,7 @@ hd0:0: detected 329 sector (164 kB) disk, model "QEMU HARDDISK", serial "QM00001
 hd0:1: detected 4,032 sector (1 MB) disk, model "QEMU HARDDISK", serial "QM00002"
 hd1:0: detected 225 sector (112 kB) disk, model "QEMU HARDDISK", serial "QM00003"
 hd1:1: detected 8,064 sector (3 MB) disk, model "QEMU HARDDISK", serial "QM00004"
-Formatting file system...done.
-Boot complete.
+Formatting file system...Boot complete.
 Putting 'grow-sparse' into the file system...
 Putting 'tar' into the file system...
 Executing 'grow-sparse':
@@ -28,13 +27,13 @@ Executing 'grow-sparse':
 (grow-sparse) end
 grow-sparse: exit(0)
 Execution of 'grow-sparse' complete.
-Timer: 96 ticks
-Thread: 30 idle ticks, 50 kernel ticks, 16 user ticks
+Timer: 97 ticks
+Thread: 30 idle ticks, 49 kernel ticks, 18 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 255 reads, 901 writes
+hd0:1: 284 reads, 912 writes
 hd1:0: 225 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1307 characters output
+Console: 1301 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

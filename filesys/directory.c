@@ -92,9 +92,8 @@ lookup (const struct dir *dir, const char *name,
 
 	ASSERT (dir != NULL);
 	ASSERT (name != NULL);
-
 	for (ofs = 0; inode_read_at (dir->inode, &e, sizeof e, ofs) == sizeof e;
-			ofs += sizeof e)
+			ofs += sizeof e){
 		if (e.in_use && !strcmp (name, e.name)) {
 			if (ep != NULL)
 				*ep = e;
@@ -102,6 +101,7 @@ lookup (const struct dir *dir, const char *name,
 				*ofsp = ofs;
 			return true;
 		}
+	}
 	return false;
 }
 
@@ -136,7 +136,6 @@ dir_add (struct dir *dir, const char *name, disk_sector_t inode_sector) {
 	struct dir_entry e;
 	off_t ofs;
 	bool success = false;
-
 	ASSERT (dir != NULL);
 	ASSERT (name != NULL);
 
@@ -171,8 +170,12 @@ done:
 /* Removes any entry for NAME in DIR.
  * Returns true if successful, false on failure,
  * which occurs only if there is no file with the given NAME. */
+
+ //? remove >> 파일 하나를 remove하면 다른 file이 고장난다.
+ save
 bool
 dir_remove (struct dir *dir, const char *name) {
+	printf("dir : %p name : %s\n",dir,name);
 	struct dir_entry e;
 	struct inode *inode = NULL;
 	bool success = false;
@@ -213,10 +216,34 @@ dir_readdir (struct dir *dir, char name[NAME_MAX + 1]) {
 
 	while (inode_read_at (dir->inode, &e, sizeof e, dir->pos) == sizeof e) {
 		dir->pos += sizeof e;
-		if (e.in_use) {
+		if (e.in_use && strcmp (".", e.name) && strcmp ("..", e.name)) {
 			strlcpy (name, e.name, NAME_MAX + 1);
 			return true;
 		}
 	}
+
 	return false;
+}
+
+bool
+dir_mkdir (const char *dir_string){
+	if (strlen(dir_string) == 0)
+		return false;
+	char dir_name[NAME_MAX + 1];
+	disk_sector_t inode_sector = 0;
+	struct dir* dir = parse_path (dir_string, dir_name);
+	bool success = (dir != NULL
+			&& (inode_sector = cluster_to_sector(fat_create_chain(0)))
+			&& dir_create (inode_sector, 0)
+			&& dir_add (dir, dir_name, inode_sector));
+
+	struct dir *new_dir = dir_open(inode_open(inode_sector));
+	dir_add (new_dir, ".", inode_sector);
+	dir_add (new_dir, "..", inode_get_inumber(dir->inode));
+
+	if (!success && inode_sector != 0)
+		fat_remove_chain(sector_to_cluster(inode_sector), 0);
+	dir_close (dir);
+
+	return success;
 }

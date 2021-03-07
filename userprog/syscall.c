@@ -1,5 +1,6 @@
 #include "userprog/syscall.h"
 #include <stdio.h>
+#include <stdbool.h>
 #include <syscall-nr.h>
 #include "threads/interrupt.h"
 #include "threads/thread.h"
@@ -12,6 +13,9 @@
 #include "filesys/filesys.h"
 #include "threads/vaddr.h"
 #include "userprog/process.h"
+#include "filesys/inode.h"
+#include "filesys/file.h"
+#include "filesys/directory.h"
 
 void syscall_entry (void);
 void syscall_handler (struct intr_frame *);
@@ -139,6 +143,19 @@ syscall_handler (struct intr_frame *f UNUSED) {
     case SYS_MUNMAP:
       munmap(f->R.rdi);
       break;
+    case SYS_ISDIR:
+      f->R.rax = isdir(f->R.rdi);
+      break;
+    case SYS_MKDIR:
+      f->R.rax = mkdir (f->R.rdi);
+      break;
+    case SYS_CHDIR:
+      f->R.rax = chdir (f->R.rdi);
+      break;
+    case SYS_INUMBER:
+      f->R.rax = inumber (f->R.rdi);
+    case SYS_READDIR:
+      f->R.rax = readdir (f->R.rdi, f->R.rsi);
     default:
       exit(f->R.rdi);
       break;
@@ -223,6 +240,11 @@ int write (int fd, const void *buffer, unsigned size){
   }
   else{
     struct file* f = process_get_file(fd);
+    if (inode_is_dir ( file_get_inode (f))){
+      lock_release(&filesys_lock);
+      return -1;
+    }
+
     size = file_write(f, buffer, size);
     lock_release(&filesys_lock);
     return size;
@@ -343,4 +365,44 @@ void munmap (void *addr){
   if (addr == pg_round_down(addr))
     do_munmap(addr);
   return;
+}
+
+bool isdir (int fd){
+  ASSERT(fd >= 2);
+  struct file *f = process_get_file(fd);
+  ASSERT(f);
+  return is_dir(f);
+}
+
+bool mkdir (const char *dir){
+  ASSERT(dir);
+  return dir_mkdir (dir);
+}
+
+bool chdir (const char *dir){
+	char path_name[NAME_MAX + 1];
+  char *file_name;
+	memcpy(path_name,dir,strlen(dir)+1);
+	struct dir *get_dir = parse_path(path_name, dir);
+
+  struct inode *inode = NULL;
+  dir_lookup(get_dir, dir, &inode);
+  ASSERT((inode == NULL || !inode_is_file(inode)));
+  get_dir = dir_open(inode);
+
+  thread_current()->curr_dir = get_dir;
+}
+
+int inumber (int fd){
+  struct file *f = process_get_file(fd);
+  return inode_get_inumber (file_get_inode (f));
+}
+
+bool readdir (int fd, char *name){
+  struct file *f = process_get_file (fd);
+  if(!is_dir(f)){
+    return false;
+  }
+  struct dir *dir = dir_open (file_get_inode (f));
+  return dir_readdir(dir, name);
 }

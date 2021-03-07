@@ -6,13 +6,12 @@ thread_init start
 Pintos booting with: 
 	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
 	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
-Calibrating timer...  157,081,600 loops/s.
+Calibrating timer...  125,952,000 loops/s.
 hd0:0: detected 329 sector (164 kB) disk, model "QEMU HARDDISK", serial "QM00001"
 hd0:1: detected 20,160 sector (9 MB) disk, model "QEMU HARDDISK", serial "QM00002"
 hd1:0: detected 207 sector (103 kB) disk, model "QEMU HARDDISK", serial "QM00003"
 hd1:1: detected 8,064 sector (3 MB) disk, model "QEMU HARDDISK", serial "QM00004"
-Formatting file system...done.
-Boot complete.
+Formatting file system...Boot complete.
 Putting 'exec-boundary' into the file system...
 Putting 'child-simple' into the file system...
 Executing 'exec-boundary':
@@ -24,13 +23,13 @@ child-simple: exit(81)
 (exec-boundary) end
 exec-boundary: exit(0)
 Execution of 'exec-boundary' complete.
-Timer: 93 ticks
-Thread: 30 idle ticks, 55 kernel ticks, 9 user ticks
+Timer: 99 ticks
+Thread: 30 idle ticks, 59 kernel ticks, 10 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 266 reads, 942 writes
+hd0:1: 289 reads, 952 writes
 hd1:0: 207 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1147 characters output
+Console: 1142 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

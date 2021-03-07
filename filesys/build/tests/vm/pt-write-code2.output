@@ -11,8 +11,7 @@ hd0:0: detected 329 sector (164 kB) disk, model "QEMU HARDDISK", serial "QM00001
 hd0:1: detected 20,160 sector (9 MB) disk, model "QEMU HARDDISK", serial "QM00002"
 hd1:0: detected 106 sector (53 kB) disk, model "QEMU HARDDISK", serial "QM00003"
 hd1:1: detected 8,064 sector (3 MB) disk, model "QEMU HARDDISK", serial "QM00004"
-Formatting file system...done.
-Boot complete.
+Formatting file system...Boot complete.
 Putting 'pt-write-code2' into the file system...
 Putting 'sample.txt' into the file system...
 Executing 'pt-write-code2':
@@ -20,13 +19,13 @@ Executing 'pt-write-code2':
 (pt-write-code2) open "sample.txt"
 pt-write-code2: exit(-1)
 Execution of 'pt-write-code2' complete.
-Timer: 79 ticks
-Thread: 30 idle ticks, 44 kernel ticks, 5 user ticks
+Timer: 84 ticks
+Thread: 30 idle ticks, 48 kernel ticks, 6 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 218 reads, 639 writes
+hd0:1: 241 reads, 648 writes
 hd1:0: 106 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1081 characters output
+Console: 1075 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

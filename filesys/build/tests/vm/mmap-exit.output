@@ -11,8 +11,7 @@ hd0:0: detected 329 sector (164 kB) disk, model "QEMU HARDDISK", serial "QM00001
 hd0:1: detected 20,160 sector (9 MB) disk, model "QEMU HARDDISK", serial "QM00002"
 hd1:0: detected 210 sector (105 kB) disk, model "QEMU HARDDISK", serial "QM00003"
 hd1:1: detected 8,064 sector (3 MB) disk, model "QEMU HARDDISK", serial "QM00004"
-Formatting file system...done.
-Boot complete.
+Formatting file system...Boot complete.
 Putting 'mmap-exit' into the file system...
 Putting 'child-mm-wrt' into the file system...
 Executing 'mmap-exit':
@@ -29,13 +28,13 @@ child-mm-wrt: exit(0)
 (mmap-exit) end
 mmap-exit: exit(0)
 Execution of 'mmap-exit' complete.
-Timer: 98 ticks
-Thread: 30 idle ticks, 54 kernel ticks, 14 user ticks
+Timer: 100 ticks
+Thread: 30 idle ticks, 55 kernel ticks, 15 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 296 reads, 958 writes
+hd0:1: 327 reads, 973 writes
 hd1:0: 210 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1319 characters output
+Console: 1314 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

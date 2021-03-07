@@ -11,8 +11,7 @@ hd0:0: detected 329 sector (164 kB) disk, model "QEMU HARDDISK", serial "QM00001
 hd0:1: detected 4,032 sector (1 MB) disk, model "QEMU HARDDISK", serial "QM00002"
 hd1:0: detected 230 sector (115 kB) disk, model "QEMU HARDDISK", serial "QM00003"
 hd1:1: detected 8,064 sector (3 MB) disk, model "QEMU HARDDISK", serial "QM00004"
-Formatting file system...done.
-Boot complete.
+Formatting file system...Boot complete.
 Putting 'symlink-file' into the file system...
 Putting 'tar' into the file system...
 Executing 'symlink-file':
@@ -22,13 +21,13 @@ Executing 'symlink-file':
 (symlink-file) create symlink "link_a"
 symlink-file: exit(4213788)
 Execution of 'symlink-file' complete.
-Timer: 87 ticks
-Thread: 30 idle ticks, 49 kernel ticks, 9 user ticks
+Timer: 93 ticks
+Thread: 30 idle ticks, 50 kernel ticks, 13 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 107 reads, 768 writes
+hd0:1: 136 reads, 778 writes
 hd1:0: 230 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1114 characters output
+Console: 1109 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

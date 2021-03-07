@@ -11,20 +11,19 @@ hd0:0: detected 329 sector (164 kB) disk, model "QEMU HARDDISK", serial "QM00001
 hd0:1: detected 20,160 sector (9 MB) disk, model "QEMU HARDDISK", serial "QM00002"
 hd1:0: detected 102 sector (51 kB) disk, model "QEMU HARDDISK", serial "QM00003"
 hd1:1: detected 8,064 sector (3 MB) disk, model "QEMU HARDDISK", serial "QM00004"
-Formatting file system...done.
-Boot complete.
+Formatting file system...Boot complete.
 Putting 'pt-bad-addr' into the file system...
 Executing 'pt-bad-addr':
 (pt-bad-addr) begin
 pt-bad-addr: exit(-1)
 Execution of 'pt-bad-addr' complete.
-Timer: 77 ticks
-Thread: 30 idle ticks, 44 kernel ticks, 3 user ticks
+Timer: 82 ticks
+Thread: 30 idle ticks, 48 kernel ticks, 4 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 208 reads, 626 writes
+hd0:1: 223 reads, 632 writes
 hd1:0: 102 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 965 characters output
+Console: 959 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

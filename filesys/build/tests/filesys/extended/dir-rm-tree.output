@@ -11,22 +11,25 @@ hd0:0: detected 329 sector (164 kB) disk, model "QEMU HARDDISK", serial "QM00001
 hd0:1: detected 4,032 sector (1 MB) disk, model "QEMU HARDDISK", serial "QM00002"
 hd1:0: detected 233 sector (116 kB) disk, model "QEMU HARDDISK", serial "QM00003"
 hd1:1: detected 8,064 sector (3 MB) disk, model "QEMU HARDDISK", serial "QM00004"
-Formatting file system...done.
-Boot complete.
+Formatting file system...Boot complete.
 Putting 'dir-rm-tree' into the file system...
 Putting 'tar' into the file system...
 Executing 'dir-rm-tree':
 (dir-rm-tree) begin
 (dir-rm-tree) creating /0/0/0/0 through /3/2/2/3...
-dir-rm-tree: exit(1195900432)
+(dir-rm-tree) open "/0/2/0/3"
+(dir-rm-tree) close "/0/2/0/3"
+(dir-rm-tree) removing /0/0/0/0 through /3/2/2/3...
+(dir-rm-tree) remove "/0/0/0/0": FAILED
+dir-rm-tree: exit(1)
 Execution of 'dir-rm-tree' complete.
-Timer: 81 ticks
-Thread: 30 idle ticks, 46 kernel ticks, 5 user ticks
+Timer: 313 ticks
+Thread: 30 idle ticks, 52 kernel ticks, 231 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 95 reads, 769 writes
+hd0:1: 4484 reads, 1864 writes
 hd1:0: 233 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1070 characters output
+Console: 1214 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

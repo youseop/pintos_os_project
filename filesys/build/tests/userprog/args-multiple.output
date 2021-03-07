@@ -11,8 +11,7 @@ hd0:0: detected 329 sector (164 kB) disk, model "QEMU HARDDISK", serial "QM00001
 hd0:1: detected 20,160 sector (9 MB) disk, model "QEMU HARDDISK", serial "QM00002"
 hd1:0: detected 102 sector (51 kB) disk, model "QEMU HARDDISK", serial "QM00003"
 hd1:1: detected 8,064 sector (3 MB) disk, model "QEMU HARDDISK", serial "QM00004"
-Formatting file system...done.
-Boot complete.
+Formatting file system...Boot complete.
 Putting 'args-multiple' into the file system...
 Executing 'args-multiple some arguments for you!':
 (args) begin
@@ -26,13 +25,13 @@ Executing 'args-multiple some arguments for you!':
 (args) end
 args-multiple: exit(0)
 Execution of 'args-multiple' complete.
-Timer: 83 ticks
-Thread: 30 idle ticks, 46 kernel ticks, 7 user ticks
+Timer: 82 ticks
+Thread: 30 idle ticks, 45 kernel ticks, 7 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 208 reads, 626 writes
+hd0:1: 223 reads, 632 writes
 hd1:0: 102 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1201 characters output
+Console: 1195 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

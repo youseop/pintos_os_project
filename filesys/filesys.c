@@ -63,11 +63,16 @@ filesys_done (void) {
 bool
 filesys_create (const char *name, off_t initial_size) {
 	disk_sector_t inode_sector = 0;
-	struct dir *dir = dir_open_root (); 
+	char path_name[NAME_MAX + 1];
+	char file_name[NAME_MAX + 1];
+
+	memcpy(path_name,name,strlen(name)+1);
+	struct dir * dir = parse_path(path_name, file_name);
+
 	bool success = (dir != NULL
 			&& (inode_sector = cluster_to_sector(fat_create_chain(0)))
 			&& inode_create (inode_sector, initial_size, false)
-			&& dir_add (dir, name, inode_sector));
+			&& dir_add (dir, file_name, inode_sector));
 	if (!success && inode_sector != 0)
 		fat_remove_chain(sector_to_cluster(inode_sector), 0);
 	dir_close (dir);
@@ -98,10 +103,15 @@ filesys_create (const char *name, off_t initial_size) {
  * or if an internal memory allocation fails. */
 struct file *
 filesys_open (const char *name) {
-	struct dir *dir = dir_open_root ();
+	char path_name[NAME_MAX + 1];
+	char file_name[NAME_MAX + 1];
+	
+	memcpy(path_name,name,strlen(name)+1);
+	struct dir * dir = parse_path(path_name, file_name);
+
 	struct inode *inode = NULL;
 	if (dir != NULL)
-		dir_lookup (dir, name, &inode);
+		dir_lookup (dir, file_name, &inode);
 	dir_close (dir);
 
 	return file_open (inode);
@@ -113,8 +123,12 @@ filesys_open (const char *name) {
  * or if an internal memory allocation fails. */
 bool
 filesys_remove (const char *name) {
-	struct dir *dir = dir_open_root ();
-	bool success = dir != NULL && dir_remove (dir, name);
+	char path_name[NAME_MAX + 1];
+	char file_name[NAME_MAX + 1];
+	
+	memcpy(path_name,name,strlen(name)+1);
+	struct dir * dir = parse_path(path_name, file_name);
+	bool success = (dir != NULL && dir_remove (dir, file_name));
 	dir_close (dir);
 
 	return success;
@@ -128,16 +142,50 @@ do_format (void) {
 #ifdef EFILESYS
 	/* Create FAT and save it to the disk. */
 	fat_create ();
-	if (!dir_create (cluster_to_sector(ROOT_DIR_CLUSTER), 0))
+	if (!dir_create (cluster_to_sector(ROOT_DIR_CLUSTER), 2))
 		PANIC ("root directory creation failed");
 	fat_close ();
-	thread_current()->curr_dir = dir_open (inode_open (cluster_to_sector (ROOT_DIR_CLUSTER)));
+	struct dir* curr_dir = dir_open (inode_open (cluster_to_sector (ROOT_DIR_CLUSTER)));
+	thread_current()->curr_dir = curr_dir;
+	dir_add (curr_dir, ".", inode_get_inumber(dir_get_inode(curr_dir)));
+	dir_add (curr_dir, "..", inode_get_inumber(dir_get_inode(curr_dir)));
 #else
 	free_map_create ();
 	if (!dir_create (ROOT_DIR_SECTOR, 16))
 		PANIC ("root directory creation failed");
 	free_map_close ();
 #endif
+}
 
-	printf ("done.\n");
+struct dir* parse_path (char *path_name, char *file_name) {
+	struct dir *dir;
+	if (path_name == NULL || strlen(path_name) == 0)
+		return NULL;
+	if (path_name[0] == '/') {
+		dir = dir_open_root();
+	}
+	else{
+		dir = dir_reopen(thread_current()->curr_dir);
+	}
+
+	char *token, *nextToken, *savePtr;
+	token = strtok_r (path_name, "/", &savePtr);
+	nextToken = strtok_r (NULL, "/", &savePtr);
+	struct inode *inode = NULL;
+
+	while (token && nextToken) {
+		dir_lookup(dir, token, &inode);
+		if (inode == NULL || inode_is_file(inode)){
+			printf("is file!!!!!!!!!!!!!!!!\n");
+			return NULL;
+		}
+		dir = dir_open(inode);
+		
+		token = nextToken;
+		nextToken = strtok_r (NULL, "/", &savePtr);
+	}
+
+	memcpy(file_name, token, strlen(token)+1);
+
+	return dir;
 }

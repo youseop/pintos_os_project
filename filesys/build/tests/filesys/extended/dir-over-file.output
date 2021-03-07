@@ -11,22 +11,23 @@ hd0:0: detected 329 sector (164 kB) disk, model "QEMU HARDDISK", serial "QM00001
 hd0:1: detected 4,032 sector (1 MB) disk, model "QEMU HARDDISK", serial "QM00002"
 hd1:0: detected 224 sector (112 kB) disk, model "QEMU HARDDISK", serial "QM00003"
 hd1:1: detected 8,064 sector (3 MB) disk, model "QEMU HARDDISK", serial "QM00004"
-Formatting file system...done.
-Boot complete.
+Formatting file system...Boot complete.
 Putting 'dir-over-file' into the file system...
 Putting 'tar' into the file system...
 Executing 'dir-over-file':
 (dir-over-file) begin
 (dir-over-file) mkdir "abc"
-dir-over-file: exit(4212172)
+(dir-over-file) create "abc" (must return false)
+(dir-over-file) end
+dir-over-file: exit(0)
 Execution of 'dir-over-file' complete.
-Timer: 83 ticks
-Thread: 30 idle ticks, 50 kernel ticks, 4 user ticks
+Timer: 89 ticks
+Thread: 30 idle ticks, 51 kernel ticks, 9 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 91 reads, 742 writes
+hd0:1: 131 reads, 761 writes
 hd1:0: 224 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1057 characters output
+Console: 1115 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

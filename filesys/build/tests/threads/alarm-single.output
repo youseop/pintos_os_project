@@ -10,8 +10,7 @@ Calibrating timer...  157,081,600 loops/s.
 hd0:0: detected 329 sector (164 kB) disk, model "QEMU HARDDISK", serial "QM00001"
 hd0:1: detected 20,160 sector (9 MB) disk, model "QEMU HARDDISK", serial "QM00002"
 hd1:1: detected 8,064 sector (3 MB) disk, model "QEMU HARDDISK", serial "QM00004"
-Formatting file system...done.
-Boot complete.
+Formatting file system...Boot complete.
 Executing 'alarm-single':
 (alarm-single) begin
 (alarm-single) Creating 5 threads to sleep 1 times each.
@@ -26,12 +25,12 @@ Executing 'alarm-single':
 (alarm-single) thread 4: duration=50, iteration=1, product=50
 (alarm-single) end
 Execution of 'alarm-single' complete.
-Timer: 318 ticks
-Thread: 279 idle ticks, 39 kernel ticks, 0 user ticks
+Timer: 316 ticks
+Thread: 280 idle ticks, 36 kernel ticks, 0 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 159 reads, 319 writes
+hd0:1: 166 reads, 326 writes
 hd1:1: 0 reads, 0 writes
-Console: 1420 characters output
+Console: 1414 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

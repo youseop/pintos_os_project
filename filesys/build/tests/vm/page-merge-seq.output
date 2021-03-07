@@ -11,8 +11,7 @@ hd0:0: detected 329 sector (164 kB) disk, model "QEMU HARDDISK", serial "QM00001
 hd0:1: detected 20,160 sector (9 MB) disk, model "QEMU HARDDISK", serial "QM00002"
 hd1:0: detected 216 sector (108 kB) disk, model "QEMU HARDDISK", serial "QM00003"
 hd1:1: detected 8,064 sector (3 MB) disk, model "QEMU HARDDISK", serial "QM00004"
-Formatting file system...done.
-Boot complete.
+Formatting file system...Boot complete.
 Putting 'page-merge-seq' into the file system...
 Putting 'child-sort' into the file system...
 Executing 'page-merge-seq':
@@ -88,13 +87,13 @@ child-sort: exit(123)
 (page-merge-seq) end
 page-merge-seq: exit(0)
 Execution of 'page-merge-seq' complete.
-Timer: 573 ticks
-Thread: 30 idle ticks, 125 kernel ticks, 418 user ticks
+Timer: 583 ticks
+Thread: 30 idle ticks, 129 kernel ticks, 424 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 4928 reads, 5193 writes
+hd0:1: 5081 reads, 5282 writes
 hd1:0: 216 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 3156 characters output
+Console: 3150 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

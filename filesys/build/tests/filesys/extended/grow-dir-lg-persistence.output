@@ -6,17 +6,15 @@ thread_init start
 Pintos booting with: 
 	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
 	ext_mem: 0x100000 ~ 0xffe0000 (Usable: 260,992 kB)
-Calibrating timer...  65,433,600 loops/s.
+Calibrating timer...  52,377,600 loops/s.
 hd0:0: detected 329 sector (164 kB) disk, model "QEMU HARDDISK", serial "QM00001"
 hd0:1: detected 4,032 sector (1 MB) disk, model "QEMU HARDDISK", serial "QM00002"
 hd1:0: detected 2,048 sector (1024 kB) disk, model "QEMU HARDDISK", serial "QM00003"
 hd1:1: detected 8,064 sector (3 MB) disk, model "QEMU HARDDISK", serial "QM00004"
 Boot complete.
 Executing 'tar fs.tar /':
-load: tar: open failed
-Kernel PANIC at ../../userprog/process.c:90 in initd(): Fail to launch initd
-
-Call stack: 0x8004213c38 0x80042172d1 0x80042078a6.
+Kernel PANIC at ../../filesys/fat.c:198 in fat_create_chain(): fat_create_chain - return 0[need to control exception case]
+Call stack: 0x8004213c73 0x800421b1be 0x800421a331 0x800421915d 0x8004218f0e 0x4001ad 0x400137 0x401765.
 The `backtrace' program can make call stacks useful.
 Read "Backtraces" in the "Debugging Tools" chapter
 of the Pintos documentation for more information.

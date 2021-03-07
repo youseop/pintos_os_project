@@ -25,6 +25,11 @@ unsigned tell (int fd);
 void close(int fd);
 void *mmap (void *addr, size_t length, int writable, int fd, off_t offset);
 void munmap (void *addr);
+bool isdir (int fd);
+bool mkdir (const char *dir);
+bool chdir (const char *dir);
+int inumber (int fd);
+bool readdir (int fd, char *name);
 
 struct lock filesys_lock;
 

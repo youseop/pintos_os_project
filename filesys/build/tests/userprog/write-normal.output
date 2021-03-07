@@ -11,8 +11,7 @@ hd0:0: detected 329 sector (164 kB) disk, model "QEMU HARDDISK", serial "QM00001
 hd0:1: detected 20,160 sector (9 MB) disk, model "QEMU HARDDISK", serial "QM00002"
 hd1:0: detected 107 sector (53 kB) disk, model "QEMU HARDDISK", serial "QM00003"
 hd1:1: detected 8,064 sector (3 MB) disk, model "QEMU HARDDISK", serial "QM00004"
-Formatting file system...done.
-Boot complete.
+Formatting file system...Boot complete.
 Putting 'write-normal' into the file system...
 Putting 'sample.txt' into the file system...
 Executing 'write-normal':
@@ -22,13 +21,13 @@ Executing 'write-normal':
 (write-normal) end
 write-normal: exit(0)
 Execution of 'write-normal' complete.
-Timer: 83 ticks
-Thread: 30 idle ticks, 47 kernel ticks, 6 user ticks
+Timer: 84 ticks
+Thread: 30 idle ticks, 47 kernel ticks, 7 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 233 reads, 647 writes
+hd0:1: 260 reads, 657 writes
 hd1:0: 107 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1114 characters output
+Console: 1108 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...
