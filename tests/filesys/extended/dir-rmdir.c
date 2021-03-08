@@ -4,6 +4,8 @@
 #include <syscall.h>
 #include "tests/lib.h"
 #include "tests/main.h"
+#include "filesys/directory.h"
+#include "threads/thread.h"
 
 void
 test_main (void) 

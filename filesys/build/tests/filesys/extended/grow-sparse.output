@@ -27,10 +27,10 @@ Executing 'grow-sparse':
 (grow-sparse) end
 grow-sparse: exit(0)
 Execution of 'grow-sparse' complete.
-Timer: 97 ticks
-Thread: 30 idle ticks, 49 kernel ticks, 18 user ticks
+Timer: 93 ticks
+Thread: 30 idle ticks, 47 kernel ticks, 17 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 284 reads, 912 writes
+hd0:1: 286 reads, 691 writes
 hd1:0: 225 reads, 0 writes
 hd1:1: 0 reads, 0 writes
 Console: 1301 characters output

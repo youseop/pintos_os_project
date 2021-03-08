@@ -25,10 +25,10 @@ Executing 'args-multiple some arguments for you!':
 (args) end
 args-multiple: exit(0)
 Execution of 'args-multiple' complete.
-Timer: 82 ticks
-Thread: 30 idle ticks, 45 kernel ticks, 7 user ticks
+Timer: 80 ticks
+Thread: 30 idle ticks, 44 kernel ticks, 6 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 223 reads, 632 writes
+hd0:1: 225 reads, 532 writes
 hd1:0: 102 reads, 0 writes
 hd1:1: 0 reads, 0 writes
 Console: 1195 characters output

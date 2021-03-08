@@ -6,6 +6,7 @@
 #include "filesys/inode.h"
 #include "threads/malloc.h"
 #include "filesys/fat.h"
+#include "threads/thread.h"
 
 /* A directory. */
 struct dir {
@@ -172,10 +173,8 @@ done:
  * which occurs only if there is no file with the given NAME. */
 
  //? remove >> 파일 하나를 remove하면 다른 file이 고장난다.
- save
 bool
 dir_remove (struct dir *dir, const char *name) {
-	printf("dir : %p name : %s\n",dir,name);
 	struct dir_entry e;
 	struct inode *inode = NULL;
 	bool success = false;
@@ -187,11 +186,18 @@ dir_remove (struct dir *dir, const char *name) {
 	/* Find directory entry. */
 	if (!lookup (dir, name, &e, &ofs))
 		goto done;
-
+	
 	/* Open inode. */
 	inode = inode_open (e.inode_sector);
 	if (inode == NULL)
 		goto done;
+
+	if (inode_is_dir (inode)){
+		char tmp[NAME_MAX + 1];
+		struct dir* remove_dir = dir_open(inode);
+		if (dir_readdir (remove_dir, tmp))
+			goto done;
+	}
 
 	/* Erase directory entry. */
 	e.in_use = false;
@@ -202,6 +208,7 @@ dir_remove (struct dir *dir, const char *name) {
 	inode_remove (inode);
 	success = true;
 
+	
 done:
 	inode_close (inode);
 	return success;
@@ -227,6 +234,7 @@ dir_readdir (struct dir *dir, char name[NAME_MAX + 1]) {
 
 bool
 dir_mkdir (const char *dir_string){
+
 	if (strlen(dir_string) == 0)
 		return false;
 	char dir_name[NAME_MAX + 1];
@@ -238,12 +246,34 @@ dir_mkdir (const char *dir_string){
 			&& dir_add (dir, dir_name, inode_sector));
 
 	struct dir *new_dir = dir_open(inode_open(inode_sector));
+
+	dir_close (dir);
 	dir_add (new_dir, ".", inode_sector);
 	dir_add (new_dir, "..", inode_get_inumber(dir->inode));
 
 	if (!success && inode_sector != 0)
 		fat_remove_chain(sector_to_cluster(inode_sector), 0);
-	dir_close (dir);
+	dir_close (new_dir);
 
 	return success;
+}
+
+int
+dir_open_cnt (const struct dir *dir){
+	return inode_open_cnt(dir->inode);
+}
+
+
+void
+lookup_in_directory (const struct dir *dir) {
+	struct dir_entry e;
+	size_t ofs;
+
+	ASSERT (dir != NULL);
+	for (ofs = 0; inode_read_at (dir->inode, &e, sizeof e, ofs) == sizeof e;
+			ofs += sizeof e){
+		if (e.in_use)
+			printf("----[lookup_in_directory]---- name : %s ofs : %d\n ",e.name,ofs);
+	}
+	printf("----[lookup_in_directory]---- end!!!\n ");
 }

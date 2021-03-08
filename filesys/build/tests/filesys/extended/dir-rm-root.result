@@ -1,1 +1,13 @@
-PASS
+FAIL
+Kernel panic in run: PANIC at ../../lib/string.c:274 in strlen(): assertion `string' failed.
+Call stack: 0x8004213c73 0x8004213541 0x800421a847 0x800421a4f5 0x8004219195 0x8004218f0e 0x40011d 0x400e7d 0x400ec6
+Translation of call stack:
+0x0000008004213c73: debug_panic (lib/kernel/debug.c:32)
+0x0000008004213541: strlen (lib/string.c:276)
+0x000000800421a847: parse_path (filesys/filesys.c:192)
+0x000000800421a4f5: filesys_remove (filesys/filesys.c:131)
+0x0000008004219195: syscall_handler (userprog/syscall.c:115)
+0x0000008004218f0e: no_sti (userprog/syscall-entry.o:?)
+0x000000000040011d: (unknown)
+0x0000000000400e7d: (unknown)
+0x0000000000400ec6: (unknown)

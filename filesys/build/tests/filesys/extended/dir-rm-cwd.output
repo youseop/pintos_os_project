@@ -18,7 +18,7 @@ Executing 'dir-rm-cwd':
 (dir-rm-cwd) begin
 (dir-rm-cwd) open "/"
 Kernel PANIC at ../../lib/string.c:274 in strlen(): assertion `string' failed.
-Call stack: 0x8004213c73 0x8004213541 0x800421a80b 0x800421a445 0x8004219901 0x80042191c9 0x8004218f0e 0x400129 0x4001f6 0x4015ae 0x4015f7.
+Call stack: 0x8004213c73 0x8004213541 0x800421a847 0x800421a445 0x8004219901 0x80042191c9 0x8004218f0e 0x400129 0x4001f6 0x4015ae 0x4015f7.
 The `backtrace' program can make call stacks useful.
 Read "Backtraces" in the "Debugging Tools" chapter
 of the Pintos documentation for more information.

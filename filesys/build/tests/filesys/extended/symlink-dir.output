@@ -21,10 +21,10 @@ Executing 'symlink-dir':
 (symlink-dir) create symlink "a/link_b"
 symlink-dir: exit(4213045)
 Execution of 'symlink-dir' complete.
-Timer: 90 ticks
-Thread: 30 idle ticks, 50 kernel ticks, 10 user ticks
+Timer: 87 ticks
+Thread: 30 idle ticks, 47 kernel ticks, 10 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 143 reads, 773 writes
+hd0:1: 146 reads, 553 writes
 hd1:0: 227 reads, 0 writes
 hd1:1: 0 reads, 0 writes
 Console: 1102 characters output

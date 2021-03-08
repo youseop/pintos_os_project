@@ -21,13 +21,13 @@ Executing 'mmap-ro':
 (mmap-ro) about to write into read-only mmap'd memory
 mmap-ro: exit(-1)
 Execution of 'mmap-ro' complete.
-Timer: 294 ticks
-Thread: 30 idle ticks, 257 kernel ticks, 7 user ticks
+Timer: 215 ticks
+Thread: 30 idle ticks, 178 kernel ticks, 7 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 241 reads, 12384 writes
+hd0:1: 243 reads, 8370 writes
 hd1:0: 4018 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1119 characters output
+Console: 1118 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

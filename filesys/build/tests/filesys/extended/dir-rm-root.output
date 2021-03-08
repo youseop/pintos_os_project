@@ -6,7 +6,7 @@ thread_init start
 Pintos booting with: 
 	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
 	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
-Calibrating timer...  130,867,200 loops/s.
+Calibrating timer...  157,081,600 loops/s.
 hd0:0: detected 329 sector (164 kB) disk, model "QEMU HARDDISK", serial "QM00001"
 hd0:1: detected 4,032 sector (1 MB) disk, model "QEMU HARDDISK", serial "QM00002"
 hd1:0: detected 224 sector (112 kB) disk, model "QEMU HARDDISK", serial "QM00003"
@@ -17,17 +17,9 @@ Putting 'tar' into the file system...
 Executing 'dir-rm-root':
 (dir-rm-root) begin
 (dir-rm-root) remove "/" (must fail)
-(dir-rm-root) create "/a"
-(dir-rm-root) end
-dir-rm-root: exit(0)
-Execution of 'dir-rm-root' complete.
-Timer: 86 ticks
-Thread: 30 idle ticks, 50 kernel ticks, 6 user ticks
-hd0:0: 0 reads, 0 writes
-hd0:1: 125 reads, 756 writes
-hd1:0: 224 reads, 0 writes
-hd1:1: 0 reads, 0 writes
-Console: 1085 characters output
-Keyboard: 0 keys pressed
-Exception: 0 page faults
-Powering off...
+Kernel PANIC at ../../lib/string.c:274 in strlen(): assertion `string' failed.
+Call stack: 0x8004213c73 0x8004213541 0x800421a847 0x800421a4f5 0x8004219195 0x8004218f0e 0x40011d 0x400e7d 0x400ec6.
+The `backtrace' program can make call stacks useful.
+Read "Backtraces" in the "Debugging Tools" chapter
+of the Pintos documentation for more information.
+Kernel PANIC recursion at ../../devices/timer.c:179 in real_time_sleep().

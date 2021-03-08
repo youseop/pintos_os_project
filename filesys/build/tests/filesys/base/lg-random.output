@@ -19,28 +19,17 @@ Executing 'lg-random':
 (lg-random) open "bazzle"
 (lg-random) write "bazzle" in random order
 (lg-random) read "bazzle" in random order
-(lg-random) 93 bytes read starting at offset 19968 in "bazzle" differ from expected.
-(lg-random) Showing first differing 64 bytes.
-(lg-random) Data actually read:
-0000000000004e00  00 00 00 00 00 00 00 00-00 00 00 00 00 00 00 00 |................|
-0000000000004e10  00 00 00 00 00 00 00 00-00 00 00 00 00 00 00 00 |................|
-0000000000004e20  00 00 00 00 00 00 00 00-00 00 00 00 00 00 00 00 |................|
-0000000000004e30  00 00 00 00 00 00 00 00-00 00 00 00 00 00 00 00 |................|
-(lg-random) Expected data:
-0000000000004e00  63 be df b5 a3 83 97 73-0b 80 55 84 c7 da d1 75 |c......s..U....u|
-0000000000004e10  31 90 0f 8f e5 f7 4e f7-73 e4 8d dc 0d a3 fc 7d |1.....N.s......}|
-0000000000004e20  e2 43 e8 7a 0a 34 c7 01-93 d8 05 4e 66 fa 91 77 |.C.z.4.....Nf..w|
-0000000000004e30  ed d7 20 68 ca ca ab 92-9b 67 b6 77 8d b4 c0 07 |.. h.....g.w....|
-(lg-random) 93 bytes read starting at offset 19968 in "bazzle" differ from expected: FAILED
-lg-random: exit(1)
+(lg-random) close "bazzle"
+(lg-random) end
+lg-random: exit(0)
 Execution of 'lg-random' complete.
-Timer: 125 ticks
-Thread: 30 idle ticks, 40 kernel ticks, 55 user ticks
+Timer: 85 ticks
+Thread: 30 idle ticks, 37 kernel ticks, 18 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 239 reads, 4675 writes
+hd0:1: 388 reads, 854 writes
 hd1:0: 110 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 2048 characters output
+Console: 1127 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

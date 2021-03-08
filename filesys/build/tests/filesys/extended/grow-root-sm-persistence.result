@@ -1,12 +1,15 @@
 FAIL
-Kernel panic in file system extraction run: PANIC at ../../filesys/fat.c:198 in fat_create_chain(): fat_create_chain - return 0[need to control exception case]
-Call stack: 0x8004213c73 0x800421b1be 0x800421a331 0x800421915d 0x8004218f0e 0x4001ad 0x400137 0x401765
+Kernel panic in file system extraction run: PANIC at ../../lib/string.c:274 in strlen(): assertion `string' failed.
+Call stack: 0x8004213c73 0x8004213541 0x800421a847 0x800421a445 0x8004219901 0x80042191c9 0x8004218f0e 0x400353 0x400294 0x400137 0x401765
 Translation of call stack:
 0x0000008004213c73: debug_panic (lib/kernel/debug.c:32)
-0x000000800421b1be: fat_create_chain (filesys/fat.c:201)
-0x000000800421a331: filesys_create (filesys/filesys.c:73)
-0x000000800421915d: syscall_handler (userprog/syscall.c:106)
+0x0000008004213541: strlen (lib/string.c:276)
+0x000000800421a847: parse_path (filesys/filesys.c:192)
+0x000000800421a445: filesys_open (filesys/filesys.c:111)
+0x0000008004219901: open (userprog/syscall.c:290)
+0x00000080042191c9: syscall_handler (userprog/syscall.c:119)
 0x0000008004218f0e: no_sti (userprog/syscall-entry.o:?)
-0x00000000004001ad: (unknown)
+0x0000000000400353: (unknown)
+0x0000000000400294: (unknown)
 0x0000000000400137: (unknown)
 0x0000000000401765: (unknown)

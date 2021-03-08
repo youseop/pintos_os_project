@@ -22,10 +22,10 @@ Executing 'read-normal':
 (read-normal) end
 read-normal: exit(0)
 Execution of 'read-normal' complete.
-Timer: 82 ticks
-Thread: 30 idle ticks, 45 kernel ticks, 7 user ticks
+Timer: 84 ticks
+Thread: 30 idle ticks, 45 kernel ticks, 9 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 249 reads, 645 writes
+hd0:1: 251 reads, 544 writes
 hd1:0: 105 reads, 0 writes
 hd1:1: 0 reads, 0 writes
 Console: 1166 characters output

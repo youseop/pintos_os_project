@@ -22,16 +22,17 @@ Executing 'mmap-clean':
 (mmap-clean) munmap "sample.txt"
 (mmap-clean) seek "sample.txt"
 (mmap-clean) read "sample.txt"
-(mmap-clean) read "sample.txt": FAILED
-mmap-clean: exit(1)
+(mmap-clean) file change was retained after munmap
+(mmap-clean) end
+mmap-clean: exit(0)
 Execution of 'mmap-clean' complete.
-Timer: 85 ticks
-Thread: 30 idle ticks, 47 kernel ticks, 8 user ticks
+Timer: 87 ticks
+Thread: 30 idle ticks, 46 kernel ticks, 11 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 249 reads, 668 writes
+hd0:1: 252 reads, 560 writes
 hd1:0: 112 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1239 characters output
+Console: 1269 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

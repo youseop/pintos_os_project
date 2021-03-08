@@ -216,13 +216,14 @@ inode_close (struct inode *inode) {
 		if (inode->removed) {
 #ifdef EFILESYS
 			fat_remove_chain(inode->data.start, 0);
-			fat_remove_chain(inode->sector, 0);
+			fat_remove_chain(sector_to_cluster(inode->sector), 0);
 #else
 			free_map_release (inode->sector, 1);
 			free_map_release (inode->data.start,
 					bytes_to_sectors (inode->data.length));
 #endif
 		}
+
 		free (inode); 
 	}
 }
@@ -317,8 +318,8 @@ inode_write_at (struct inode *inode, const void *buffer_, off_t size,
 		for (int i = 0; i < extend_clst; i++){
 			start_clst = fat_create_chain(start_clst);
 		}
+		inode->data.length = size + offset;
 	}
-	inode->data.length = size + offset;
 
 	while (size > 0) {
 		/* Sector to write, starting byte offset within sector. */
@@ -400,4 +401,9 @@ inode_is_dir (const struct inode* inode) {
 bool
 inode_is_file (const struct inode* inode) {
 	return !inode->data.is_dir;
+}
+
+int
+inode_open_cnt (const struct inode *inode) {
+	return inode->open_cnt;
 }

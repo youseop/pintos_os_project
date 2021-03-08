@@ -125,15 +125,11 @@ fat_create (void) {
 	
 	// Set up ROOT_DIR_CLST
 	fat_put (ROOT_DIR_CLUSTER, EOChain);
-	
-	//?---------init free list----------------
-	ASSERT(fat_fs->fat_length > 2);
-	fat_put(2, 0);
+
+	fat_put(0, 2);
 	for (int i = 3; i < fat_fs->fat_length; i++){
-		fat_put(i, i-1);
+		fat_put(i-1, i);
 	}
-	fat_fs->last_clst = fat_fs->fat_length - 1;
-	//?---------------------------------------
 
 	// Fill up ROOT_DIR_CLUSTER region with 0
 	uint8_t *buf = calloc (1, DISK_SECTOR_SIZE);
@@ -193,12 +189,14 @@ Return the cluster number of newly allocated cluster.*/
 cluster_t
 fat_create_chain (cluster_t clst) {
 	lock_acquire(&fat_fs->write_lock);
-	cluster_t alloc_clst = fat_fs->last_clst;
+	// cluster_t alloc_clst = fat_fs->last_clst;
+	cluster_t alloc_clst = fat_get(0);
+	fat_put(0, fat_get(alloc_clst));
 	if(alloc_clst == 0){
 		PANIC("fat_create_chain - return 0[need to control exception case]");
 		return 0;
 	}
-	fat_fs->last_clst = fat_get(alloc_clst);
+	// fat_fs->last_clst = fat_get(alloc_clst);
 	lock_release(&fat_fs->write_lock);
 
 	fat_put(alloc_clst, EOChain);
@@ -229,8 +227,10 @@ fat_remove_chain (cluster_t clst, cluster_t pclst) {
 	}
 
 	lock_acquire(&fat_fs->write_lock);
-	fat_put(clst, fat_fs->last_clst);
-	fat_fs->last_clst = origin_clst;
+	// fat_put(clst, fat_fs->last_clst);
+	// fat_fs->last_clst = origin_clst;
+	fat_put(clst, fat_get(0));
+	fat_put(0, origin_clst);
 	lock_release(&fat_fs->write_lock);
 }
 

@@ -1,0 +1,21 @@
+main start
+Kernel command line: -q -f put dir-empty-name.output run dir-empty-name-persistence
+thread_init start
+0 ~ 9fc00 1
+100000 ~ 13e0000 1
+Pintos booting with: 
+	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
+	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
+Calibrating timer...  130,867,200 loops/s.
+hd0:0: detected 329 sector (164 kB) disk, model "QEMU HARDDISK", serial "QM00001"
+hd0:1: detected 20,160 sector (9 MB) disk, model "QEMU HARDDISK", serial "QM00002"
+hd1:0: detected 4 sector (2 kB) disk, model "QEMU HARDDISK", serial "QM00003"
+hd1:1: detected 8,064 sector (3 MB) disk, model "QEMU HARDDISK", serial "QM00004"
+Formatting file system...Boot complete.
+Putting 'dir-empty-name.output' into the file system...
+Kernel PANIC at ../../filesys/fsutil.c:111 in fsutil_put(): dir-empty-name.output: create failed
+Call stack: 0x8004213c73 0x800421da9a 0x80042068f8 0x80042061b2.
+The `backtrace' program can make call stacks useful.
+Read "Backtraces" in the "Debugging Tools" chapter
+of the Pintos documentation for more information.
+Kernel PANIC recursion at ../../devices/timer.c:179 in real_time_sleep().

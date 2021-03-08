@@ -10,6 +10,7 @@
 #include "threads/malloc.h"
 #include "threads/palloc.h"
 #include "threads/vaddr.h"
+#include "threads/thread.h"
 
 /* List files in the root directory. */
 void
@@ -85,6 +86,7 @@ fsutil_put (char **argv) {
 	void *buffer;
 
 	printf ("Putting '%s' into the file system...\n", file_name);
+
 
 	/* Allocate buffer. */
 	buffer = malloc (DISK_SECTOR_SIZE);

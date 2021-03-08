@@ -19,6 +19,7 @@ static void do_format (void);
  * If FORMAT is true, reformats the file system. */
 void
 filesys_init (bool format) {
+
 	filesys_disk = disk_get (0, 1);
 	if (filesys_disk == NULL)
 		PANIC ("hd0:1 (hdb) not present, file system initialization failed");
@@ -30,7 +31,7 @@ filesys_init (bool format) {
 
 	if (format)
 		do_format ();
-
+	
 	fat_open ();
 #else
 	/* Original FS */
@@ -68,11 +69,11 @@ filesys_create (const char *name, off_t initial_size) {
 
 	memcpy(path_name,name,strlen(name)+1);
 	struct dir * dir = parse_path(path_name, file_name);
-
 	bool success = (dir != NULL
 			&& (inode_sector = cluster_to_sector(fat_create_chain(0)))
 			&& inode_create (inode_sector, initial_size, false)
 			&& dir_add (dir, file_name, inode_sector));
+
 	if (!success && inode_sector != 0)
 		fat_remove_chain(sector_to_cluster(inode_sector), 0);
 	dir_close (dir);
@@ -128,6 +129,9 @@ filesys_remove (const char *name) {
 	
 	memcpy(path_name,name,strlen(name)+1);
 	struct dir * dir = parse_path(path_name, file_name);
+	
+	// lookup_in_directory(dir);
+
 	bool success = (dir != NULL && dir_remove (dir, file_name));
 	dir_close (dir);
 
@@ -176,9 +180,9 @@ struct dir* parse_path (char *path_name, char *file_name) {
 	while (token && nextToken) {
 		dir_lookup(dir, token, &inode);
 		if (inode == NULL || inode_is_file(inode)){
-			printf("is file!!!!!!!!!!!!!!!!\n");
 			return NULL;
 		}
+		dir_close(dir);
 		dir = dir_open(inode);
 		
 		token = nextToken;
