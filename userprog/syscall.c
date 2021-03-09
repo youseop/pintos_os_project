@@ -231,7 +231,8 @@ int read (int fd, void *buffer, unsigned size){
   exit(-1);  
 }
 
-int write (int fd, const void *buffer, unsigned size){
+int 
+write (int fd, const void *buffer, unsigned size){
   lock_acquire(&filesys_lock);
   if(fd == 1){
     putbuf(buffer, size);
@@ -248,14 +249,14 @@ int write (int fd, const void *buffer, unsigned size){
       lock_release(&filesys_lock);
       return -1;
     }
-
     size = file_write(f, buffer, size);
     lock_release(&filesys_lock);
     return size;
   }
 }
 
-void check_address(void *addr, int status)
+void 
+check_address(void *addr, int status)
 {
   /* 포인터가 가리키는 주소가 유저영역의 주소인지 확인 */
   /* 잘못된 접근일 경우 프로세스 종료 */
@@ -265,7 +266,8 @@ void check_address(void *addr, int status)
   }
 }
 
-void exit (int status) {
+void 
+exit (int status) {
   struct thread * curr = thread_current();
 
   curr->exit_status = status;
@@ -274,15 +276,18 @@ void exit (int status) {
 }
 
 
-void halt (void){
+void 
+halt (void){
   power_off();
 }
 
-int exec(const char*cmd_line){
+int 
+exec(const char*cmd_line){
   return process_exec(cmd_line);
 }
 
-int wait(tid_t tid){
+int 
+wait(tid_t tid){
   return process_wait(tid);
 }
 
@@ -290,7 +295,8 @@ int wait(tid_t tid){
 /* 해당 파일 객체에 파일 디스크립터 부여 */
 /* 파일 디스크립터 리턴 */
 /* 해당 파일이 존재하지 않으면 -1 리턴 */
-int open(const char *file){
+int 
+open(const char *file){
   struct file *f = filesys_open(file);
   if (f == NULL){
     return -1;
@@ -301,7 +307,8 @@ int open(const char *file){
 /* 파일 디스크립터를 이용하여 파일 객체 검색 */
 /* 해당 파일의 길이를 리턴 */
 /* 해당 파일이 존재하지 않으면 -1 리턴 */
-int filesize (int fd){
+int 
+filesize (int fd){
   struct file *f = process_get_file(fd);
   if(f == NULL)
     return -1;
@@ -320,7 +327,8 @@ void seek (int fd, unsigned position){
 
 /* 파일 디스크립터를 이용하여 파일 객체 검색 */
 /* 해당 열린 파일의 위치를 반환 */
-unsigned tell (int fd){
+unsigned 
+tell (int fd){
   struct file *f = process_get_file(fd);
   return file_tell(f);
 }
@@ -331,7 +339,8 @@ void close(int fd){
   process_close_file(fd);
 }
 
-void *mmap (void *addr, size_t length, int writable, int fd, off_t offset){
+void *
+mmap (void *addr, size_t length, int writable, int fd, off_t offset){
   
   struct file* file = process_get_file(fd);
   
@@ -365,25 +374,29 @@ void *mmap (void *addr, size_t length, int writable, int fd, off_t offset){
   return do_mmap(addr, length, writable, new_file, offset);
 }
 
-void munmap (void *addr){
+void 
+munmap (void *addr){
   if (addr == pg_round_down(addr))
     do_munmap(addr);
   return;
 }
 
-bool isdir (int fd){
+bool 
+isdir (int fd){
   ASSERT(fd >= 2);
   struct file *f = process_get_file(fd);
   ASSERT(f);
   return is_dir(f);
 }
 
-bool mkdir (const char *dir){
+bool 
+mkdir (const char *dir){
   ASSERT(dir);
   return dir_mkdir (dir);
 }
 
-bool chdir (const char *dir){
+bool 
+chdir (const char *dir){
   if (!strcmp(dir, "/"))
     return true;
 
@@ -395,17 +408,21 @@ bool chdir (const char *dir){
   struct inode *inode = NULL;
   dir_lookup(get_dir, dir, &inode);
   ASSERT((inode == NULL || !inode_is_file(inode)));
+  dir_close(get_dir);
+
   get_dir = dir_open(inode);
   dir_close(thread_current()->curr_dir);
   thread_current()->curr_dir = get_dir;
 }
 
-int inumber (int fd){
+int 
+inumber (int fd){
   struct file *f = process_get_file(fd);
   return inode_get_inumber (file_get_inode (f));
 }
 
-bool readdir (int fd, char *name){
+bool 
+readdir (int fd, char *name){
   struct dir *dir = process_get_file (fd);
   if(!is_dir(dir)){
     return false;

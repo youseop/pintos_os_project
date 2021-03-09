@@ -7,7 +7,7 @@ Pintos booting with:
 	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
 	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
 Calibrating timer...  157,081,600 loops/s.
-hd0:0: detected 329 sector (164 kB) disk, model "QEMU HARDDISK", serial "QM00001"
+hd0:0: detected 337 sector (168 kB) disk, model "QEMU HARDDISK", serial "QM00001"
 hd0:1: detected 4,032 sector (1 MB) disk, model "QEMU HARDDISK", serial "QM00002"
 hd1:0: detected 228 sector (114 kB) disk, model "QEMU HARDDISK", serial "QM00003"
 hd1:1: detected 8,064 sector (3 MB) disk, model "QEMU HARDDISK", serial "QM00004"
@@ -17,15 +17,34 @@ Putting 'tar' into the file system...
 Executing 'symlink-link':
 (symlink-link) begin
 (symlink-link) create symlink "link_a"
-symlink-link: exit(4213138)
+(symlink-link) create symlink "link_b"
+(symlink-link) create symlink "link_c"
+(symlink-link) create "file"
+(symlink-link) open "link_c"
+(symlink-link) write "link_c"
+(symlink-link) close "link_c"
+(symlink-link) open "file" for verification
+(symlink-link) verified contents of "file"
+(symlink-link) close "file"
+(symlink-link) open "link_a" for verification
+(symlink-link) verified contents of "link_a"
+(symlink-link) close "link_a"
+(symlink-link) open "link_b" for verification
+(symlink-link) verified contents of "link_b"
+(symlink-link) close "link_b"
+(symlink-link) open "link_c" for verification
+(symlink-link) verified contents of "link_c"
+(symlink-link) close "link_c"
+(symlink-link) end
+symlink-link: exit(0)
 Execution of 'symlink-link' complete.
-Timer: 80 ticks
-Thread: 30 idle ticks, 44 kernel ticks, 6 user ticks
+Timer: 123 ticks
+Thread: 30 idle ticks, 48 kernel ticks, 46 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 117 reads, 539 writes
+hd0:1: 868 reads, 880 writes
 hd1:0: 228 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1056 characters output
+Console: 1745 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

@@ -23,7 +23,6 @@ write_some_bytes (const char *file_name, int fd, const char *buf, size_t *ofs)
       size_t ret_val;
       if (block_size > FILE_SIZE - *ofs)
         block_size = FILE_SIZE - *ofs;
-
       ret_val = write (fd, buf + *ofs, block_size);
       if (ret_val != block_size)
         fail ("write %zu bytes at offset %zu in \"%s\" returned %zu",

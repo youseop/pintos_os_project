@@ -74,6 +74,7 @@ filesys_create (const char *name, off_t initial_size) {
 	char file_name[NAME_MAX + 1];
 
 	int cpy_len = NAME_MAX > strlen(name) ? strlen(name) : NAME_MAX;
+	
 	memcpy(path_name,name,cpy_len+1);
 	struct dir * dir = parse_path(path_name, file_name);
 	bool success = (dir != NULL
@@ -111,13 +112,11 @@ filesys_create (const char *name, off_t initial_size) {
  * or if an internal memory allocation fails. */
 struct file *
 filesys_open (const char *name) {
-
 	if (!strcmp(name, "/"))
 		return dir_open_root();
 
 	char path_name[NAME_MAX + 1];
 	char file_name[NAME_MAX + 1];
-	
 	memcpy(path_name,name,strlen(name)+1);
 	struct dir * dir = parse_path(path_name, file_name);
 
@@ -126,6 +125,12 @@ filesys_open (const char *name) {
 		dir_lookup (dir, file_name, &inode);
 	dir_close (dir);
 
+	if(inode == NULL){
+		return NULL;
+	}
+	else if (inode_is_link (inode)){
+		return filesys_open (inode_get_path(inode));
+	}
 	return file_open (inode);
 }
 
@@ -187,22 +192,37 @@ parse_path (char *path_name, char *file_name) {
 	}
 
 	char *token, *nextToken, *savePtr;
+	char link_path[NAME_MAX + 1];
+	char origin_path[NAME_MAX + 1];
+	struct inode *inode = NULL;
+	struct dir *get_dir = NULL;
+
 	token = strtok_r (path_name, "/", &savePtr);
 	nextToken = strtok_r (NULL, "/", &savePtr);
-	struct inode *inode = NULL;
 
 	while (token && nextToken) {
 		dir_lookup(dir, token, &inode);
-		if (inode == NULL || inode_is_file(inode)){
+		if (inode == NULL)
 			return NULL;
-		}
+	
 		dir_close(dir);
+		if (inode_is_link(inode)){
+			memcpy(origin_path, inode_get_path(inode), strlen(inode_get_path(inode))+1);
+			get_dir = parse_path(origin_path, link_path);
+			
+			inode_close(inode);
+			dir_lookup(get_dir, link_path, &inode);
+  		ASSERT((inode == NULL || !inode_is_file(inode)));
+		}
+
+		if (inode_is_file(inode))
+			return NULL;
+		
 		dir = dir_open(inode);
 		
 		token = nextToken;
 		nextToken = strtok_r (NULL, "/", &savePtr);
 	}
-
 	memcpy(file_name, token, strlen(token)+1);
 	return dir;
 }

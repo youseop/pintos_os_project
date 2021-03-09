@@ -28,4 +28,6 @@ bool dir_remove (struct dir *, const char *name);
 bool dir_readdir (struct dir *, char name[NAME_MAX + 1]);
 int dir_open_cnt (const struct dir *dir);
 void lookup_in_directory (const struct dir *dir);
+int dir_symlink(const char *target, const char *linkpath);
+
 #endif /* filesys/directory.h */

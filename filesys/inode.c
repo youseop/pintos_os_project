@@ -19,7 +19,7 @@ struct inode_disk {
 	unsigned magic;                     /* Magic number. */
 	bool is_dir;
 	bool is_link;
-	char link_string[495];               /* Not used. */
+	char soft_link[495];               /* Not used. */
 };
 
 /* Returns the number of sectors to allocate for an inode SIZE
@@ -98,6 +98,7 @@ inode_create (disk_sector_t sector, off_t length, bool is_dir) {
 		disk_inode->length = length;
 		disk_inode->magic = INODE_MAGIC;
 		disk_inode->is_dir = is_dir;
+		disk_inode->is_link = false;
 		static char zeros[DISK_SECTOR_SIZE];
 		cluster_t first_cluster = fat_create_chain(0);
 		if (first_cluster == 0)
@@ -294,6 +295,7 @@ inode_read_at (struct inode *inode, void *buffer_, off_t size, off_t offset) {
 off_t
 inode_write_at (struct inode *inode, const void *buffer_, off_t size,
 		off_t offset) {
+
 	const uint8_t *buffer = buffer_;
 	off_t bytes_written = 0;
 	uint8_t *bounce = NULL;
@@ -390,7 +392,7 @@ inode_allow_write (struct inode *inode) {
 
 /* Returns the length, in bytes, of INODE's data. */
 off_t
-inode_length (const struct inode *inode) {
+inode_length (const struct inode* inode) {
 	return inode->data.length;
 }
 
@@ -404,7 +406,30 @@ inode_is_file (const struct inode* inode) {
 	return !inode->data.is_dir;
 }
 
+bool
+inode_is_link (const struct inode* inode) {
+	return inode->data.is_link;
+}
+
 int
-inode_open_cnt (const struct inode *inode) {
+inode_open_cnt (const struct inode* inode) {
 	return inode->open_cnt;
+}
+
+bool
+inode_set_link (disk_sector_t inode_sector, const char *target) {
+	struct inode *inode = inode_open(inode_sector);
+	if(inode){
+		inode->data.is_link = true;
+		memcpy(inode->data.soft_link, target, strlen(target)+1);
+		inode_close(inode);
+		return true;
+	}
+	inode_close(inode);
+	return false;
+}
+
+char*
+inode_get_path (const struct inode* inode) {
+	return inode->data.soft_link;
 }

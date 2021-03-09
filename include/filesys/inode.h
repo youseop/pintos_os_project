@@ -14,11 +14,18 @@ struct inode *inode_reopen (struct inode *);
 disk_sector_t inode_get_inumber (const struct inode *);
 void inode_close (struct inode *);
 void inode_remove (struct inode *);
-off_t inode_read_at (struct inode *, void *, off_t size, off_t offset);
-off_t inode_write_at (struct inode *, const void *, off_t size, off_t offset);
+off_t inode_read_at (struct inode *, void *, off_t, off_t);
+off_t inode_write_at (struct inode *, const void *, off_t, off_t);
 void inode_deny_write (struct inode *);
 void inode_allow_write (struct inode *);
 off_t inode_length (const struct inode *);
+
 bool inode_is_dir (const struct inode *);
-int inode_open_cnt (const struct inode *inode); 
+bool inode_is_file (const struct inode *);
+bool inode_is_link (const struct inode*);
+
+int inode_open_cnt (const struct inode *); 
+bool inode_set_link (disk_sector_t, const char *);
+char* inode_get_path (const struct inode*);
+
 #endif /* filesys/inode.h */

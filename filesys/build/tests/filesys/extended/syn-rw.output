@@ -6,8 +6,8 @@ thread_init start
 Pintos booting with: 
 	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
 	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
-Calibrating timer...  157,081,600 loops/s.
-hd0:0: detected 329 sector (164 kB) disk, model "QEMU HARDDISK", serial "QM00001"
+Calibrating timer...  130,867,200 loops/s.
+hd0:0: detected 337 sector (168 kB) disk, model "QEMU HARDDISK", serial "QM00001"
 hd0:1: detected 4,032 sector (1 MB) disk, model "QEMU HARDDISK", serial "QM00002"
 hd1:0: detected 344 sector (172 kB) disk, model "QEMU HARDDISK", serial "QM00003"
 hd1:1: detected 8,064 sector (3 MB) disk, model "QEMU HARDDISK", serial "QM00004"
@@ -23,10 +23,10 @@ Executing 'syn-rw':
 (syn-rw) exec child 2 of 4: "child-syn-rw 1"
 (syn-rw) exec child 3 of 4: "child-syn-rw 2"
 (syn-rw) exec child 4 of 4: "child-syn-rw 3"
-child-syn-rw: exit(3)
-child-syn-rw: exit(2)
 child-syn-rw: exit(1)
 child-syn-rw: exit(0)
+child-syn-rw: exit(3)
+child-syn-rw: exit(2)
 (syn-rw) wait for child 1 of 4 returned 0 (expected 0)
 (syn-rw) wait for child 2 of 4 returned 1 (expected 1)
 (syn-rw) wait for child 3 of 4 returned 2 (expected 2)
@@ -34,8 +34,8 @@ child-syn-rw: exit(0)
 (syn-rw) end
 syn-rw: exit(0)
 Execution of 'syn-rw' complete.
-Timer: 220 ticks
-Thread: 30 idle ticks, 59 kernel ticks, 132 user ticks
+Timer: 211 ticks
+Thread: 30 idle ticks, 56 kernel ticks, 125 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 934 reads, 1325 writes
 hd1:0: 344 reads, 0 writes

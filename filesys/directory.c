@@ -280,3 +280,28 @@ lookup_in_directory (const struct dir *dir) {
 	printf("----[lookup_in_directory]---- end!!!\n ");
 }
 
+int
+dir_symlink(const char *target, const char *linkpath){
+	//symlink ("/a/b", "/a/link_b")
+	//a폴더에 link_b를 만들자 link_b에는 /a/b링크가 저장되어 있음!
+	disk_sector_t inode_sector = 0;
+	char path_name[NAME_MAX + 1];
+	char file_name[NAME_MAX + 1];
+
+	memcpy(path_name,linkpath,strlen(linkpath)+1);
+	struct dir * dir = parse_path(path_name, file_name);
+	bool success = (dir != NULL
+			&& (inode_sector = cluster_to_sector(fat_create_chain(0)))
+			&& inode_create (inode_sector, 0, false)
+			&& dir_add (dir, file_name, inode_sector));
+
+	inode_set_link(inode_sector, target);
+
+	if (!success && inode_sector != 0)
+		fat_remove_chain(sector_to_cluster(inode_sector), 0);
+	dir_close (dir);
+	
+	if (success)
+		return 0;
+	return -1;
+}

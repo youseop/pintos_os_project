@@ -1,2 +1,1 @@
-FAIL
-Prerequisite test tests/filesys/extended/symlink-dir failed.
+PASS
