@@ -26,7 +26,7 @@ Execution of 'mmap-overlap' complete.
 Timer: 83 ticks
 Thread: 30 idle ticks, 45 kernel ticks, 8 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 247 reads, 574 writes
+hd0:1: 248 reads, 575 writes
 hd1:0: 119 reads, 0 writes
 hd1:1: 0 reads, 0 writes
 Console: 1170 characters output

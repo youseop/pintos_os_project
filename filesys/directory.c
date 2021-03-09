@@ -265,7 +265,7 @@ dir_open_cnt (const struct dir *dir){
 	return inode_open_cnt(dir->inode);
 }
 
-
+/*for debuging*/
 void
 lookup_in_directory (const struct dir *dir) {
 	struct dir_entry e;
@@ -279,3 +279,4 @@ lookup_in_directory (const struct dir *dir) {
 	}
 	printf("----[lookup_in_directory]---- end!!!\n ");
 }
+

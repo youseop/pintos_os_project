@@ -30,6 +30,7 @@ bool mkdir (const char *dir);
 bool chdir (const char *dir);
 int inumber (int fd);
 bool readdir (int fd, char *name);
+int symlink (const char *target, const char *linkpath);
 
 struct lock filesys_lock;
 

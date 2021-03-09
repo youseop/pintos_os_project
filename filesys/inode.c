@@ -18,7 +18,8 @@ struct inode_disk {
 	off_t length;                  			/* file length */
 	unsigned magic;                     /* Magic number. */
 	bool is_dir;
-	uint32_t unused[124];               /* Not used. */
+	bool is_link;
+	char link_string[495];               /* Not used. */
 };
 
 /* Returns the number of sectors to allocate for an inode SIZE

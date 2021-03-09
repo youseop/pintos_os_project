@@ -21,10 +21,10 @@ Executing 'dir-under-file':
 (dir-under-file) end
 dir-under-file: exit(0)
 Execution of 'dir-under-file' complete.
-Timer: 81 ticks
-Thread: 30 idle ticks, 43 kernel ticks, 8 user ticks
+Timer: 83 ticks
+Thread: 29 idle ticks, 46 kernel ticks, 8 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 133 reads, 542 writes
+hd0:1: 134 reads, 543 writes
 hd1:0: 224 reads, 0 writes
 hd1:1: 0 reads, 0 writes
 Console: 1125 characters output

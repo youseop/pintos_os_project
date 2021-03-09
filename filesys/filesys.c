@@ -38,8 +38,6 @@ filesys_init (bool format) {
 	 *들어가 있다면, curr_dir을 찾지 못하는 문제가 발생한다.	*/
 	struct dir* curr_dir = dir_open (inode_open (cluster_to_sector (ROOT_DIR_CLUSTER)));
 	thread_current()->curr_dir = curr_dir;
-	dir_add (curr_dir, ".", inode_get_inumber(dir_get_inode(curr_dir)));
-	dir_add (curr_dir, "..", inode_get_inumber(dir_get_inode(curr_dir)));
 	fat_open ();
 #else
 	/* Original FS */
@@ -164,11 +162,10 @@ do_format (void) {
 		PANIC ("root directory creation failed");
 	fat_close ();
 
-	//?.. .은 여기에 위치해야할수도...?
-	// struct dir* curr_dir = dir_open (inode_open (cluster_to_sector (ROOT_DIR_CLUSTER)));
-	// thread_current()->curr_dir = curr_dir;
-	// dir_add (curr_dir, ".", inode_get_inumber(dir_get_inode(curr_dir)));
-	// dir_add (curr_dir, "..", inode_get_inumber(dir_get_inode(curr_dir)));
+	struct dir* curr_dir = dir_open (inode_open (cluster_to_sector (ROOT_DIR_CLUSTER)));
+	dir_add (curr_dir, ".", inode_get_inumber(dir_get_inode(curr_dir)));
+	dir_add (curr_dir, "..", inode_get_inumber(dir_get_inode(curr_dir)));
+	dir_close(curr_dir);
 #else
 	free_map_create ();
 	if (!dir_create (ROOT_DIR_SECTOR, 16))

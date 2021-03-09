@@ -52,10 +52,10 @@ Executing 'priority-donate-chain':
 (priority-donate-chain) main finishing with priority 0.
 (priority-donate-chain) end
 Execution of 'priority-donate-chain' complete.
-Timer: 83 ticks
-Thread: 30 idle ticks, 53 kernel ticks, 0 user ticks
+Timer: 84 ticks
+Thread: 30 idle ticks, 55 kernel ticks, 0 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 168 reads, 335 writes
+hd0:1: 169 reads, 336 writes
 hd1:1: 0 reads, 0 writes
 Console: 3064 characters output
 Keyboard: 0 keys pressed

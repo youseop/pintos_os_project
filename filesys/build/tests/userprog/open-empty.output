@@ -18,10 +18,10 @@ Executing 'open-empty':
 (open-empty) end
 open-empty: exit(0)
 Execution of 'open-empty' complete.
-Timer: 77 ticks
-Thread: 30 idle ticks, 42 kernel ticks, 5 user ticks
+Timer: 83 ticks
+Thread: 30 idle ticks, 48 kernel ticks, 5 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 225 reads, 534 writes
+hd0:1: 226 reads, 535 writes
 hd1:0: 103 reads, 0 writes
 hd1:1: 0 reads, 0 writes
 Console: 968 characters output

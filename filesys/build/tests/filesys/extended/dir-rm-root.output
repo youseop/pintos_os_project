@@ -24,7 +24,7 @@ Execution of 'dir-rm-root' complete.
 Timer: 80 ticks
 Thread: 30 idle ticks, 44 kernel ticks, 6 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 123 reads, 535 writes
+hd0:1: 124 reads, 536 writes
 hd1:0: 224 reads, 0 writes
 hd1:1: 0 reads, 0 writes
 Console: 1085 characters output

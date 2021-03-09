@@ -20,10 +20,10 @@ Executing 'read-zero':
 (read-zero) end
 read-zero: exit(0)
 Execution of 'read-zero' complete.
-Timer: 79 ticks
-Thread: 30 idle ticks, 44 kernel ticks, 5 user ticks
+Timer: 81 ticks
+Thread: 30 idle ticks, 44 kernel ticks, 7 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 243 reads, 544 writes
+hd0:1: 244 reads, 545 writes
 hd1:0: 105 reads, 0 writes
 hd1:1: 0 reads, 0 writes
 Console: 1050 characters output

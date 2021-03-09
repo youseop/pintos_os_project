@@ -13,7 +13,6 @@ static bool make_tar_archive (const char *archive_name,
 int
 main (int argc, char *argv[]) 
 {
-  printf("start tar main\n");
   if (argc < 3)
     usage ();
   return (make_tar_archive (argv[1], argv + 2, argc - 2)

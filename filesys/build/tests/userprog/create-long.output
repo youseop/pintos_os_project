@@ -19,10 +19,10 @@ Executing 'create-long':
 (create-long) end
 create-long: exit(0)
 Execution of 'create-long' complete.
-Timer: 79 ticks
-Thread: 30 idle ticks, 44 kernel ticks, 5 user ticks
+Timer: 83 ticks
+Thread: 30 idle ticks, 48 kernel ticks, 5 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 225 reads, 538 writes
+hd0:1: 226 reads, 539 writes
 hd1:0: 103 reads, 0 writes
 hd1:1: 0 reads, 0 writes
 Console: 1008 characters output

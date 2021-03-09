@@ -22,7 +22,7 @@ Execution of 'symlink-link' complete.
 Timer: 80 ticks
 Thread: 30 idle ticks, 44 kernel ticks, 6 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 116 reads, 538 writes
+hd0:1: 117 reads, 539 writes
 hd1:0: 228 reads, 0 writes
 hd1:1: 0 reads, 0 writes
 Console: 1056 characters output

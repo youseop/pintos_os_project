@@ -38,19 +38,19 @@ child-sort: exit(123)
 (page-merge-par) wait for child 3
 (page-merge-par) wait for child 4
 (page-merge-par) wait for child 5
+child-sort: exit(123)
 (page-merge-par) wait for child 6
 (page-merge-par) wait for child 7
-child-sort: exit(123)
 (page-merge-par) merge
 (page-merge-par) verify
 (page-merge-par) success, buf_idx=1,048,576
 (page-merge-par) end
 page-merge-par: exit(0)
 Execution of 'page-merge-par' complete.
-Timer: 401 ticks
-Thread: 30 idle ticks, 78 kernel ticks, 294 user ticks
+Timer: 393 ticks
+Thread: 30 idle ticks, 77 kernel ticks, 286 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 4949 reads, 7016 writes
+hd0:1: 4951 reads, 7017 writes
 hd1:0: 218 reads, 0 writes
 hd1:1: 0 reads, 0 writes
 Console: 1867 characters output

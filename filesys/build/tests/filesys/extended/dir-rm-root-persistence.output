@@ -19,7 +19,7 @@ Getting 'fs.tar' from the file system...
 Timer: 91 ticks
 Thread: 30 idle ticks, 36 kernel ticks, 26 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 593 reads, 509 writes
+hd0:1: 590 reads, 509 writes
 hd1:0: 0 reads, 229 writes
 hd1:1: 0 reads, 0 writes
 Console: 893 characters output

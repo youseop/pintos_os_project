@@ -19,41 +19,10 @@ Executing 'page-merge-mm':
 (page-merge-mm) init
 (page-merge-mm) sort chunk 0
 (page-merge-mm) sort chunk 1
-child-qsort-mm: exit(80)
 (page-merge-mm) sort chunk 2
 child-qsort-mm: exit(80)
 (page-merge-mm) sort chunk 3
 child-qsort-mm: exit(80)
-(page-merge-mm) sort chunk 4
-child-qsort-mm: exit(80)
-(page-merge-mm) sort chunk 5
-child-qsort-mm: exit(80)
-(page-merge-mm) sort chunk 6
-(page-merge-mm) sort chunk 7
-child-qsort-mm: exit(80)
-child-qsort-mm: exit(80)
-(page-merge-mm) wait for child 0
-(page-merge-mm) wait for child 1
-(page-merge-mm) wait for child 2
-(page-merge-mm) wait for child 3
-(page-merge-mm) wait for child 4
-(page-merge-mm) wait for child 5
-(page-merge-mm) wait for child 6
-(page-merge-mm) wait for child 7
-child-qsort-mm: exit(80)
-(page-merge-mm) merge
-(page-merge-mm) verify
-(page-merge-mm) success, buf_idx=1,048,576
-(page-merge-mm) end
-page-merge-mm: exit(0)
-Execution of 'page-merge-mm' complete.
-Timer: 455 ticks
-Thread: 30 idle ticks, 70 kernel ticks, 355 user ticks
-hd0:0: 0 reads, 0 writes
-hd0:1: 4955 reads, 7028 writes
-hd1:0: 224 reads, 0 writes
-hd1:1: 0 reads, 0 writes
-Console: 1871 characters output
-Keyboard: 0 keys pressed
-Exception: 0 page faults
-Powering off...
+Kernel PANIC at ../../threads/synch.c:248 in lock_release(): assertion `lock_held_by_current_thread (lock)' failed.
+Call stack: 0x8004213c73 0x800420a801 0x8004217e39 0x80042178b1 0x80042198c6 0x80042190f7 0x8004218f0echild-qsort-mm: exit(-1)
+Kernel PANIC recursion at ../../threads/thread.c:337 in thread_current().

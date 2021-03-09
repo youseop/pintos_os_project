@@ -158,6 +158,9 @@ syscall_handler (struct intr_frame *f UNUSED) {
     case SYS_READDIR:
       f->R.rax = readdir (f->R.rdi, f->R.rsi);
       break;
+    case SYS_SYMLINK:
+      f->R.rax = symlink (f->R.rdi, f->R.rsi);
+      break;
     default:
       exit(f->R.rdi);
       break;
@@ -409,4 +412,13 @@ bool readdir (int fd, char *name){
   }
   bool success = dir_readdir(dir, name);
   return success;
+}
+
+/*Creates a symbolic link named linkpath which contains 
+the string target. On success, zero is returned. 
+Otherwise, -1 is returned.*/
+int symlink (const char *target, const char *linkpath){
+  if (target && linkpath && strlen(target) && strlen(linkpath))
+    return dir_symlink(target, linkpath);
+  return -1;
 }

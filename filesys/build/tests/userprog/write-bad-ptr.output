@@ -22,7 +22,7 @@ Execution of 'write-bad-ptr' complete.
 Timer: 80 ticks
 Thread: 30 idle ticks, 44 kernel ticks, 6 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 244 reads, 544 writes
+hd0:1: 245 reads, 545 writes
 hd1:0: 105 reads, 0 writes
 hd1:1: 0 reads, 0 writes
 Console: 1067 characters output

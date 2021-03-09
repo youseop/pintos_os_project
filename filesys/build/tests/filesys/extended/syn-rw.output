@@ -23,10 +23,10 @@ Executing 'syn-rw':
 (syn-rw) exec child 2 of 4: "child-syn-rw 1"
 (syn-rw) exec child 3 of 4: "child-syn-rw 2"
 (syn-rw) exec child 4 of 4: "child-syn-rw 3"
-child-syn-rw: exit(1)
-child-syn-rw: exit(0)
 child-syn-rw: exit(3)
 child-syn-rw: exit(2)
+child-syn-rw: exit(1)
+child-syn-rw: exit(0)
 (syn-rw) wait for child 1 of 4 returned 0 (expected 0)
 (syn-rw) wait for child 2 of 4 returned 1 (expected 1)
 (syn-rw) wait for child 3 of 4 returned 2 (expected 2)
@@ -34,13 +34,13 @@ child-syn-rw: exit(2)
 (syn-rw) end
 syn-rw: exit(0)
 Execution of 'syn-rw' complete.
-Timer: 185 ticks
-Thread: 30 idle ticks, 56 kernel ticks, 99 user ticks
+Timer: 220 ticks
+Thread: 30 idle ticks, 59 kernel ticks, 132 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 933 reads, 1324 writes
+hd0:1: 934 reads, 1325 writes
 hd1:0: 344 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1587 characters output
+Console: 1588 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...
