@@ -23,8 +23,8 @@ child-simple: exit(81)
 (exec-boundary) end
 exec-boundary: exit(0)
 Execution of 'exec-boundary' complete.
-Timer: 91 ticks
-Thread: 30 idle ticks, 52 kernel ticks, 9 user ticks
+Timer: 89 ticks
+Thread: 30 idle ticks, 50 kernel ticks, 9 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 291 reads, 749 writes
 hd1:0: 207 reads, 0 writes

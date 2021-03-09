@@ -6,7 +6,7 @@ thread_init start
 Pintos booting with: 
 	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
 	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
-Calibrating timer...  154,624,000 loops/s.
+Calibrating timer...  157,081,600 loops/s.
 hd0:0: detected 329 sector (164 kB) disk, model "QEMU HARDDISK", serial "QM00001"
 hd0:1: detected 4,032 sector (1 MB) disk, model "QEMU HARDDISK", serial "QM00002"
 hd1:0: detected 224 sector (112 kB) disk, model "QEMU HARDDISK", serial "QM00003"
@@ -26,8 +26,8 @@ Executing 'grow-seq-lg':
 (grow-seq-lg) end
 grow-seq-lg: exit(0)
 Execution of 'grow-seq-lg' complete.
-Timer: 104 ticks
-Thread: 30 idle ticks, 46 kernel ticks, 28 user ticks
+Timer: 103 ticks
+Thread: 30 idle ticks, 44 kernel ticks, 29 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 396 reads, 883 writes
 hd1:0: 224 reads, 0 writes

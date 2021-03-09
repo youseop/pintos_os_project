@@ -16,8 +16,8 @@ Executing 'alarm-negative':
 (alarm-negative) PASS
 (alarm-negative) end
 Execution of 'alarm-negative' complete.
-Timer: 64 ticks
-Thread: 30 idle ticks, 34 kernel ticks, 0 user ticks
+Timer: 61 ticks
+Thread: 30 idle ticks, 32 kernel ticks, 0 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 168 reads, 321 writes
 hd1:1: 0 reads, 0 writes

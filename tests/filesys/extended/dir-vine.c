@@ -55,7 +55,9 @@ test_main (void)
       CHECK ((fd = open (".")) > 1, "open \".\"");
       CHECK (readdir (fd, name[0]), "readdir \".\"");
       CHECK (readdir (fd, name[1]), "readdir \".\"");
+
       CHECK (!readdir (fd, name[2]), "readdir \".\" (should fail)");
+
       CHECK ((!strcmp (name[0], dir_name) && !strcmp (name[1], file_name))
              || (!strcmp (name[1], dir_name) && !strcmp (name[0], file_name)),
              "names should be \"%s\" and \"%s\", "

@@ -1,2 +1,1 @@
-FAIL
-Prerequisite test tests/filesys/extended/dir-rm-cwd failed.
+PASS

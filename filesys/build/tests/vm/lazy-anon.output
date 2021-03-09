@@ -41,8 +41,8 @@ Executing 'lazy-anon':
 (lazy-anon) end
 lazy-anon: exit(0)
 Execution of 'lazy-anon' complete.
-Timer: 89 ticks
-Thread: 30 idle ticks, 46 kernel ticks, 13 user ticks
+Timer: 90 ticks
+Thread: 30 idle ticks, 46 kernel ticks, 14 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 226 reads, 538 writes
 hd1:0: 105 reads, 0 writes

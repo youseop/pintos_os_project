@@ -6,7 +6,7 @@ thread_init start
 Pintos booting with: 
 	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
 	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
-Calibrating timer...  157,081,600 loops/s.
+Calibrating timer...  130,867,200 loops/s.
 hd0:0: detected 329 sector (164 kB) disk, model "QEMU HARDDISK", serial "QM00001"
 hd0:1: detected 20,160 sector (9 MB) disk, model "QEMU HARDDISK", serial "QM00002"
 hd1:0: detected 224 sector (112 kB) disk, model "QEMU HARDDISK", serial "QM00003"
@@ -38,17 +38,17 @@ child-qsort: exit(72)
 (page-merge-stk) wait for child 3
 (page-merge-stk) wait for child 4
 (page-merge-stk) wait for child 5
+child-qsort: exit(72)
 (page-merge-stk) wait for child 6
 (page-merge-stk) wait for child 7
-child-qsort: exit(72)
 (page-merge-stk) merge
 (page-merge-stk) verify
 (page-merge-stk) success, buf_idx=1,048,576
 (page-merge-stk) end
 page-merge-stk: exit(0)
 Execution of 'page-merge-stk' complete.
-Timer: 450 ticks
-Thread: 30 idle ticks, 75 kernel ticks, 345 user ticks
+Timer: 455 ticks
+Thread: 30 idle ticks, 76 kernel ticks, 349 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 4962 reads, 7028 writes
 hd1:0: 224 reads, 0 writes

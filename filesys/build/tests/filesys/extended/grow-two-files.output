@@ -32,13 +32,13 @@ Executing 'grow-two-files':
 (grow-two-files) end
 grow-two-files: exit(0)
 Execution of 'grow-two-files' complete.
-Timer: 100 ticks
-Thread: 30 idle ticks, 50 kernel ticks, 20 user ticks
+Timer: 97 ticks
+Thread: 30 idle ticks, 46 kernel ticks, 21 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 255 reads, 653 writes
 hd1:0: 228 reads, 0 writes
 hd1:1: 0 reads, 0 writes
-Console: 1481 characters output
+Console: 1480 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

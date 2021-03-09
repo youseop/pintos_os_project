@@ -154,14 +154,15 @@ syscall_handler (struct intr_frame *f UNUSED) {
       break;
     case SYS_INUMBER:
       f->R.rax = inumber (f->R.rdi);
+      break;
     case SYS_READDIR:
       f->R.rax = readdir (f->R.rdi, f->R.rsi);
+      break;
     default:
       exit(f->R.rdi);
       break;
   }
 }
-
 
 /* 유저 스택에 저장된 인자값들을 커널로 저장 */
 /* 인자가 저장된 위치가 유저영역인지 확인 */
@@ -380,6 +381,9 @@ bool mkdir (const char *dir){
 }
 
 bool chdir (const char *dir){
+  if (!strcmp(dir, "/"))
+    return true;
+
 	char path_name[NAME_MAX + 1];
   char *file_name;
 	memcpy(path_name,dir,strlen(dir)+1);
@@ -389,7 +393,7 @@ bool chdir (const char *dir){
   dir_lookup(get_dir, dir, &inode);
   ASSERT((inode == NULL || !inode_is_file(inode)));
   get_dir = dir_open(inode);
-
+  dir_close(thread_current()->curr_dir);
   thread_current()->curr_dir = get_dir;
 }
 
@@ -399,10 +403,10 @@ int inumber (int fd){
 }
 
 bool readdir (int fd, char *name){
-  struct file *f = process_get_file (fd);
-  if(!is_dir(f)){
+  struct dir *dir = process_get_file (fd);
+  if(!is_dir(dir)){
     return false;
   }
-  struct dir *dir = dir_open (file_get_inode (f));
-  return dir_readdir(dir, name);
+  bool success = dir_readdir(dir, name);
+  return success;
 }

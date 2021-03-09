@@ -26,7 +26,7 @@ Executing 'alarm-single':
 (alarm-single) end
 Execution of 'alarm-single' complete.
 Timer: 318 ticks
-Thread: 280 idle ticks, 39 kernel ticks, 0 user ticks
+Thread: 280 idle ticks, 38 kernel ticks, 0 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 168 reads, 326 writes
 hd1:1: 0 reads, 0 writes

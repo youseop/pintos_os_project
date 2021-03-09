@@ -21,34 +21,34 @@ Executing 'page-merge-mm':
 (page-merge-mm) sort chunk 1
 child-qsort-mm: exit(80)
 (page-merge-mm) sort chunk 2
-(page-merge-mm) sort chunk 3
 child-qsort-mm: exit(80)
+(page-merge-mm) sort chunk 3
 child-qsort-mm: exit(80)
 (page-merge-mm) sort chunk 4
 child-qsort-mm: exit(80)
 (page-merge-mm) sort chunk 5
+child-qsort-mm: exit(80)
 (page-merge-mm) sort chunk 6
-child-qsort-mm: exit(80)
-child-qsort-mm: exit(80)
 (page-merge-mm) sort chunk 7
+child-qsort-mm: exit(80)
 child-qsort-mm: exit(80)
 (page-merge-mm) wait for child 0
 (page-merge-mm) wait for child 1
 (page-merge-mm) wait for child 2
-child-qsort-mm: exit(80)
 (page-merge-mm) wait for child 3
 (page-merge-mm) wait for child 4
 (page-merge-mm) wait for child 5
 (page-merge-mm) wait for child 6
 (page-merge-mm) wait for child 7
+child-qsort-mm: exit(80)
 (page-merge-mm) merge
 (page-merge-mm) verify
 (page-merge-mm) success, buf_idx=1,048,576
 (page-merge-mm) end
 page-merge-mm: exit(0)
 Execution of 'page-merge-mm' complete.
-Timer: 458 ticks
-Thread: 30 idle ticks, 69 kernel ticks, 359 user ticks
+Timer: 455 ticks
+Thread: 30 idle ticks, 70 kernel ticks, 355 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 4955 reads, 7028 writes
 hd1:0: 224 reads, 0 writes

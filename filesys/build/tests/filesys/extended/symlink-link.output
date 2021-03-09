@@ -19,8 +19,8 @@ Executing 'symlink-link':
 (symlink-link) create symlink "link_a"
 symlink-link: exit(4213138)
 Execution of 'symlink-link' complete.
-Timer: 82 ticks
-Thread: 30 idle ticks, 47 kernel ticks, 6 user ticks
+Timer: 80 ticks
+Thread: 30 idle ticks, 44 kernel ticks, 6 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 116 reads, 538 writes
 hd1:0: 228 reads, 0 writes

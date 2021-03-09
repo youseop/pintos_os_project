@@ -13,9 +13,9 @@ static bool make_tar_archive (const char *archive_name,
 int
 main (int argc, char *argv[]) 
 {
+  printf("start tar main\n");
   if (argc < 3)
     usage ();
-
   return (make_tar_archive (argv[1], argv + 2, argc - 2)
           ? EXIT_SUCCESS : EXIT_FAILURE);
 }
@@ -53,7 +53,7 @@ make_tar_archive (const char *archive_name, char *files[], size_t file_cnt)
   bool success = true;
   bool write_error = false;
   size_t i;
-  
+
   if (!create (archive_name, 0)) 
     {
       printf ("%s: create failed\n", archive_name);

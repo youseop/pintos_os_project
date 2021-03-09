@@ -31,7 +31,15 @@ filesys_init (bool format) {
 
 	if (format)
 		do_format ();
-	
+	/*do_format에서 curr_dir을 지정하게 되면, -f flag가 포함되지 않았을 때는
+	 *curr_dir이 지정되지 않는다. do_format에서 curr_dir을 지정하더라도, 
+	 *다른 testcase는 통과할 수 있겠지만, persistence testcase에서는 
+	 *-f로 format을 시키지 않기 때문에 do_format에 curr_dir을 입력하는 부분이
+	 *들어가 있다면, curr_dir을 찾지 못하는 문제가 발생한다.	*/
+	struct dir* curr_dir = dir_open (inode_open (cluster_to_sector (ROOT_DIR_CLUSTER)));
+	thread_current()->curr_dir = curr_dir;
+	dir_add (curr_dir, ".", inode_get_inumber(dir_get_inode(curr_dir)));
+	dir_add (curr_dir, "..", inode_get_inumber(dir_get_inode(curr_dir)));
 	fat_open ();
 #else
 	/* Original FS */
@@ -67,7 +75,8 @@ filesys_create (const char *name, off_t initial_size) {
 	char path_name[NAME_MAX + 1];
 	char file_name[NAME_MAX + 1];
 
-	memcpy(path_name,name,strlen(name)+1);
+	int cpy_len = NAME_MAX > strlen(name) ? strlen(name) : NAME_MAX;
+	memcpy(path_name,name,cpy_len+1);
 	struct dir * dir = parse_path(path_name, file_name);
 	bool success = (dir != NULL
 			&& (inode_sector = cluster_to_sector(fat_create_chain(0)))
@@ -104,6 +113,10 @@ filesys_create (const char *name, off_t initial_size) {
  * or if an internal memory allocation fails. */
 struct file *
 filesys_open (const char *name) {
+
+	if (!strcmp(name, "/"))
+		return dir_open_root();
+
 	char path_name[NAME_MAX + 1];
 	char file_name[NAME_MAX + 1];
 	
@@ -124,14 +137,15 @@ filesys_open (const char *name) {
  * or if an internal memory allocation fails. */
 bool
 filesys_remove (const char *name) {
+	if (!strcmp(name, "/"))
+		return false;
+
 	char path_name[NAME_MAX + 1];
 	char file_name[NAME_MAX + 1];
 	
 	memcpy(path_name,name,strlen(name)+1);
 	struct dir * dir = parse_path(path_name, file_name);
-	
-	// lookup_in_directory(dir);
-
+	struct inode *inode = NULL;
 	bool success = (dir != NULL && dir_remove (dir, file_name));
 	dir_close (dir);
 
@@ -149,10 +163,12 @@ do_format (void) {
 	if (!dir_create (cluster_to_sector(ROOT_DIR_CLUSTER), 2))
 		PANIC ("root directory creation failed");
 	fat_close ();
-	struct dir* curr_dir = dir_open (inode_open (cluster_to_sector (ROOT_DIR_CLUSTER)));
-	thread_current()->curr_dir = curr_dir;
-	dir_add (curr_dir, ".", inode_get_inumber(dir_get_inode(curr_dir)));
-	dir_add (curr_dir, "..", inode_get_inumber(dir_get_inode(curr_dir)));
+
+	//?.. .은 여기에 위치해야할수도...?
+	// struct dir* curr_dir = dir_open (inode_open (cluster_to_sector (ROOT_DIR_CLUSTER)));
+	// thread_current()->curr_dir = curr_dir;
+	// dir_add (curr_dir, ".", inode_get_inumber(dir_get_inode(curr_dir)));
+	// dir_add (curr_dir, "..", inode_get_inumber(dir_get_inode(curr_dir)));
 #else
 	free_map_create ();
 	if (!dir_create (ROOT_DIR_SECTOR, 16))
@@ -161,9 +177,10 @@ do_format (void) {
 #endif
 }
 
-struct dir* parse_path (char *path_name, char *file_name) {
+struct dir* 
+parse_path (char *path_name, char *file_name) {
 	struct dir *dir;
-	if (path_name == NULL || strlen(path_name) == 0)
+	if (path_name == NULL || strlen(path_name) == 0 || file_name == NULL)
 		return NULL;
 	if (path_name[0] == '/') {
 		dir = dir_open_root();
@@ -190,6 +207,5 @@ struct dir* parse_path (char *path_name, char *file_name) {
 	}
 
 	memcpy(file_name, token, strlen(token)+1);
-
 	return dir;
 }

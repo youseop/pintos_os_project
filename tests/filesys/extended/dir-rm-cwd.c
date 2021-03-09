@@ -67,7 +67,6 @@ test_main (void)
       a_fd3 = wrap_open (".");
       CHECK (inumber (a_fd3) == inumber (a_fd1),
              "\".\" must have same inumber as before");
-
       CHECK (chdir ("/"), "chdir \"/\"");
       CHECK (!remove ("a"), "try to remove \"a\" (must fail: still open)");
     }

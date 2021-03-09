@@ -117,9 +117,9 @@ dir_lookup (const struct dir *dir, const char *name,
 
 	ASSERT (dir != NULL);
 	ASSERT (name != NULL);
-
-	if (lookup (dir, name, &e, NULL))
+	if (lookup (dir, name, &e, NULL)){
 		*inode = inode_open (e.inode_sector);
+	}
 	else
 		*inode = NULL;
 
@@ -172,7 +172,6 @@ done:
  * Returns true if successful, false on failure,
  * which occurs only if there is no file with the given NAME. */
 
- //? remove >> 파일 하나를 remove하면 다른 file이 고장난다.
 bool
 dir_remove (struct dir *dir, const char *name) {
 	struct dir_entry e;
@@ -197,6 +196,9 @@ dir_remove (struct dir *dir, const char *name) {
 		struct dir* remove_dir = dir_open(inode);
 		if (dir_readdir (remove_dir, tmp))
 			goto done;
+		/*현재 dir과 일치한다면 지울 수 없다.*/
+		if(dir_get_inode(remove_dir) == dir_get_inode(thread_current()->curr_dir))
+			goto done;
 	}
 
 	/* Erase directory entry. */
@@ -220,36 +222,36 @@ done:
 bool
 dir_readdir (struct dir *dir, char name[NAME_MAX + 1]) {
 	struct dir_entry e;
-
 	while (inode_read_at (dir->inode, &e, sizeof e, dir->pos) == sizeof e) {
 		dir->pos += sizeof e;
-		if (e.in_use && strcmp (".", e.name) && strcmp ("..", e.name)) {
+		
+		if (e.in_use && (strcmp (".", e.name) && strcmp ("..", e.name))) {
 			strlcpy (name, e.name, NAME_MAX + 1);
 			return true;
 		}
 	}
-
 	return false;
 }
 
 bool
-dir_mkdir (const char *dir_string){
+dir_mkdir (const char *dir_path){
+	if(thread_current()->next_fd >= 420)
+		return false;
 
-	if (strlen(dir_string) == 0)
+	if (strlen(dir_path) == 0)
 		return false;
 	char dir_name[NAME_MAX + 1];
 	disk_sector_t inode_sector = 0;
-	struct dir* dir = parse_path (dir_string, dir_name);
+	struct dir* dir = parse_path (dir_path, dir_name);
 	bool success = (dir != NULL
 			&& (inode_sector = cluster_to_sector(fat_create_chain(0)))
 			&& dir_create (inode_sector, 0)
 			&& dir_add (dir, dir_name, inode_sector));
-
+			
 	struct dir *new_dir = dir_open(inode_open(inode_sector));
-
-	dir_close (dir);
 	dir_add (new_dir, ".", inode_sector);
 	dir_add (new_dir, "..", inode_get_inumber(dir->inode));
+	dir_close (dir);
 
 	if (!success && inode_sector != 0)
 		fat_remove_chain(sector_to_cluster(inode_sector), 0);
